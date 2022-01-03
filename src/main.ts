@@ -14,6 +14,8 @@ async function bootstrap() {
     // logger: false
   });
 
+
+
   app.use(helmet());
 
 
@@ -36,6 +38,8 @@ async function bootstrap() {
   // app.useLogger(myLogger);
   app.useGlobalInterceptors(app.get(ErrorsInterceptor));
   app.useGlobalPipes(new ValidationPipe({ transform: true }),);
+
+
   await app.listen(port);
   myLogger.log(`server started and listening on: ${await app.getUrl()}`);
 }
