@@ -14,7 +14,8 @@ import { UsersModule } from './api/users/users.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { MulterModule } from '@nestjs/platform-express';
 import { FileModule } from './utils/file/file.module';
-import { EventsModule } from './utils/events/events.module';
+import { SocketModule } from './utils/socket/socket.module';
+import { SseModule } from './utils/sse/sse.module';
 import * as multer from 'multer';
 
 @Module({
@@ -34,7 +35,7 @@ import * as multer from 'multer';
         fileSize: 10000000, //10MB in bytes
       }
     }),
-    EventsModule,
+    SocketModule,
     AuthModule,
     ResumeModule,
     SearchModule,
@@ -64,7 +65,8 @@ import * as multer from 'multer';
     LoggerModule,
     ConsoleModule,
     UsersModule,
-    FileModule
+    FileModule,
+    SseModule
   ],
   controllers: [],
   providers: [SeedService,

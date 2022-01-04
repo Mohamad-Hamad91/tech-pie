@@ -6,6 +6,7 @@ import { MyLogger } from './utils/logger/my-logger';
 import * as helmet from 'helmet';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import * as compression from 'compression';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
 
@@ -19,8 +20,21 @@ async function bootstrap() {
   app.use(helmet());
 
 
-  if (process.env.NODE_ENV !== 'production')
+  // if (process.env.NODE_ENV !== 'production') {
+    // const options = {
+    //   "origin": "*",
+    //   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    //   "preflightContinue": false,
+    //   "optionsSuccessStatus": 204,
+    //   // "credentials": true,
+    //   'Content-Type': 'text/event-stream',
+    //   'Connection': 'keep-alive',
+    //   'Cache-Control': 'no-cache',
+    //   'X-Accel-Buffering': 'no'
+    // }
     app.enableCors();
+  // }
+
 
   app.use(compression());
 
@@ -39,6 +53,17 @@ async function bootstrap() {
   app.useGlobalInterceptors(app.get(ErrorsInterceptor));
   app.useGlobalPipes(new ValidationPipe({ transform: true }),);
 
+
+  //#region Swagger 
+  const config = new DocumentBuilder()
+    .setTitle('PIE')
+    .setDescription('(Professional Identity for Employment) API description')
+    .setVersion('1.0')
+    .addTag('pie')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+  //#endregion
 
   await app.listen(port);
   myLogger.log(`server started and listening on: ${await app.getUrl()}`);
