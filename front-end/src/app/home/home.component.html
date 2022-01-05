@@ -1,4 +1,112 @@
 <app-navbar></app-navbar>
-<p>home works!</p>
+
+<!-- Why Choose Us Area Start -->
+<ng-particles class="particles" [id]="particlesId" [options]="particlesOptions"
+    (particlesLoaded)="particlesLoaded($event)"></ng-particles>
+<section style="margin-top: 5%;">
+    <div class="container">
+        <div class="row align-items-center">
+            <!--Why Choose Content and Image box Start-->
+            <div class="col-12 col-sm-12 col-md-6">
+                <div class="home-start-content">
+                    <!-- π -->
+                    <h1>PIE</h1>
+                    <h3>Professional Identity for Employment</h3>
+                    <h4>The right person in the right position 😉🙃</h4>
+                    <br><br><br>
+                    <div class="row">
+                        <div class="col-6">
+                            <a class="pi-btn" routerLink="/register">Employee</a>
+                        </div>
+                        <div class="col-6">
+                            <a class="pi-btn" routerLink="/company/search">Company</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+                <div>
+                    <img class="home-start-content-img" src="assets/imgs/1.svg" alt="developer">
+                </div>
+            </div>
+            <!--Why Choose Content and Image box End-->
+        </div>
+
+    </div>
+</section>
+<!-- Why Choose Us Area End -->
+
+<section class="choose-user-type">
+    <div class="container">
+        <div class="row align-items-center" (scroll)="scrollHandler($event)">
+            <div class="col-12 col-sm-12 col-md-8">
+                <div class="choose-user-content">
+                    <h2>Developer</h2>
+                    <h4>Are you seeking a job?</h4>
+                    <p>We cooperate with multiple companies.</p>
+                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
+                        magni dolores eos qui ratione
+                        voluptatem dolor sit amet, consectetur, adipisci numquam eius modi tempora incid dolore magnam
+                        aliquam quaerat voluptatem.<br><br>
+
+                        Duis aute irure dolor reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                        pariatur.
+
+                        Duis aute irure dolor reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                        pariatur.</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <a class="pi-btn" routerLink="/login">Login</a>
+                        </div>
+                        <div class="col-6">
+                            <a class="pi-btn" routerLink="/register">Register</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4">
+                <div>
+                    <img #emp class="choose-user-content-img" src="assets/imgs/3.svg" alt="About">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row align-items-center" (scroll)="scrollHandler($event)" style="margin-top: 5%;">
+            <div class="col-12 col-sm-12 col-md-4">
+                <div>
+                    <img #comp class="choose-user-content-img" src="assets/imgs/4.svg" alt="About">
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-8">
+                <div class="choose-user-content">
+                    <h2>Company</h2>
+                    <h4>Are you Lookin for a developer?</h4>
+                    <p>You can search over hundreds of structyred data</p>
+                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
+                        magni dolores eos qui ratione
+                        voluptatem dolor sit amet, consectetur, adipisci numquam eius modi tempora incid dolore magnam
+                        aliquam quaerat voluptatem.<br><br>
+
+                        Duis aute irure dolor reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                        pariatur.
+
+                        Duis aute irure dolor reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                        pariatur.</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <a class="pi-btn" routerLink="/company/search">Search</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
 
 <app-footer></app-footer>

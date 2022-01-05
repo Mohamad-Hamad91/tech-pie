@@ -17,9 +17,11 @@ import { FileModule } from './utils/file/file.module';
 import { SocketModule } from './utils/socket/socket.module';
 import { SseModule } from './utils/sse/sse.module';
 import * as multer from 'multer';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true, // no need to import into other modules
     }),

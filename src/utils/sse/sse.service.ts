@@ -1,16 +1,22 @@
 import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class SseService {
 
-    private events = new Subject<MessageEvent>();
+    constructor(private eventEmitter: EventEmitter2) { }
 
-    addEvent(event) {
-        this.events.next(event);
+    private events = new Subject<MessageEvent>();
+    private ids: [];
+
+    addEvent(event, id?: string) {
+        // this.events.next(event);
+        this.eventEmitter.emit(id, event.data);
     }
 
-    sendEvents() : Observable<MessageEvent> {
+
+    sendEvents(): Observable<MessageEvent> {
         return this.events.asObservable();
     }
 

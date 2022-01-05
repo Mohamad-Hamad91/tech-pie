@@ -1,5 +1,7 @@
-import { Controller, Get, Logger, Res, Response, Sse, MessageEvent } from '@nestjs/common';
+import { Controller, Get, Logger, Res, Response, Sse, MessageEvent, Query } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { interval, map, Observable, Subject } from 'rxjs';
+import { SseQueryDto } from './query.dto';
 // import { MessageEvent } from './message.model';
 import { SseService } from './sse.service';
 
@@ -7,46 +9,25 @@ import { SseService } from './sse.service';
 export class SseController {
 
     private logger = new Logger(SseController.name);
-    constructor(private readonly sseService: SseService) { }
+    constructor(private readonly sseService: SseService, private eventEmitter: EventEmitter2) { }
 
     @Sse('notification')
-    sse(): Observable<MessageEvent> {
+    sse(@Query() sseQuery: SseQueryDto): Observable<MessageEvent> {
+        this.logger.log('id: ' + sseQuery.id);
         // return interval(1000).pipe(map((_) => ({ data: { hello: 'world' } })));
         setInterval(() => {
             this.logger.log('added');
-            this.sseService.addEvent({ data: { data: 'hello' } });
+            this.sseService.addEvent({ data: { data: 'hello' } }, '1');
         }, 5000);
-        return this.sseService.sendEvents();
+        // return this.sseService.sendEvents();
+
+        const subject$ = new Subject();
+        this.eventEmitter.on(sseQuery.id, data => {
+            subject$.next(data);
+        });
+        return subject$.pipe(
+            map((data: MessageEvent): MessageEvent => ({ data })),
+        );
     }
-
-    // @Sse()
-    // sse(): Observable<MessageEvent> {
-    //     this.logger.log('notification sse opened');
-    // setInterval(() => {
-    //     this.logger.log('added');
-    //     this.sseService.addEvent({ data: 'hello' });
-    // }, 500);
-    // return this.sseService.sendEvents();
-
-    // const subject$ = new Subject();
-
-
-    // subject$.next({data: 'hello'});
-
-    // this.logger.log('notification sse opened');
-    // return subject$.pipe(
-    //     map((data: MessageEvent): MessageEvent => ({ data })),
-    //   );
-
-    // return interval(1000).pipe(map((_) => ({ data: { hello: 'world' } })));
-
-    // return interval(1000).pipe(() => {
-    //     const s = new Subject<MessageEvent>();
-    //     s.next({ data: '{ hello }' } as MessageEvent);
-    //     this.logger.log('sent');
-
-    //     return s.asObservable();
-    // });
-    // }
 
 }

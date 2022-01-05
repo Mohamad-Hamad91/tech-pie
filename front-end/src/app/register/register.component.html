@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+
+<div class="login-wrapper">
+    <section class="login-section">
+        <main class="col-xs-12 col-lg-6 offset-lg-3 login-content">
+            <div class="form-wrapper">
+                <div class="center-image-wrapper">
+                    <img class="center-image" src="assets/imgs/private.svg" alt="" srcset="">
+                </div>
+                <h2>Welcome to PIE</h2>
+                <div class="login-input-wrapper">
+                    <a routerLink="/login">Already have an account? login</a>
+                </div>
+                <form class="login-form">
+                    <div class="login-input-wrapper">
+                        <input name="email" autocapitalize="none" placeholder="E-mail / mobile number"
+                            class="login-input">
+                    </div>
+                    <div class="login-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input #pass name="password" type="password" class="login-input login-input-pass"
+                                placeholder="Password" aria-label="" aria-describedby="basic-addon1">
+                            <div class="input-group-prepend" style="margin: 0%;">
+                                <button class="btn btn-outline-secondary login-eye-btn" type="button"
+                                    (click)="displayPass(pass)">
+                                    <img [src]="eyeSrc" alt="" srcset="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="login-input-wrapper">
+                        <button class="pi-btn">Register</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </section>
+</div>
+
+<app-footer></app-footer>
