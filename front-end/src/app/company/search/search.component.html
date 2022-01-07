@@ -1,6 +1,56 @@
 <app-navbar></app-navbar>
 
-<p>search works!</p>
+<section class="container search">
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2 search-input-wrapper">
+            <div class="centered-image">
+                <img src="assets/imgs/search-emp.svg" alt="search" width="190">
+            </div>
+            <h2>Search for Developers</h2>
+            <div class="input-group mb-3">
+                <input name="search" type="search" class="search-input" placeholder="Search By Name/ E-mail/ Title">
+                <div class="input-group-prepend" style="margin: 0%;">
+                    <button class="btn btn-outline-secondary search-btn" type="button">
+                        <img src="assets/imgs/search.svg" alt="search" width="27">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="advanced-search">
+        <h6 (click)="flipArrow()">Advanced Search <img #arrow src="assets/imgs/arraow-bottom.svg" alt="arrow bottom"
+                width="25"></h6>
 
+        <div #advancedSearch class="row advanced-search-input-wrapper"
+            [ngClass]="{'hide-advanced-search': !displayAdvanceSearch}">
+            <div class="col-12 col-md-6">
+                <input name="search" type="search" class="advanced-search-input"
+                    placeholder="Search By Name/ E-mail/ Title">
+                <br>
+                <input name="search" type="search" class="advanced-search-input"
+                    placeholder="Search By Name/ E-mail/ Title">
+                <br>
+                <input name="search" type="search" class="advanced-search-input"
+                    placeholder="Search By Name/ E-mail/ Title">
+            </div>
+            <div class="col-12 col-md-6">
+                <input name="search" type="search" class="advanced-search-input"
+                    placeholder="Search By Name/ E-mail/ Title">
+                <br>
+                <input name="search" type="search" class="advanced-search-input"
+                    placeholder="Search By Name/ E-mail/ Title">
+                <br>
+                <input name="search" type="search" class="advanced-search-input"
+                    placeholder="Search By Name/ E-mail/ Title">
+            </div>
+            <div class="advanced-search-btn-wrapper">
+                <button class="pi-btn">
+                    Search &nbsp;&nbsp; <img src="assets/imgs/search.svg" alt="search" width="20">
+                </button>
+            </div>
+        </div>
+    </div>
+
+</section>
 
 <app-footer></app-footer>

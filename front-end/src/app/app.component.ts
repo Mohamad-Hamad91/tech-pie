@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   baseURL = environment.baseURL;
 
   constructor(private toastr: ToastrService) {
-    const evtSource = new EventSource('http://localhost:3001/api/' + 'notification');
+    const evtSource = new EventSource('http://localhost:3001/api/' + 'notification?id=1');
     evtSource.onmessage = ({ data }) => {
       console.log('connection send data');
       const message = JSON.parse(data);

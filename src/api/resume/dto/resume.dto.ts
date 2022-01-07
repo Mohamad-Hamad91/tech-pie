@@ -93,6 +93,14 @@ export class ResumeDto {
   @IsIn(Enum2Array.transform(Shift))
   shift: Shift = Shift.UNSPECIFIED;
 
+  title?: string;
+  
+  expectedPriceMin?: number;
+
+  expectedPriceUnit?: string;
+
+  expectedPriceCurrency?: string;
+
   @ApiProperty()
   summary: string = '';
 

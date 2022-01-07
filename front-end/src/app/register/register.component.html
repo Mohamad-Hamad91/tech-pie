@@ -11,18 +11,30 @@
                 <div class="login-input-wrapper">
                     <a routerLink="/login">Already have an account? login</a>
                 </div>
-                <form class="login-form">
+                <form class="login-form" (ngSubmit)="save()">
                     <div class="login-input-wrapper">
                         <input name="email" autocapitalize="none" placeholder="E-mail / mobile number"
-                            class="login-input">
+                            class="login-input" [(ngModel)]="data.email">
                     </div>
                     <div class="login-input-wrapper">
                         <div class="input-group mb-3">
                             <input #pass name="password" type="password" class="login-input login-input-pass"
-                                placeholder="Password" aria-label="" aria-describedby="basic-addon1">
+                                placeholder="Password" [(ngModel)]="data.password" aria-describedby="basic-addon1">
                             <div class="input-group-prepend" style="margin: 0%;">
                                 <button class="btn btn-outline-secondary login-eye-btn" type="button"
-                                    (click)="displayPass(pass)">
+                                    (click)="displayPass(pass, confpass)">
+                                    <img [src]="eyeSrc" alt="" srcset="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="login-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input #confpass name="confpassword" type="password" class="login-input login-input-pass"
+                                placeholder="Confirm Password" [(ngModel)]="data.confirmPassword" aria-describedby="basic-addon1">
+                            <div class="input-group-prepend" style="margin: 0%;">
+                                <button class="btn btn-outline-secondary login-eye-btn" type="button"
+                                    (click)="displayPass(pass, confpass)">
                                     <img [src]="eyeSrc" alt="" srcset="">
                                 </button>
                             </div>

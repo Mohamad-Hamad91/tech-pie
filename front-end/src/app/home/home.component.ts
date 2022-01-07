@@ -27,11 +27,11 @@ export class HomeComponent implements OnInit {
       interactivity: {
         events: {
           onClick: {
-            enable: true,
+            enable: false,
             mode: "push"
           },
           onHover: {
-            enable: true,
+            enable: false,
             mode: "repulse"
           },
           resize: true
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
         number: {
           density: {
             enable: true,
-            area: 1000
+            area: 1200
           },
           value: 80
         },
@@ -99,9 +99,9 @@ export class HomeComponent implements OnInit {
 
 
   particlesLoaded(container: Container): void {
-    console.log(container);
-    const canvs = document.getElementsByTagName('canvas');
-    canvs.item(0).style.zIndex = '-100';
+    // console.log(container);
+    // const canvs = document.getElementsByTagName('canvas');
+    // canvs.item(0).style.zIndex = '-100';
   }
 
   @HostListener('window:scroll', ['$event']) 

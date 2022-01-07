@@ -1,0 +1,18 @@
+export class SearchQuery {
+    expectedPriceMin: number;
+    expectedPriceMax: number;
+    expectedPriceUnit: string;
+    expectedPriceCurrency: string;
+    country?: string;
+    city?: string;
+    available?: boolean;
+    availableAt?: Date;
+    workType?: string;
+    shift?: string;
+    skills?: string[];
+}
+
+export class Skill {
+    expertLevel: string;
+    value: string;
+}

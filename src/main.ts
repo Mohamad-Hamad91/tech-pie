@@ -20,7 +20,7 @@ async function bootstrap() {
   app.use(helmet());
 
 
-  // if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     // const options = {
     //   "origin": "*",
     //   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -33,7 +33,7 @@ async function bootstrap() {
     //   'X-Accel-Buffering': 'no'
     // }
     app.enableCors();
-  // }
+  }
 
 
   app.use(compression());

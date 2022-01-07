@@ -15,16 +15,17 @@ export class SseController {
     sse(@Query() sseQuery: SseQueryDto): Observable<MessageEvent> {
         this.logger.log('id: ' + sseQuery.id);
         // return interval(1000).pipe(map((_) => ({ data: { hello: 'world' } })));
-        setInterval(() => {
-            this.logger.log('added');
-            this.sseService.addEvent({ data: { data: 'hello' } }, '1');
-        }, 5000);
+        // setInterval(() => {
+        //     this.logger.log('added');
+        //     this.sseService.addEvent({ data: { data: 'hello' } }, '1');
+        // }, 5000);
         // return this.sseService.sendEvents();
 
         const subject$ = new Subject();
         this.eventEmitter.on(sseQuery.id, data => {
             subject$.next(data);
         });
+        // this.eventEmitter.on('event.broadcastiong', data)
         return subject$.pipe(
             map((data: MessageEvent): MessageEvent => ({ data })),
         );
