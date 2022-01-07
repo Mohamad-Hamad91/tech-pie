@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +11,12 @@ export class NavbarComponent implements OnInit {
   @ViewChild('collapseBtn') collapseBtn: ElementRef;
   @ViewChild('nav') nav: ElementRef;
   collapsed: boolean = true;
+  isLoggedin: boolean = false;
 
-  constructor() { }
+  constructor(private _authService: AuthService) { }
 
   ngOnInit(): void {
+    this.isLoggedin = this._authService.isLoggedIn();
   }
 
   collapseNav() {

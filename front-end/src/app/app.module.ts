@@ -13,10 +13,11 @@ import { SharedModule } from './shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import {NgParticlesModule} from "ng-particles";
+import { NgParticlesModule } from "ng-particles";
 import { GeneralInterceptor } from './general.interceptor';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -41,11 +42,14 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ToastrModule.forRoot(), // ToastrModule added
     NgParticlesModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: GeneralInterceptor,
-    multi: true
-  }],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GeneralInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

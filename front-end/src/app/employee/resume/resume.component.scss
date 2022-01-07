@@ -1,0 +1,148 @@
+:host {
+  background-color: #f2f5fa;
+  display: block;
+}
+
+.resume {
+  min-height: 150vh;
+  background-color: #ffffff;
+  box-shadow: #92959c -4px -14px 10px;
+  padding: 0px;
+}
+
+.row {
+  width: 100% !important;
+}
+
+.resume-wrapper {
+  min-height: 100vh;
+  //   margin-bottom: 10%;
+  padding-bottom: 10%;
+}
+
+.resume-pic-wrapper {
+  height: 30vh;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.resume-pic {
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+}
+
+.emp-photo-wrapper {
+  padding: 0% 5% 0% 5%;
+  position: sticky;
+}
+
+.emp-photo {
+  transform: translateY(-35%);
+}
+
+.main-info {
+  text-align: center;
+  padding-top: 1%;
+  color: #182514;
+  text-shadow: #7f8d73 1px 1px 2px;
+  h2,
+  h4 {
+    font-family: 'Ropa Sans', 'Lato', 'Courier New', Courier, monospace;
+    font-weight: 700;
+  }
+}
+
+.resume-content {
+  height: 100%;
+  min-height: 80vh;
+}
+
+.resume-summary,
+.resume-availability,
+.resume-experience,
+.resume-edu,
+.resume-courses,
+.resume-projects,
+.resume-references {
+  text-align: justify;
+  padding: 0px 5%;
+  h3 {
+    font-family: 'Aldrich', 'Lato', 'Courier New', Courier, monospace;
+    font-weight: 700;
+    color: #303075;
+    padding-top: 4%;
+  }
+}
+
+.total-experience {
+  font-weight: bold;
+  color: #0f3257;
+  font-size: large;
+}
+
+.employment-header {
+  padding-top: 3%;
+  font-weight: bold;
+}
+
+.employment-date {
+  color: #476868;
+}
+
+.resume-side-content {
+  background-color: #092a4e;
+  min-height: 80vh;
+  text-align: left;
+  color: rgb(219, 228, 233);
+  padding: 3% 2% 3% 2%;
+  font-weight: 600;
+  line-height: 2.2;
+  font-size: 1em;
+  border-radius: 10px;
+  overflow: visible;
+  inline-size: 25%;
+  overflow-wrap: break-word;
+  h4 {
+    font-family: 'Aldrich', 'Lato', 'Courier New', Courier, monospace;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .resume-side-content {
+    font-size: 0.5em;
+  }
+  .progress, .progress-bar {
+    height: 5px;;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .emp-photo {
+    transform: translateY(-15%);
+    width: 100%;
+  }
+  .main-info {
+    h2,
+    h4 {
+      font-weight: 500;
+    }
+  }
+  .resume-side-content {
+    font-size: 0.5em;
+    div {
+      font-size: 1em !important;
+    }
+    h3,
+    h4 {
+      font-size: 1.2em !important;
+    }
+  }
+  .progress, .progress-bar {
+    height: 5px;;
+  }
+}

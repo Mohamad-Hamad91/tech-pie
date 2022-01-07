@@ -14,11 +14,13 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/company/search" routerLinkActive="active-nav-link">Search</a>
             </li>
-            
+            <li *ngIf="isLoggedin">
+                <a class="nav-link" routerLink="/employee/resume" routerLinkActive="active-nav-link">Resume</a>
+            </li>
         </ul>
 
         <span >
-                <a class="pi-btn" routerLink="/register">Register</a>
+                <a *ngIf="!isLoggedin" class="pi-btn" routerLink="/register">Register</a>
         </span>
     </div>
 </nav>

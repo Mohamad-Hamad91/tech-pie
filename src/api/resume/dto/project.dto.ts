@@ -4,6 +4,8 @@ export class ProjectDto {
   @IsNotEmpty()
   title: string = '';
 
+  link?: string;
+
   description: string = '';
 
   @IsDate()

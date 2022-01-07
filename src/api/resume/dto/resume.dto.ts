@@ -67,6 +67,9 @@ export class ResumeDto {
   @ApiProperty()
   address: string = '';
 
+  @ApiProperty({type: ()=> ['Male', 'Female']})
+  gender?: 'Male' | 'Female';
+
   @IsDate()
   @ApiProperty()
   birthDate: Date = new Date(1990, 1, 1);
