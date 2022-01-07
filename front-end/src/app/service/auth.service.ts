@@ -22,4 +22,12 @@ export class AuthService {
     return this._http.post<LoginResDto>(this._baseURL + 'login', data);
   }
 
+  isLoggedIn() {
+    return !!localStorage.getItem('token');
+  }
+
+  getRole() {
+    return 'EMPLOYEE';
+  }
+
 }

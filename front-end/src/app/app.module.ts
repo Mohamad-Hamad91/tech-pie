@@ -15,13 +15,17 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {NgParticlesModule} from "ng-particles";
 import { GeneralInterceptor } from './general.interceptor';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UnauthorizedComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

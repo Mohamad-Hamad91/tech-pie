@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     .login(this.data)
     .subscribe(res => {
       localStorage.setItem('token', res.accessToken);
-      this._router.navigate(['/']);
+      this._router.navigate(['/employee/resume']);
     });
   }
  
