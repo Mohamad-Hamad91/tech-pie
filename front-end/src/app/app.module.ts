@@ -36,9 +36,6 @@ import { AuthGuard } from './auth.guard';
     BrowserAnimationsModule, // required animations module
     AppRoutingModule,
     SharedModule,
-    // DashboardModule,
-    // EmployeeModule,
-    // CompanyModule,
     ToastrModule.forRoot(), // ToastrModule added
     NgParticlesModule
   ],

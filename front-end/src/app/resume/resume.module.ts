@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmpProfileComponent } from './emp-profile/emp-profile.component';
-import { EmpRoutingModule } from './emp-routing.module';
+import { ResumeRoutingModule } from './resume.routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ViewComponent } from './view/view.component';
 
 
 
 @NgModule({
   declarations: [
-  
-    EmpProfileComponent
+    ViewComponent
   ],
   imports: [
     CommonModule,
-    EmpRoutingModule,
+    ResumeRoutingModule,
     SharedModule
   ]
 })
-export class EmployeeModule { }
+export class ResumeModule { }
