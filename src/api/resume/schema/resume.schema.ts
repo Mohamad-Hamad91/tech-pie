@@ -32,10 +32,7 @@ export class Resume {
   email: string;
 
   @Prop()
-  fName: string;
-
-  @Prop()
-  lName: string;
+  name: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'MyFile' })
   photo: MyFile;
@@ -44,16 +41,16 @@ export class Resume {
   phone: string;
 
   @Prop()
-  country: Country = Country.Syria;
-
-  @Prop()
-  city: City = City.UNSPECIFIED;
+  city: City;
 
   @Prop()
   address: string;
 
   @Prop()
-  birthDate: Date = new Date(1990, 1, 1);
+  gender?: 'Male' | 'Female';
+
+  @Prop()
+  birthDate: Date;
 
   @Prop()
   nationality: Nationality = Nationality.Syrian;
@@ -65,10 +62,22 @@ export class Resume {
   availableAt: Date = new Date();
 
   @Prop()
-  workType: WorkType = WorkType.OTHER;
+  workType: WorkType[];
 
   @Prop()
   shift: Shift = Shift.UNSPECIFIED;
+
+  @Prop()
+  title?: string;
+
+  @Prop()
+  expectedPriceMin?: number;
+
+  @Prop()
+  expectedPriceUnit?: string;
+
+  @Prop()
+  expectedPriceCurrency?: string;
 
   @Prop()
   summary: string;
@@ -77,7 +86,7 @@ export class Resume {
   hobbies: string;
 
   @Prop()
-  armyServiceStatus: ArmyServiceStatus = ArmyServiceStatus.Pending_For_Study;
+  armyServiceStatus: ArmyServiceStatus;
 
   @Prop({ type: [{ type: EmploymentHistorySchema }] })
   employmentHistory: EmploymentHistory[];

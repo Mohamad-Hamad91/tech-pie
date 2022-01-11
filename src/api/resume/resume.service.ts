@@ -26,18 +26,22 @@ export class ResumeService {
       .limit(input.pageSize)
       .skip(input.pageSize * (input.pageNumber - 1))
       .exec();
-      return result;
+    return result;
   }
 
   async getOne(id: string): Promise<Resume> {
     return await this.resumeModel.findById(id).exec();
   }
 
+  async getByUserId(id: string): Promise<Resume> {
+    return await this.resumeModel.findOne({ user: id }).exec();
+  }
+
   async create(resume: ResumeDto, userId: ObjectId, file?: Express.Multer.File): Promise<Resume> {
     let result;
     const session: ClientSession = await this.resumeModel.startSession();
     await session.withTransaction(async (session) => {
-      const photoId = await this.fileService.save(file, false, session);
+      const photoId = file? await this.fileService.save(file, false, session): null;
       const temp = new this.resumeModel(resume);
       const user = await this.userService.findById(userId, session);
       if (!user) throw new BadRequestException('User Not Found!');

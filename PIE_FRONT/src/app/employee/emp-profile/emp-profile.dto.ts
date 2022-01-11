@@ -1,0 +1,32 @@
+export class EmpProfileDto {
+    _id: string;
+    email: string;
+    name: string;
+    phone: string;
+    photo: string;
+    city: string;
+    address: string;
+    gender?: 'Male' | 'Female';
+    birthDate: Date;
+    nationality: string;
+    available: boolean;
+    availableAt?: Date;
+    workType: string[];
+    shift: string;
+    title: string;
+    expectedPriceMin?: number;
+    expectedPriceUnit?: string;
+    expectedPriceCurrency?: string;
+    summary: string;
+    hobbies: string;
+    armyServiceStatus: string;
+    employmentHistory: any[];
+    courses: any[];
+    education: any[];
+    links: any[];
+    projects: any[];
+    references: any[];
+    languages: any[];
+    skills: any[];
+    user: string;
+}

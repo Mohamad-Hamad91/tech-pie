@@ -18,6 +18,7 @@ import { SocketModule } from './utils/socket/socket.module';
 import { SseModule } from './utils/sse/sse.module';
 import * as multer from 'multer';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ConstantsModule } from './api/constants/constants.module';
 
 @Module({
   imports: [
@@ -68,7 +69,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     ConsoleModule,
     UsersModule,
     FileModule,
-    SseModule
+    SseModule,
+    ConstantsModule
   ],
   controllers: [],
   providers: [SeedService,

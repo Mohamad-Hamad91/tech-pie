@@ -61,11 +61,18 @@ export class ResumeController {
     return await this.resumeService.get(input);
   }
 
+  @Get('user/:id')
+  async getByUserId(@Param('id') id: string) {
+    return this.resumeService.getByUserId(id);
+  }
+
+
   @Get('/:id')
   async getOne(@Param('id') id: string) {
     // throw new Error('just kidding 😜');
     return this.resumeService.getOne(id);
   }
+
 
   @Post()
   @UseInterceptors(FileInterceptor('photo'))

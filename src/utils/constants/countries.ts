@@ -12,12 +12,11 @@ export enum Country {
 }
 
 export enum City {
-  Damascus = 'Damascus',
-  Damascus_Country_Side = 'Damascus_Country_Side',
-  Daraa = 'Daraa',
-  Sweida = 'Sweida',
-  Homs = 'Homs',
-  Hama = 'Hama',
-  Halab = 'Halab',
-  UNSPECIFIED = 'UNSPECIFIED',
+  Damascus = 'Damascus Syria',
+  Damascus_Country_Side = 'Damascus Country Side Syria',
+  Daraa = 'Daraa Syria',
+  Sweida = 'Sweida Syria',
+  Homs = 'Homs Syria',
+  Hama = 'Hama Syria',
+  Halab = 'Halab Syria'
 }

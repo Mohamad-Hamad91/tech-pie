@@ -26,10 +26,9 @@ export class AuthService {
     async login(data: LoginDto) {
         const user = await this.validateLocalUser(data.email, data.password);
         if (!user) throw new UnauthorizedException("");
-
         const payload = { email: user?.email, id: user?._id.toString(), roles: user?.roles };
         const accessToken = await this.jwtService.signAsync(payload);
-        return { accessToken };
+        return { accessToken, email: user?.email, id: user?._id.toString(), roles: user?.roles};
     }
 
     async validateLocalUser(email: string, pass: string): Promise<any> {

@@ -40,7 +40,7 @@ export class Resume extends BaseEntity {
   country: Country = Country.Syria;
 
   @Column()
-  city: City = City.UNSPECIFIED;
+  city: City;
 
   @Column()
   address: string;
@@ -58,7 +58,7 @@ export class Resume extends BaseEntity {
   availableAt: Date = new Date();
 
   @Column()
-  workType: WorkType = WorkType.OTHER;
+  workType: WorkType;
 
   @Column()
   shift: Shift = Shift.UNSPECIFIED;

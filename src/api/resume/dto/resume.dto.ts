@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+  Allow,
   IsAlpha,
+  IsArray,
   IsBoolean,
   IsDate,
   IsEmail,
@@ -11,6 +13,7 @@ import {
   IsPhoneNumber,
   Length,
   MinLength,
+  ValidateIf,
   ValidateNested,
 } from 'class-validator';
 import { type } from 'os';
@@ -30,49 +33,39 @@ import { UserLangDto } from './user-lang.dto';
 import { UserSkillDto } from './user-skill.dto';
 
 export class ResumeDto {
-  // id: string = '';
+
+  _id?: string;
 
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty()
-  email: string = '';
+  email: string;
 
-  @IsAlpha()
   @IsNotEmpty()
   @MinLength(3)
   @ApiProperty()
-  fName: string = '';
-
-  @IsAlpha()
-  @IsNotEmpty()
-  @MinLength(3)
-  @ApiProperty()
-  lName: string = '';
+  name: string;
 
   @ApiProperty()
-  photo: string = '';
+  photo: string;
 
   @IsPhoneNumber()
   @ApiProperty()
-  phone: string = '';
-
-  @ApiProperty()
-  @IsIn(Enum2Array.transform(Country))
-  country: Country = Country.Syria;
+  phone: string;
 
   @ApiProperty()
   @IsIn(Enum2Array.transform(City))
-  city: City = City.UNSPECIFIED;
+  city: City;
 
   @ApiProperty()
-  address: string = '';
+  address: string;
 
-  @ApiProperty({type: ()=> ['Male', 'Female']})
+  @ApiProperty({ type: () => ['Male', 'Female'] })
   gender?: 'Male' | 'Female';
 
-  @IsDate()
+  // @IsDate()
   @ApiProperty()
-  birthDate: Date = new Date(1990, 1, 1);
+  birthDate?: Date;
 
   @ApiProperty()
   @IsIn(Enum2Array.transform(Nationality))
@@ -89,15 +82,18 @@ export class ResumeDto {
   availableAt: Date = new Date();
 
   @ApiProperty()
-  @IsIn(Enum2Array.transform(WorkType))
-  workType: WorkType = WorkType.OTHER;
+  // @IsIn(Enum2Array.transform(WorkType))
+  // @ValidateNested({ each: true })
+  @IsArray()
+  workType: WorkType[];
 
   @ApiProperty()
   @IsIn(Enum2Array.transform(Shift))
   shift: Shift = Shift.UNSPECIFIED;
 
+  @ApiProperty()
   title?: string;
-  
+
   expectedPriceMin?: number;
 
   expectedPriceUnit?: string;
@@ -105,16 +101,16 @@ export class ResumeDto {
   expectedPriceCurrency?: string;
 
   @ApiProperty()
-  summary: string = '';
+  summary: string;
 
   @ApiProperty()
-  hobbies: string = '';
+  hobbies: string;
 
   @ApiProperty()
   @IsIn(Enum2Array.transform(ArmyServiceStatus))
-  armyServiceStatus: ArmyServiceStatus = ArmyServiceStatus.Pending_For_Study;
+  armyServiceStatus: ArmyServiceStatus;
 
-  @ApiProperty({type: () => [EmploymentHistoryDto]})
+  @ApiProperty({ type: () => [EmploymentHistoryDto] })
   @ValidateNested({ each: true })
   @Type(() => EmploymentHistoryDto)
   employmentHistory: EmploymentHistoryDto[];
