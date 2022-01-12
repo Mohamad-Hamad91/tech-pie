@@ -10,8 +10,12 @@ import { InputTextareaModule } from 'primeng-lts/inputtextarea';
 import { ToastModule } from 'primeng-lts/toast';
 import { AutoCompleteModule } from 'primeng-lts/autocomplete';
 import { CheckboxModule } from 'primeng-lts/checkbox';
-import {DropdownModule} from 'primeng-lts/dropdown';
-import {CalendarModule} from 'primeng-lts/calendar';
+import { DropdownModule } from 'primeng-lts/dropdown';
+import { CalendarModule } from 'primeng-lts/calendar';
+import { InputNumberModule } from 'primeng-lts/inputnumber';
+import { DialogModule } from 'primeng-lts/dialog';
+import { InputTextModule } from 'primeng-lts/inputtext';
+import { FileUploadModule } from 'primeng-lts/fileupload';
 
 
 
@@ -32,7 +36,11 @@ import {CalendarModule} from 'primeng-lts/calendar';
     AutoCompleteModule,
     CheckboxModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    InputNumberModule,
+    DialogModule,
+    InputTextModule,
+    FileUploadModule
   ]
 })
 export class EmployeeModule { }

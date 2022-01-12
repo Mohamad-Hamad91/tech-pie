@@ -19,9 +19,15 @@ import { SseModule } from './utils/sse/sse.module';
 import * as multer from 'multer';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ConstantsModule } from './api/constants/constants.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'dist/public'),
+      serveRoot: '/public'
+    }),
     EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true, // no need to import into other modules

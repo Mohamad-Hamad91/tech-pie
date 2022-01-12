@@ -34,14 +34,14 @@ export class ResumeService {
   }
 
   async getByUserId(id: string): Promise<Resume> {
-    return await this.resumeModel.findOne({ user: id }).exec();
+    return await this.resumeModel.findOne({ user: id }).populate('photo').exec();
   }
 
   async create(resume: ResumeDto, userId: ObjectId, file?: Express.Multer.File): Promise<Resume> {
     let result;
     const session: ClientSession = await this.resumeModel.startSession();
     await session.withTransaction(async (session) => {
-      const photoId = file? await this.fileService.save(file, false, session): null;
+      const photoId = file ? await this.fileService.save(file, false, session) : null;
       const temp = new this.resumeModel(resume);
       const user = await this.userService.findById(userId, session);
       if (!user) throw new BadRequestException('User Not Found!');
@@ -64,7 +64,17 @@ export class ResumeService {
   }
 
   async update(id: string, resume: ResumeDto, file?: Express.Multer.File): Promise<Resume> {
-    return await this.resumeModel.findOneAndUpdate({ id }, resume);
+    let result;
+    const session: ClientSession = await this.resumeModel.startSession();
+    await session.withTransaction(async (session) => {
+      const temp = new this.resumeModel(resume);
+      if(file) {
+        temp.photo = await this.fileService.save(file, false, session);
+      }
+      const old = await this.resumeModel.findOneAndUpdate({ id }, temp);
+      if(file) this.fileService.delete( old.photo._id.toString(), false);
+    });
+    return result;
   }
 
   async delete(id: string): Promise<void> {

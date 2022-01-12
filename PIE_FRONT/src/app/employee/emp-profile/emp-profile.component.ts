@@ -3,7 +3,15 @@ import { MessageService } from 'primeng-lts/api';
 import { AuthService } from 'src/app/service/auth.service';
 import { ConstantsService } from 'src/app/service/constants.service';
 import { ProfileService } from '../service/profile.service';
-import { EmpProfileDto } from './emp-profile.dto';
+import { CourseDto } from './dto/courses.dto';
+import { EducationDto } from './dto/education.dto';
+import { EmpProfileDto } from './dto/emp-profile.dto';
+import { EmploymentHistory } from './dto/employment-history.dto';
+import { LanguageDto } from './dto/language.dto';
+import { LinkDto } from './dto/links.dto';
+import { ProjectDto } from './dto/project.dto';
+import { ReferencesDto } from './dto/references.dto';
+import { SkillDto } from './dto/skills.dto';
 
 @Component({
   selector: 'app-emp-profile',
@@ -12,6 +20,7 @@ import { EmpProfileDto } from './emp-profile.dto';
 })
 export class EmpProfileComponent implements OnInit {
 
+  //#region Data members definition
   data: EmpProfileDto = new EmpProfileDto();
   id: string;
 
@@ -22,7 +31,35 @@ export class EmpProfileComponent implements OnInit {
   tempNationalities: string[];
 
   gender: any[] = [{ value: 'Male' }, { value: 'Female' }];
-  tempGender: string[] = ['Male', 'Female'];
+
+  currency: any[] = [{ value: 'SYP' }, { value: 'USD' }, { value: 'EURO' }, { value: 'EAD' }];
+
+  priceUnit: any[] = [{ value: 'Hour' }, { value: 'Month' }, { value: 'Year' }];
+
+  expertLevels: any[] = [
+    { value: 'NoVice' },
+    { value: 'Beginner' },
+    { value: 'Skillful' },
+    { value: 'Experienced' },
+    { value: 'Expert' }
+  ];
+
+  langLevels: any[] = [
+    { value: 'A1', label: 'A1' },
+    { value: 'A2', label: 'A2' },
+    { value: 'Working_Knowledge', label: 'Working Knowledge' },
+    { value: 'B1', label: 'B1' },
+    { value: 'Good_Working_Knowledge', label: 'Good Working Knowledge' },
+    { value: 'Very_Good_Command', label: 'Very Good Command' },
+    { value: 'B2', label: 'B2' },
+    { value: 'C1', label: 'C1' },
+    { value: 'Highly_Proficient', label: 'Highly Proficient' },
+    { value: 'C2', label: 'C2' },
+    { value: 'Native_Speaker', label: 'Native Speaker' }
+  ];
+
+  languages: string[];
+  tempLanguages: string[];
 
   armyService: string[];
   tempArmyService: string[];
@@ -30,7 +67,35 @@ export class EmpProfileComponent implements OnInit {
   workType: string[];
   tempWorkType: string[];
 
+  skills: string[];
+  tempSkills: string[];
 
+  empHistoryDialog: boolean = false;
+  tempEmpHistomry: EmploymentHistory = new EmploymentHistory();
+
+  eduDialog: boolean = false;
+  tempEdu: EducationDto = new EducationDto();
+
+  courseDialog: boolean = false;
+  tempCourse: CourseDto = new CourseDto();
+
+  projectDialog: boolean = false;
+  tempProject: ProjectDto = new ProjectDto();
+
+  refDialog: boolean = false;
+  tempRef: ReferencesDto = new ReferencesDto();
+
+  linkDialog: boolean = false;
+  tempLink: LinkDto = new LinkDto();
+
+  skillDialog: boolean = false;
+  tempSkill: SkillDto = new SkillDto();
+
+  langDialog: boolean = false;
+  tempLang: LanguageDto = new LanguageDto();
+  imageSrc: string | ArrayBuffer;
+  fromFrontAvatar: boolean;
+  //#endregion Data member definition
 
 
   constructor(private _authService: AuthService,
@@ -49,15 +114,43 @@ export class EmpProfileComponent implements OnInit {
       .subscribe(res => {
         this.data = res;
         this.data.birthDate = this.data.birthDate ? new Date(this.data.birthDate) : null;
+        this.data.skills = this.data.skills.map((val): SkillDto => {
+          return { ...val, expertLevelValue: this.getSkillValue(val.expertLevel) };
+        });
+        this.data.languages = this.data.languages.map((val): LanguageDto => {
+          return { ...val, expertValue: this.getLangValue(val.level) };
+        });
       });
+  }
+
+  onAvatarUpload(e) {
+    let file = e.files[0];
+    this.data.avatar = file;
+    const reader = new FileReader();
+    this.fromFrontAvatar = true;
+    reader.onload = e => this.imageSrc = reader.result;
+    reader.readAsDataURL(file);
   }
 
   save() {
     this.data.user = this.id;
+    let formData = new FormData();
+    if (this.data.avatar) {
+      formData.append('avatar', this.data.avatar);
+      delete this.data.avatar;
+    }
+    for (let key in this.data) {
+      // debugger;
+      if (typeof this.data[key] === 'object')
+        formData.append(key, JSON.stringify(this.data[key]));
+      else
+        formData.append(key, this.data[key]);
+    }
+
     if (this.data._id) {
       // update
       this._profileService
-        .updateResume(this.data, this.data._id)
+        .updateResume(formData, this.data._id)
         .subscribe(res => this._messageService.add({
           severity: 'success',
           life: 3000,
@@ -65,7 +158,7 @@ export class EmpProfileComponent implements OnInit {
         }));
     } else {
       // create
-      this._profileService.createResume(this.data)
+      this._profileService.createResume(formData)
         .subscribe(res => {
           console.log(res);
           this.data._id = res._id;
@@ -73,6 +166,8 @@ export class EmpProfileComponent implements OnInit {
     }
   }
 
+
+  //#region Autocomplete
   searchCities(event) {
     if (!this.cities) {
       this._constService.getCities().subscribe(res => {
@@ -93,15 +188,6 @@ export class EmpProfileComponent implements OnInit {
       })
     } else {
       this.nationalities = this.tempNationalities.filter(val =>
-        val.toLocaleLowerCase().includes(event.query.toLocaleLowerCase()));
-    }
-  }
-
-  searchGender(event) {
-    if (!this.gender) {
-      this.gender = [...this.tempGender];
-    } else {
-      this.gender = this.tempGender.filter(val =>
         val.toLocaleLowerCase().includes(event.query.toLocaleLowerCase()));
     }
   }
@@ -129,6 +215,352 @@ export class EmpProfileComponent implements OnInit {
         val.toLocaleLowerCase().includes(event.query.toLocaleLowerCase()));
     }
   }
+
+  searchSkills(event) {
+    if (!this.skills) {
+      this._constService.getSkills().subscribe(res => {
+        this.tempSkills = res;
+        this.skills = [...this.tempSkills];
+      })
+    } else {
+      this.skills = this.tempSkills.filter(val =>
+        val.toLocaleLowerCase().includes(event.query.toLocaleLowerCase()));
+    }
+  }
+
+  searchLangs(event) {
+    if (!this.languages) {
+      this._constService.getLanguages().subscribe(res => {
+        this.tempLanguages = res;
+        this.languages = [...this.tempLanguages];
+      })
+    } else {
+      this.languages = this.tempLanguages.filter(val =>
+        val.toLocaleLowerCase().includes(event.query.toLocaleLowerCase()));
+    }
+  }
+  //#endregion Autocomplete
+
+
+  //#region Employment History
+  displayEmpHistory() {
+    this.tempEmpHistomry = new EmploymentHistory();
+    this.empHistoryDialog = true;
+  }
+
+  addEmpHistory() {
+    if (this.tempEmpHistomry._id && this.tempEmpHistomry.myIndex >= 0)
+      this.data.employmentHistory[this.tempEmpHistomry.myIndex] = { ...this.tempEmpHistomry };
+    else
+      this.data.employmentHistory.push({ ...this.tempEmpHistomry });
+    this.tempEmpHistomry = new EmploymentHistory();
+    this.empHistoryDialog = false;
+  }
+
+  cancelEmpHistory() {
+    this.tempEmpHistomry = new EmploymentHistory();
+    this.empHistoryDialog = false;
+  }
+
+  deleteEmpHistory(i) {
+    this.data.employmentHistory = this.data.employmentHistory.splice(i, 1);
+  }
+
+  editEmpHistory(i) {
+    this.tempEmpHistomry = this.data.employmentHistory[i];
+    this.tempEmpHistomry.myIndex = i;
+    this.tempEmpHistomry.startDate = this.tempEmpHistomry.startDate ? new Date(this.tempEmpHistomry.startDate) : null;
+    this.tempEmpHistomry.endDate = this.tempEmpHistomry.endDate ? new Date(this.tempEmpHistomry.endDate) : null;
+    this.empHistoryDialog = true;
+  }
+  //#endregion Employment history
+
+
+  //#region Education section
+  displayEdu() {
+    this.tempEdu = new EducationDto();
+    this.eduDialog = true;
+  }
+
+  addEdu() {
+    if (this.tempEdu._id && this.tempEdu.myIndex >= 0)
+      this.data.education[this.tempEdu.myIndex] = { ...this.tempEdu };
+    else
+      this.data.education.push({ ...this.tempEdu });
+    this.tempEdu = new EducationDto();
+    this.eduDialog = false;
+  }
+
+  cancelEdu() {
+    this.tempEdu = new EducationDto();
+    this.eduDialog = false;
+  }
+
+  deleteEdu(i) {
+    this.data.education = this.data.education.splice(i, 1);
+  }
+
+  editEdu(i) {
+    this.tempEdu = this.data.education[i];
+    this.tempEdu.myIndex = i;
+    this.tempEdu.startDate = this.tempEdu.startDate ? new Date(this.tempEdu.startDate) : null;
+    this.tempEdu.endDate = this.tempEdu.endDate ? new Date(this.tempEdu.endDate) : null;
+    this.eduDialog = true;
+  }
+  //#endregion Education section
+
+
+  //#region Courses section
+  displayCourse() {
+    this.tempCourse = new CourseDto();
+    this.courseDialog = true;
+  }
+
+  addCourse() {
+    if (this.tempCourse._id && this.tempCourse.myIndex >= 0)
+      this.data.courses[this.tempCourse.myIndex] = { ...this.tempCourse };
+    else
+      this.data.courses.push({ ...this.tempCourse });
+    this.tempCourse = new CourseDto();
+    this.courseDialog = false;
+  }
+
+  cancelCourse() {
+    this.tempCourse = new CourseDto();
+    this.courseDialog = false;
+  }
+
+  deleteCourse(i) {
+    this.data.courses = this.data.courses.splice(i, 1);
+  }
+
+  editCourse(i) {
+    this.tempCourse = this.data.courses[i];
+    this.tempCourse.myIndex = i;
+    this.tempCourse.startDate = this.tempCourse.startDate ? new Date(this.tempCourse.startDate) : null;
+    this.tempCourse.endDate = this.tempCourse.endDate ? new Date(this.tempCourse.endDate) : null;
+    this.courseDialog = true;
+  }
+  //#endregion Courses section
+
+
+  //#region Projects section
+  displayProject() {
+    this.tempProject = new ProjectDto();
+    this.projectDialog = true;
+  }
+
+  addProject() {
+    if (this.tempProject._id && this.tempProject.myIndex >= 0)
+      this.data.projects[this.tempProject.myIndex] = { ...this.tempProject };
+    else
+      this.data.projects.push({ ...this.tempProject });
+    this.tempProject = new ProjectDto();
+    this.projectDialog = false;
+  }
+
+  cancelProject() {
+    this.tempProject = new ProjectDto();
+    this.projectDialog = false;
+  }
+
+  deleteProject(i) {
+    this.data.projects = this.data.projects.splice(i, 1);
+  }
+
+  editProject(i) {
+    this.tempProject = this.data.projects[i];
+    this.tempProject.myIndex = i;
+    this.tempProject.startDate = this.tempProject.startDate ? new Date(this.tempProject.startDate) : null;
+    this.tempProject.endDate = this.tempProject.endDate ? new Date(this.tempProject.endDate) : null;
+    this.projectDialog = true;
+  }
+  //#endregion Projects section
+
+
+  //#region References section
+  displayRef() {
+    this.tempRef = new ReferencesDto();
+    this.refDialog = true;
+  }
+
+  addRef() {
+    if (this.tempRef._id && this.tempRef.myIndex >= 0)
+      this.data.references[this.tempRef.myIndex] = { ...this.tempRef };
+    else
+      this.data.references.push({ ...this.tempRef });
+    this.tempRef = new ReferencesDto();
+    this.refDialog = false;
+  }
+
+  cancelRef() {
+    this.tempRef = new ReferencesDto();
+    this.refDialog = false;
+  }
+
+  deleteRef(i) {
+    this.data.references = this.data.references.splice(i, 1);
+  }
+
+  editRef(i) {
+    this.tempRef = this.data.references[i];
+    this.tempRef.myIndex = i;
+    this.refDialog = true;
+  }
+  //#endregion References section
+
+
+  //#region Links section
+  displayLink() {
+    this.tempLink = new LinkDto();
+    this.linkDialog = true;
+  }
+
+  addLink() {
+    if (this.tempLink._id && this.tempLink.myIndex >= 0)
+      this.data.links[this.tempLink.myIndex] = { ...this.tempLink };
+    else
+      this.data.links.push({ ...this.tempLink });
+    this.tempLink = new LinkDto();
+    this.linkDialog = false;
+  }
+
+  cancelLink() {
+    this.tempLink = new LinkDto();
+    this.linkDialog = false;
+  }
+
+  deleteLink(i) {
+    this.data.links = this.data.links.splice(i, 1);
+  }
+
+  editLink(i) {
+    this.tempLink = this.data.links[i];
+    this.tempLink.myIndex = i;
+    this.linkDialog = true;
+  }
+  //#endregion Links section
+
+
+  //#region Skills section
+  getSkillValue(val): number {
+    let _temp;
+    switch (val) {
+      case 'NoVice':
+        _temp = 20;
+        break;
+      case 'Beginner':
+        _temp = 40;
+        break;
+      case 'Skillful':
+        _temp = 60;
+        break;
+      case 'Experienced':
+        _temp = 80;
+        break;
+      case 'Expert':
+        _temp = 100;
+        break;
+      default: _temp = 0;
+    }
+    return _temp;
+  }
+
+  displaySkill() {
+    this.tempSkill = new SkillDto();
+    this.skillDialog = true;
+  }
+
+  addSkill() {
+    this.tempSkill.expertLevelValue = this.getSkillValue(this.tempSkill.expertLevel);
+    if (this.tempSkill._id && this.tempSkill.myIndex >= 0)
+      this.data.skills[this.tempSkill.myIndex] = { ...this.tempSkill };
+    else
+      this.data.skills.push({ ...this.tempSkill });
+    this.tempSkill = new SkillDto();
+    this.skillDialog = false;
+  }
+
+  cancelSkill() {
+    this.tempSkill = new SkillDto();
+    this.skillDialog = false;
+  }
+
+  deleteSkill(i) {
+    this.data.skills = this.data.skills.splice(i, 1);
+  }
+
+  editSkill(i) {
+    this.tempSkill = this.data.skills[i];
+    this.tempSkill.myIndex = i;
+    this.skillDialog = true;
+  }
+  //#endregion Skills section
+
+
+  //#region Languages section
+  getLangValue(val): number {
+    let _temp;
+    switch (val) {
+      case 'A1':
+        _temp = 10;
+        break;
+      case 'A2':
+        _temp = 20;
+        break;
+      case 'Working_Knowledge': case 'B1':
+        _temp = 30;
+        break;
+      case 'Good_Working_Knowledge':
+        _temp = 40;
+        break;
+      case 'Very_Good_Command': case 'B2':
+        _temp = 50;
+        break;
+      case 'C1': case 'Highly_Proficient':
+        _temp = 70;
+        break;
+      case 'C2':
+        _temp = 80;
+        break;
+      case 'Native_Speaker':
+        _temp = 100;
+        break;
+      default: _temp = 0;
+    }
+    return _temp;
+  }
+
+  displayLang() {
+    this.tempLang = new LanguageDto();
+    this.langDialog = true;
+  }
+
+  addLang() {
+    this.tempLang.expertValue = this.getLangValue(this.tempLang.level);
+    if (this.tempLang._id && this.tempLang.myIndex >= 0)
+      this.data.languages[this.tempLang.myIndex] = { ...this.tempLang };
+    else
+      this.data.languages.push({ ...this.tempLang });
+    this.tempLang = new LanguageDto();
+    this.langDialog = false;
+  }
+
+  cancelLang() {
+    this.tempLang = new LanguageDto();
+    this.langDialog = false;
+  }
+
+  deleteLang(i) {
+    this.data.languages = this.data.languages.splice(i, 1);
+  }
+
+  editLang(i) {
+    this.tempLang = this.data.languages[i];
+    this.tempLang.myIndex = i;
+    this.langDialog = true;
+  }
+  //#endregion Languages section
 
 
 }

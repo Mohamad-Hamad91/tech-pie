@@ -12,7 +12,6 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, {
     logger: new MyLogger(),
-    // logger: false
   });
 
 
@@ -20,20 +19,8 @@ async function bootstrap() {
   app.use(helmet());
 
 
-  if (process.env.NODE_ENV !== 'production') {
-    // const options = {
-    //   "origin": "*",
-    //   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    //   "preflightContinue": false,
-    //   "optionsSuccessStatus": 204,
-    //   // "credentials": true,
-    //   'Content-Type': 'text/event-stream',
-    //   'Connection': 'keep-alive',
-    //   'Cache-Control': 'no-cache',
-    //   'X-Accel-Buffering': 'no'
-    // }
+  if (process.env.NODE_ENV !== 'production')
     app.enableCors();
-  }
 
 
   app.use(compression());
@@ -51,7 +38,8 @@ async function bootstrap() {
   const myLogger = app.get(MyLogger);
   // app.useLogger(myLogger);
   app.useGlobalInterceptors(app.get(ErrorsInterceptor));
-  app.useGlobalPipes(new ValidationPipe({ transform: true }),);
+
+  // app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
 
   //#region Swagger 

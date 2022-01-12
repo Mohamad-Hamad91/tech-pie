@@ -1,16 +1,19 @@
+import { Type } from 'class-transformer';
 import { IsDate, IsNotEmpty } from 'class-validator';
 
 export class ProjectDto {
   @IsNotEmpty()
-  title: string = '';
+  title: string;
 
   link?: string;
 
-  description: string = '';
+  description: string;
 
   @IsDate()
-  startDate: Date = new Date();
+  @Type(() => Date)
+  startDate: Date;
 
   @IsDate()
-  endDate: Date = new Date();
+  @Type(() => Date)
+  endDate: Date;
 }

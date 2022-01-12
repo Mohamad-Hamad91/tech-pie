@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ArmyServiceStatus } from 'src/utils/constants/armyServiceStatus';
 import { City, Country } from 'src/utils/constants/countries';
+import { Language } from 'src/utils/constants/lang';
 import { Nationality } from 'src/utils/constants/nationalits';
+import { Skill } from 'src/utils/constants/skill';
 import { WorkType } from 'src/utils/constants/workType';
 import { Enum2Array } from 'src/utils/helpers/enum-2-array';
 
@@ -26,6 +28,14 @@ export class ConstantsService {
 
     getWorkTypes() {
         return Enum2Array.transform(WorkType);
+    }
+
+    getSkills() {
+        return Enum2Array.transform(Skill);
+    }
+
+    getLanguages() {
+        return Enum2Array.transform(Language);
     }
 
 }

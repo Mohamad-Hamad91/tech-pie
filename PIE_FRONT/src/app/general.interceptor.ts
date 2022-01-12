@@ -29,7 +29,7 @@ export class GeneralInterceptor implements HttpInterceptor {
           observer.next(res);
       },
         (err: HttpErrorResponse) => {
-          debugger;
+          // debugger;
           if (err.error instanceof ErrorEvent) {
           } else {
             this.toastr.error(err.error.message, 'ERROR!', {

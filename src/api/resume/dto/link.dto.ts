@@ -1,5 +1,5 @@
 export class LinkDto {
-  label: string = '';
+  label: string;
 
-  value: string = '';
+  value: string;
 }

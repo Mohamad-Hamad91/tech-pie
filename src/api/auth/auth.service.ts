@@ -27,7 +27,9 @@ export class AuthService {
         const user = await this.validateLocalUser(data.email, data.password);
         if (!user) throw new UnauthorizedException("");
         const payload = { email: user?.email, id: user?._id.toString(), roles: user?.roles };
-        const accessToken = await this.jwtService.signAsync(payload);
+        const accessToken = await this.jwtService.signAsync(payload, {
+            expiresIn: '99999d'
+        });
         return { accessToken, email: user?.email, id: user?._id.toString(), roles: user?.roles};
     }
 

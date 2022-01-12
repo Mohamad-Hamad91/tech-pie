@@ -11,7 +11,11 @@
         <!--------------- Main header starts -------------->
         <div class="row resume-header">
             <div class="col-4 emp-photo-wrapper">
-                <img class="emp-photo" src="assets/imgs/resume/resume-def-profile.svg" alt="profile photo" width="150">
+                <img *ngIf="!fromFrontAvatar" class="emp-photo" [src]="data.photo? data.photo.url: 'assets/imgs/resume/resume-def-profile.svg'"
+                    alt="profile photo" width="150">
+                    <img *ngIf="fromFrontAvatar" src="{{imageSrc}}" alt="avatar" width="150">
+                <p-fileUpload mode="advanced" name="demo" accept="image/*" maxFileSize="1000000" customUpload="true"
+                    (uploadHandler)="onAvatarUpload($event)" [auto]="true" chooseLabel="Change Photo" chooseIcon=" pi pi-upload"></p-fileUpload>
             </div>
             <div class="col-6 col-md-4 main-info">
                 <div class="name-wrapper">
@@ -43,138 +47,110 @@
                     <span> Available
                         <p-checkbox name="available" binary="true" [(ngModel)]="data.available"></p-checkbox>
                     </span>
-                    <h6>Preferrable Work Type: 
+                    <h6>Preferrable Work Type:
                         <p-autoComplete [(ngModel)]="data.workType" [suggestions]="workType"
-                        (completeMethod)="searchWorkType($event)" [dropdown]="true" Placeholder="Work Type"
-                        [multiple]="true" class="just-white"></p-autoComplete>
+                            (completeMethod)="searchWorkType($event)" [dropdown]="true" Placeholder="Work Type"
+                            [multiple]="true" class="just-white" [inputStyle]="{'background': '#fff'}"></p-autoComplete>
                     </h6>
-                    <h6>Minimum Salary: 1SYP for HOUR</h6>
+                    <h6>Minimum Salary:
+                        <span style="width: 50px;">
+                            <p-inputNumber [(ngModel)]="data.expectedPriceMin" [showButtons]="true"
+                                buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.25"
+                                decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
+                                incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal">
+                            </p-inputNumber>
+                        </span>
+                        <span>
+                            <p-dropdown [options]="currency" [(ngModel)]="data.expectedPriceCurrency"
+                                optionLabel="value" optionValue="value"
+                                [panelStyle]="{'background': '#fff', 'margin-top': '-3px'}"
+                                [style]="{'background': '#fff', 'width': '25%'}">
+                            </p-dropdown>
+                        </span>
+                        per
+                        <span>
+                            <p-dropdown [options]="priceUnit" [(ngModel)]="data.expectedPriceUnit" optionLabel="value"
+                                optionValue="value" [panelStyle]="{'background': '#fff', 'margin-top': '-3px'}"
+                                [style]="{'background': '#fff', 'width': '25%'}">
+                            </p-dropdown>
+                        </span>
+                    </h6>
                 </div>
                 <hr>
                 <div class="resume-experience">
-                    <h3>Employment History</h3>
-                    <span class="total-experience">Total: 4 years</span>
-                    <div>
-                        <h4 class="employment-header">jobTitle (Employer) city</h4>
-                        <div class="employment-date">startDate-endDate</div>
-                        <div class="responsibilities">Boy favourable day can introduced sentiments entreaties. Noisier
-                            carried of in warrant because. So mr plate seems cause chief widen first. Two differed
-                            husbands
-                            met screened his. Bed was form wife out ask draw. Wholly coming at we no enable. Offending
-                            sir
-                            delivered questions now new met. Acceptance she interested new boisterous day discretion
-                            celebrated.</div>
+                    <h3>Employment History
+                        <button (click)="displayEmpHistory()" class="btn btn-outline-secondary">Add</button>
+                    </h3>
+                    <span class="total-experience">Total Experience:
+                        <p-inputNumber [(ngModel)]="data.totalExperience" [showButtons]="true" buttonLayout="horizontal"
+                            inputId="horizontal" spinnerMode="horizontal" [step]="0.25"
+                            decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
+                            incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal">
+                        </p-inputNumber> years
+                    </span>
+                    <div *ngFor="let emph of data.employmentHistory; index as i">
+                        <h4 class="employment-header">{{emph.jobTitle}} ({{emph.Employer}}) {{emph.city}}
+                            <button (click)="editEmpHistory(i)" class="btn btn-outline-secondary">Edit</button>
+                            <button (click)="deleteEmpHistory(i)" class="btn btn-outline-danger">Delete</button>
+                        </h4>
+                        <div class="employment-date">{{emph.startDate| date}} - {{emph.endDate | date}}</div>
+                        <div class="responsibilities">{{emph.description}}</div>
                     </div>
-                    <div>
-                        <h4 class="employment-header">jobTitle (Employer) city</h4>
-                        <div class="employment-date">startDate-endDate</div>
-                        <div class="responsibilities">Boy favourable day can introduced sentiments entreaties. Noisier
-                            carried of in warrant because. So mr plate seems cause chief widen first. Two differed
-                            husbands
-                            met screened his. Bed was form wife out ask draw. Wholly coming at we no enable. Offending
-                            sir
-                            delivered questions now new met. Acceptance she interested new boisterous day discretion
-                            celebrated.</div>
-                    </div>
-                    <div>
-                        <h4 class="employment-header">jobTitle (Employer) city</h4>
-                        <div class="employment-date">startDate-endDate</div>
-                        <div class="responsibilities">Boy favourable day can introduced sentiments entreaties. Noisier
-                            carried of in warrant because. So mr plate seems cause chief widen first. Two differed
-                            husbands
-                            met screened his. Bed was form wife out ask draw. Wholly coming at we no enable. Offending
-                            sir
-                            delivered questions now new met. Acceptance she interested new boisterous day discretion
-                            celebrated.</div>
-                    </div>
-
                 </div>
                 <hr>
                 <div class="resume-edu">
-                    <h3>Education</h3>
-                    <div>
-                        <h4 class="employment-header">Degree, school, city</h4>
-                        <div class="employment-date">startDate - endDate</div>
-                        <p>description: answer oppose to ye months no esteem. Branched is on an ecstatic directly it.
-                            Put
-                            off continue you
-                            denoting returned juvenile. Looked </p>
-                    </div>
-                    <div>
-                        <h4 class="employment-header">Degree, school, city</h4>
-                        <div class="employment-date">startDate - endDate</div>
-                        <p>description: answer oppose to ye months no esteem. Branched is on an ecstatic directly it.
-                            Put
-                            off continue you
-                            denoting returned juvenile. Looked </p>
+                    <h3>Education
+                        <button (click)="displayEdu()" class="btn btn-outline-secondary">Add</button>
+                    </h3>
+                    <div *ngFor="let edu of data.education; index as i">
+                        <h4 class="employment-header">{{edu.Degree}}, {{edu.school}}, {{edu.city}}
+                            <button (click)="editEdu(i)" class="btn btn-outline-secondary">Edit</button>
+                            <button (click)="deleteEdu(i)" class="btn btn-outline-danger">Delete</button>
+                        </h4>
+                        <div class="employment-date">{{edu.startDate | date}} - {{edu.endDate | date}}</div>
+                        <p>{{edu.description}}</p>
                     </div>
                 </div>
                 <hr>
                 <div class="resume-courses">
-                    <h3>Licenses & certifications</h3>
-                    <div>
-                        <h4 class="employment-header"><a href="#"> name (institution)</a></h4>
-                        <div class="employment-date">startDate-endDate</div>
-                        <div class="responsibilities">description: Boy favourable day can introduced sentiments
-                            entreaties. Noisier
-                            carried of in warrant because. So mr plate seems cause chief widen first. Two differed
-                            husbands
-                            met screened his. Bed was form wife out ask draw. Wholly coming at we no enable. Offending
-                            sir
-                            delivered questions now new met. Acceptance she interested new boisterous day discretion
-                            celebrated.</div>
-                    </div>
-                    <div>
-                        <h4 class="employment-header"><a href="#"> name (institution)</a></h4>
-                        <div class="employment-date">startDate-endDate</div>
-                        <div class="responsibilities">description: Boy favourable day can introduced sentiments
-                            entreaties. Noisier
-                            carried of in warrant because. So mr plate seems cause chief widen first. Two differed
-                            husbands
-                            met screened his. Bed was form wife out ask draw. Wholly coming at we no enable. Offending
-                            sir
-                            delivered questions now new met. Acceptance she interested new boisterous day discretion
-                            celebrated.</div>
+                    <h3>Licenses & certifications
+                        <button (click)="displayCourse()" class="btn btn-outline-secondary">Add</button>
+                    </h3>
+                    <div *ngFor="let c of data.courses; index as i">
+                        <h4 class="employment-header">
+                            <a href="{{c.link}}" target="_blank"> {{c.name}} ({{c.institution}})</a>
+                            <button (click)="editCourse(i)" class="btn btn-outline-secondary">Edit</button>
+                            <button (click)="deleteCourse(i)" class="btn btn-outline-danger">Delete</button>
+                        </h4>
+                        <div class="employment-date">{{c.startDate | date}} - {{c.endDate | date}}</div>
+                        <div class="responsibilities">{{c.description}}</div>
                     </div>
                 </div>
                 <hr>
                 <div class="resume-projects">
-                    <h3>Projects</h3>
-                    <div>
-                        <h4 class="employment-header"><a href="#"> title</a></h4>
-                        <div class="employment-date">startDate-endDate</div>
-                        <div class="responsibilities">description: Boy favourable day can introduced sentiments
-                            entreaties. Noisier
-                            carried of in warrant because. So mr plate seems cause chief widen first. Two differed
-                            husbands
-                            met screened his. Bed was form wife out ask draw. Wholly coming at we no enable. Offending
-                            sir
-                            delivered questions now new met. Acceptance she interested new boisterous day discretion
-                            celebrated.</div>
-                    </div>
-                    <div>
-                        <h4 class="employment-header"><a href="#"> title </a></h4>
-                        <div class="employment-date">startDate-endDate</div>
-                        <div class="responsibilities">description: Boy favourable day can introduced sentiments
-                            entreaties. Noisier
-                            carried of in warrant because. So mr plate seems cause chief widen first. Two differed
-                            husbands
-                            met screened his. Bed was form wife out ask draw. Wholly coming at we no enable. Offending
-                            sir
-                            delivered questions now new met. Acceptance she interested new boisterous day discretion
-                            celebrated.</div>
+                    <h3>Projects
+                        <button (click)="displayProject()" class="btn btn-outline-secondary">Add</button>
+                    </h3>
+                    <div *ngFor="let p of data.projects; index as i">
+                        <h4 class="employment-header"><a href="{{p.link}}" target="_blank"> {{p.title}}</a>
+                            <button (click)="editProject(i)" class="btn btn-outline-secondary">Edit</button>
+                            <button (click)="deleteProject(i)" class="btn btn-outline-danger">Delete</button>
+                        </h4>
+                        <div class="employment-date">{{p.startDate | date}} - {{p.endDate | date}}</div>
+                        <div class="responsibilities">{{p.description}}</div>
                     </div>
                 </div>
                 <hr>
                 <div class="resume-references">
-                    <h3>References</h3>
-                    <div>
-                        <h4 class="employment-header">name (company)</h4>
-                        <div class="employment-date">mail@host.domain - +963-123454657</div>
-                    </div>
-                    <div>
-                        <h4 class="employment-header">name (company)</h4>
-                        <div class="employment-date">mail@host.domain - +963-123454657</div>
+                    <h3>References
+                        <button (click)="displayRef()" class="btn btn-outline-secondary">Add</button>
+                    </h3>
+                    <div *ngFor="let ref of data.references; index as i">
+                        <h4 class="employment-header">{{ref.name}} ({{ref.company}})
+                            <button (click)="editRef(i)" class="btn btn-outline-secondary">Edit</button>
+                            <button (click)="deleteRef(i)" class="btn btn-outline-danger">Delete</button>
+                        </h4>
+                        <div class="employment-date">{{ref.email}} {{ref.phone}}</div>
                     </div>
                 </div>
             </div>
@@ -227,61 +203,53 @@
 
                 <hr>
                 <div class="resume-links">
-                    <h4>Links</h4>
-                    <a href="#">Github</a>
-                    <br>
-                    <a href="#">Personal Website</a>
-                    <br>
-                    <a href="#">Linkedin</a>
+                    <h4>Links
+                        <button (click)="displayLink()" class="btn btn-outline-secondary">Add</button>
+                    </h4>
+                    <div *ngFor="let link of data.links; index as i">
+                        <a href="{{link.value}}">{{link.label}}</a>
+                        <button (click)="editLink(i)" class="btn btn-outline-secondary">Edit</button>
+                        <button (click)="deleteLink(i)" class="btn btn-outline-danger">Delete</button>
+                    </div>
                 </div>
                 <hr>
                 <div class="resume-skills">
-                    <h4>Skils</h4>
-                    <label for="">HTML, CSS</label>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" style="width: 90%"></div>
-                    </div>
-                    <label for="">JavaScript</label>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" style="width: 80%"></div>
-                    </div>
-                    <label for="">TypeScript</label>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" style="width: 80%"></div>
-                    </div>
-                    <label for="">NodeJs</label>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" style="width: 80%"></div>
-                    </div>
-                    <label for="">NestJs</label>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" style="width: 75%"></div>
-                    </div>
-                    <label for="">MongoDb</label>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" style="width: 70%"></div>
+                    <h4>Skills
+                        <button (click)="displaySkill()" class="btn btn-outline-secondary">Add</button>
+                    </h4>
+                    <div *ngFor="let skill of data.skills; index as i">
+                        <label>{{skill.value}}
+                            <button (click)="editSkill(i)" class="btn btn-outline-secondary">Edit</button>
+                            <button (click)="deleteSkill(i)" class="btn btn-outline-danger">Delete</button>
+                        </label>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped" style="width: {{skill.expertLevelValue}}%">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr>
                 <div class="resume-langs">
-                    <h4>Languages</h4>
-                    <label for="">Arabic</label>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" style="width: 100%"></div>
-                    </div>
-                    <label for="">English</label>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" style="width: 75%"></div>
-                    </div>
-                    <label for="">French</label>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" style="width: 5%"></div>
+                    <h4>Languages
+                        <button (click)="displayLang()" class="btn btn-outline-secondary">Add</button>
+                    </h4>
+                    <div *ngFor="let lang of data.languages; index as i">
+                        <label for="">{{lang.value}}
+                            <button (click)="editLang(i)" class="btn btn-outline-secondary">Edit</button>
+                            <button (click)="deleteLang(i)" class="btn btn-outline-danger">Delete</button>
+                        </label>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped" style="width: {{lang.expertValue}}%"></div>
+                        </div>
                     </div>
                 </div>
                 <hr />
                 <div class="resume-hobbies">
                     <h3>Hobbies</h3>
-                    <span>Reading, Teaching</span>
+                    <span>
+                        <input type="text" name="hobbies" class="resume-input-side" [(ngModel)]="data.hobbies"
+                            placeholder="Hobbies">
+                    </span>
                 </div>
             </div>
             <!--------------- Side content ends -------------->
@@ -292,3 +260,275 @@
 
 
 <app-footer></app-footer>
+
+<p-dialog header="Employee History" [(visible)]="empHistoryDialog" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <div class="input-group mb-3">
+        <label for="jobTitle">Job Title</label>
+        <input pInputText type="text" name="address" [(ngModel)]="tempEmpHistomry.jobTitle"
+            placeholder="Job Title/ Position" style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="employer">Employer</label>
+        <input pInputText type="text" name="address" [(ngModel)]="tempEmpHistomry.Employer" placeholder="Employer"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="startDate">Start Date</label>
+        <span style="width: 100%;">
+            <p-calendar [(ngModel)]="tempEmpHistomry.startDate" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="1950:2030" inputId="startDate" [showIcon]="true" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-calendar>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <label for="endDate">End Date</label>
+        <span style="width: 100%;">
+            <p-calendar [(ngModel)]="tempEmpHistomry.endDate" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="1950:2030" inputId="endDate" [showIcon]="true" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-calendar>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <label for="city">City</label>
+        <span style="width: 100%;">
+            <p-autoComplete [(ngModel)]="tempEmpHistomry.city" [suggestions]="cities"
+                (completeMethod)="searchCities($event)" [dropdown]="true" Placeholder="City" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-autoComplete>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <textarea pInputTextarea autoResize="autoResize" [(ngModel)]="tempEmpHistomry.description"
+            style="width: 100%;"></textarea>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelEmpHistory()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="addEmpHistory()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Education" [(visible)]="eduDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <div class="input-group mb-3">
+        <label for="school">School</label>
+        <input pInputText type="text" name="school" [(ngModel)]="tempEdu.school" placeholder="School"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="Degree">Degree</label>
+        <input pInputText type="text" name="Degree" [(ngModel)]="tempEdu.Degree" placeholder="Degree"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="startDate">Start Date</label>
+        <span style="width: 100%;">
+            <p-calendar [(ngModel)]="tempEdu.startDate" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="1950:2030" inputId="startDate" [showIcon]="true" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-calendar>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <label for="endDate">End Date</label>
+        <span style="width: 100%;">
+            <p-calendar [(ngModel)]="tempEdu.endDate" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="1950:2030" inputId="endDate" [showIcon]="true" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-calendar>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <label for="city">City</label>
+        <span style="width: 100%;">
+            <p-autoComplete [(ngModel)]="tempEdu.city" [suggestions]="cities" (completeMethod)="searchCities($event)"
+                [dropdown]="true" Placeholder="City" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-autoComplete>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <textarea pInputTextarea rows="5" autoResize="autoResize" [(ngModel)]="tempEdu.description"
+            style="width: 100%;"></textarea>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelEdu()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="addEdu()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Licenses & certifications" [(visible)]="courseDialog" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <div class="input-group mb-3">
+        <label for="name">Name/ Title</label>
+        <input pInputText type="text" name="name" [(ngModel)]="tempCourse.name" placeholder="Name/ Title"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="institution">Institution</label>
+        <input pInputText type="text" name="institution" [(ngModel)]="tempCourse.institution" placeholder="Institution"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="link">Link</label>
+        <input pInputText type="text" name="link" [(ngModel)]="tempCourse.link" placeholder="Link" style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="startDate">Start Date</label>
+        <span style="width: 100%;">
+            <p-calendar [(ngModel)]="tempCourse.startDate" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="1950:2030" inputId="startDate" [showIcon]="true" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-calendar>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <label for="endDate">End Date</label>
+        <span style="width: 100%;">
+            <p-calendar [(ngModel)]="tempCourse.endDate" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="1950:2030" inputId="endDate" [showIcon]="true" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-calendar>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <textarea pInputTextarea rows="5" autoResize="autoResize" [(ngModel)]="tempCourse.description"
+            style="width: 100%;"></textarea>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelCourse()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="addCourse()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Project" [(visible)]="projectDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <div class="input-group mb-3">
+        <label for="title">Name/ Title</label>
+        <input pInputText type="text" name="title" [(ngModel)]="tempProject.title" placeholder="Name/ Title"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="link">Link</label>
+        <input pInputText type="text" name="link" [(ngModel)]="tempProject.link" placeholder="Link"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="startDate">Start Date</label>
+        <span style="width: 100%;">
+            <p-calendar [(ngModel)]="tempProject.startDate" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="1950:2030" inputId="startDate" [showIcon]="true" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-calendar>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <label for="endDate">End Date</label>
+        <span style="width: 100%;">
+            <p-calendar [(ngModel)]="tempProject.endDate" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="1950:2030" inputId="endDate" [showIcon]="true" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-calendar>
+        </span>
+    </div>
+    <div class="input-group mb-3">
+        <textarea pInputTextarea rows="5" autoResize="autoResize" [(ngModel)]="tempProject.description"
+            style="width: 100%;"></textarea>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelProject()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="addProject()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Reference" [(visible)]="refDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <div class="input-group mb-3">
+        <label for="name">Name</label>
+        <input pInputText type="text" name="name" [(ngModel)]="tempRef.name" placeholder="Name" style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="company">Company</label>
+        <input pInputText type="text" name="company" [(ngModel)]="tempRef.company" placeholder="company"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="email">E-mail</label>
+        <input pInputText type="email" name="email" [(ngModel)]="tempRef.email" placeholder="E-mail"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="phone">Phone</label>
+        <input pInputText type="tel" name="phone" [(ngModel)]="tempRef.phone" placeholder="Phone" style="width: 100%;">
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelRef()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="addRef()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Link" [(visible)]="linkDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <div class="input-group mb-3">
+        <label for="label">Label</label>
+        <input pInputText type="text" name="label" [(ngModel)]="tempLink.label" placeholder="Label"
+            style="width: 100%;">
+    </div>
+    <div class="input-group mb-3">
+        <label for="value">Value</label>
+        <input pInputText type="text" name="value" [(ngModel)]="tempLink.value" placeholder="Value"
+            style="width: 100%;">
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelLink()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="addLink()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Skill" [(visible)]="skillDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <div class="input-group mb-3">
+        <label for="skill">Skill</label>
+        <span style="width: 100%;">
+            <p-autoComplete [(ngModel)]="tempSkill.value" [suggestions]="skills" (completeMethod)="searchSkills($event)"
+                [dropdown]="true" Placeholder="Skill" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-autoComplete>
+        </span>
+    </div>
+    <p-dropdown [options]="expertLevels" [(ngModel)]="tempSkill.expertLevel" optionLabel="value" optionValue="value"
+        [panelStyle]="{'background': '#fff', 'margin-top': '-3px'}" [style]="{'background': '#fff', 'width': '25%'}"
+        appendTo="body">
+    </p-dropdown>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelSkill()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="addSkill()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Language" [(visible)]="langDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <div class="input-group mb-3">
+        <label for="lang">Language</label>
+        <span style="width: 100%;">
+            <p-autoComplete [(ngModel)]="tempLang.value" [suggestions]="languages"
+                (completeMethod)="searchLangs($event)" [dropdown]="true" Placeholder="Language" appendTo="body"
+                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+            </p-autoComplete>
+        </span>
+    </div>
+    <p-dropdown [options]="langLevels" [(ngModel)]="tempLang.level" optionLabel="label" optionValue="value"
+        [panelStyle]="{'background': '#fff', 'margin-top': '-3px'}" [style]="{'background': '#fff', 'width': '25%'}"
+        appendTo="body">
+    </p-dropdown>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelLang()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="addLang()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

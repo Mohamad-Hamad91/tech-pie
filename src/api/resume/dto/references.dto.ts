@@ -2,13 +2,13 @@ import { IsEmail, IsNotEmpty, IsPhoneNumber } from 'class-validator';
 
 export class ReferencesDto {
   @IsNotEmpty()
-  name: string = '';
+  name: string;
 
   @IsPhoneNumber()
-  phone: string = '';
+  phone: string;
 
   @IsEmail()
-  email: string = '';
+  email: string;
 
-  company: string = '';
+  company: string;
 }

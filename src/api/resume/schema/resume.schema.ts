@@ -80,6 +80,9 @@ export class Resume {
   expectedPriceCurrency?: string;
 
   @Prop()
+  totalExperience?: number;
+
+  @Prop()
   summary: string;
 
   @Prop()

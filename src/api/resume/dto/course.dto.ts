@@ -1,18 +1,21 @@
+import { Type } from 'class-transformer';
 import { IsDate, IsNotEmpty } from 'class-validator';
 
 export class CourseDto {
   @IsNotEmpty()
-  name: string = '';
+  name: string;
 
-  institution: string = '';
-
-  @IsDate()
-  startDate: Date = new Date();
+  institution: string;
 
   @IsDate()
-  endDate: Date = new Date();
+  @Type(() => Date)
+  startDate: Date;
 
-  link: string = '';
+  @IsDate()
+  @Type(() => Date)
+  endDate: Date;
 
-  description: string = '';
+  link: string;
+
+  description: string;
 }

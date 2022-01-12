@@ -1,10 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 export type FileDocument = MyFile & Document;
 
 @Schema()
 export class MyFile {
+
+  _id: ObjectId;
 
   @Prop()
  filename: string;

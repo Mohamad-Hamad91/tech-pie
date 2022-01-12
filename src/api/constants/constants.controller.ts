@@ -29,4 +29,14 @@ export class ConstantsController {
         return this._constService.getWorkTypes();
     }
 
+    @Get('skill')
+    getSkills() {
+        return this._constService.getSkills();
+    }
+
+    @Get('language')
+    getLangs() {
+        return this._constService.getLanguages();
+    }
+
 }

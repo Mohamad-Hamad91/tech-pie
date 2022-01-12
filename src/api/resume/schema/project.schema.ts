@@ -12,6 +12,9 @@ export class Project {
   description: string = '';
 
   @Prop()
+  link?: string;
+
+  @Prop()
   startDate: Date = new Date();
 
   @Prop()

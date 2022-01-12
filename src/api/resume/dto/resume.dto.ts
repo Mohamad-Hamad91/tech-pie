@@ -1,22 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
-  Allow,
-  IsAlpha,
   IsArray,
   IsBoolean,
   IsDate,
   IsEmail,
-  IsHexadecimal,
   IsIn,
   IsNotEmpty,
+  IsNumber,
+  IsOptional,
   IsPhoneNumber,
-  Length,
   MinLength,
-  ValidateIf,
   ValidateNested,
 } from 'class-validator';
-import { type } from 'os';
 import { ArmyServiceStatus } from 'src/utils/constants/armyServiceStatus';
 import { City, Country } from 'src/utils/constants/countries';
 import { Nationality } from 'src/utils/constants/nationalits';
@@ -32,6 +28,8 @@ import { ReferencesDto } from './references.dto';
 import { UserLangDto } from './user-lang.dto';
 import { UserSkillDto } from './user-skill.dto';
 
+
+
 export class ResumeDto {
 
   _id?: string;
@@ -39,114 +37,155 @@ export class ResumeDto {
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty()
-  email: string;
+  @IsOptional()
+  email?: string;
 
   @IsNotEmpty()
   @MinLength(3)
   @ApiProperty()
-  name: string;
+  @IsOptional()
+  name?: string;
 
   @ApiProperty()
-  photo: string;
+  @IsOptional()
+  photo?: string;
 
   @IsPhoneNumber()
   @ApiProperty()
-  phone: string;
+  @IsOptional()
+  phone?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsIn(Enum2Array.transform(City))
-  city: City;
+  city?: City;
 
   @ApiProperty()
-  address: string;
+  @IsOptional()
+  address?: string;
 
   @ApiProperty({ type: () => ['Male', 'Female'] })
+  @IsOptional()
   gender?: 'Male' | 'Female';
 
   // @IsDate()
+  @IsOptional()
   @ApiProperty()
+  @Type(() => Date)
   birthDate?: Date;
 
   @ApiProperty()
+  @IsOptional()
   @IsIn(Enum2Array.transform(Nationality))
-  nationality: Nationality = Nationality.Syrian;
+  nationality?: Nationality = Nationality.Syrian;
 
   @ApiProperty()
+  @IsOptional()
   @Type(() => Boolean)
   @IsBoolean()
-  available: boolean = true;
+  available?: boolean = true;
 
   @ApiProperty()
+  @IsOptional()
   @Type(() => Date)
   @IsDate()
-  availableAt: Date = new Date();
+  availableAt?: Date = new Date();
 
   @ApiProperty()
+  @IsOptional()
   // @IsIn(Enum2Array.transform(WorkType))
   // @ValidateNested({ each: true })
   @IsArray()
-  workType: WorkType[];
+  workType?: WorkType[];
 
   @ApiProperty()
+  @IsOptional()
   @IsIn(Enum2Array.transform(Shift))
-  shift: Shift = Shift.UNSPECIFIED;
+  shift?: Shift = Shift.UNSPECIFIED;
 
   @ApiProperty()
+  @IsOptional()
   title?: string;
 
+  @ApiProperty()
+  @IsNumber()
+  @IsOptional()
+  @Type(() => Number)
   expectedPriceMin?: number;
 
+  @ApiProperty()
+  @IsOptional()
   expectedPriceUnit?: string;
 
+  @ApiProperty()
+  @IsOptional()
   expectedPriceCurrency?: string;
 
   @ApiProperty()
-  summary: string;
+  @IsNumber()
+  @IsOptional()
+  @Type(() => Number)
+  totalExperience?: number;
 
   @ApiProperty()
-  hobbies: string;
+  @IsOptional()
+  summary?: string;
 
   @ApiProperty()
+  @IsOptional()
+  hobbies?: string;
+
+  @ApiProperty()
+  @IsOptional()
   @IsIn(Enum2Array.transform(ArmyServiceStatus))
-  armyServiceStatus: ArmyServiceStatus;
+  armyServiceStatus?: ArmyServiceStatus;
 
   @ApiProperty({ type: () => [EmploymentHistoryDto] })
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => EmploymentHistoryDto)
-  employmentHistory: EmploymentHistoryDto[];
+  employmentHistory?: EmploymentHistoryDto[];
 
   @ApiProperty()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => CourseDto)
-  courses: CourseDto[];
+  courses?: CourseDto[];
 
   @ApiProperty()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => EducationDto)
-  education: EducationDto[];
+  education?: EducationDto[];
 
   @ApiProperty()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => LinkDto)
-  links: LinkDto[];
+  links?: LinkDto[];
 
   @ApiProperty()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => ProjectDto)
-  projects: ProjectDto[];
+  projects?: ProjectDto[];
 
   @ApiProperty()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => ReferencesDto)
-  references: ReferencesDto[];
+  references?: ReferencesDto[];
 
   @ApiProperty()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => UserLangDto)
-  languages: UserLangDto[];
+  languages?: UserLangDto[];
 
   @ApiProperty()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => UserSkillDto)
-  skills: UserSkillDto[];
+  skills?: UserSkillDto[];
+
 }

@@ -52,7 +52,7 @@
   text-shadow: #7f8d73 1px 1px 2px;
   h2,
   h4 {
-    font-family: "Ropa Sans", "Lato", "Courier New", Courier, monospace;
+    font-family: 'Ropa Sans', 'Lato', 'Courier New', Courier, monospace;
     font-weight: 700;
   }
 }
@@ -72,7 +72,7 @@
   text-align: justify;
   padding: 0px 5%;
   h3 {
-    font-family: "Aldrich", "Lato", "Courier New", Courier, monospace;
+    font-family: 'Aldrich', 'Lato', 'Courier New', Courier, monospace;
     font-weight: 700;
     color: #e75113;
     padding-top: 4%;
@@ -108,7 +108,7 @@
   inline-size: 25%;
   overflow-wrap: break-word;
   h4 {
-    font-family: "Aldrich", "Lato", "Courier New", Courier, monospace;
+    font-family: 'Aldrich', 'Lato', 'Courier New', Courier, monospace;
   }
   div {
     padding: 1%;
@@ -165,7 +165,7 @@
   width: 100%;
   font-size: 16px;
   height: 48px;
-  font-family: "Ropa Sans", "Lato", "Courier New", Courier, monospace;
+  font-family: 'Ropa Sans', 'Lato', 'Courier New', Courier, monospace;
   font-size: larger;
   font-weight: 500;
   text-align: center;
@@ -187,23 +187,44 @@
 
 :host ::ng-deep .p-autocomplete,
 :host ::ng-deep .p-calendar {
-  width: 80%;
+  width: 100%;
   input {
     background-color: #383838;
     color: #f2f5fa;
+    border: none;
+  }
+  button {
+    background-color: #383838;
     border: none;
   }
 }
 
 :host::ng-deep.p-dropdown {
   background-color: #383838;
-  height: 4vh;
+  width: 100%;
+  border: none;
   .p-dropdown-label {
     height: 100% !important;
-    background-color: #383838;
-    color: #f2f5fa;
+    // background-color: #383838;
+    // color: #acb1bb;
+    text-shadow: #ffffff 1px 1px .1px;
     border: none;
     padding: 2px;
     padding-left: 15px;
   }
+}
+
+:host::ng-deep.p-inputnumber {
+  input {
+    width: 100px;
+  }
+}
+
+:host::ng-deep.p-fileupload-content {
+  display: none;
+}
+
+:host::ng-deep.p-fileupload-buttonbar {
+  border: none;
+  background: none;
 }

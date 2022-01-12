@@ -27,4 +27,12 @@ export class ConstantsService {
     return this._http.get<any>(this._URL + 'work-type');
   }
 
+  getSkills() {
+    return this._http.get<any>(this._URL + 'skill');
+  }
+
+  getLanguages() {
+    return this._http.get<any>(this._URL + 'language');
+  }
+
 }
