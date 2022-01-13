@@ -4,7 +4,7 @@ import { ViewComponent } from './view/view.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'v', pathMatch: 'full' },
-    {path: 'v', component: ViewComponent}
+    {path: 'v/:id', component: ViewComponent}
 ];
 
 @NgModule({

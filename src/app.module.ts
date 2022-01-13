@@ -4,7 +4,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './api/auth/auth.module';
 import { ResumeModule } from './api/resume/resume.module';
-import { SearchModule } from './api/search/search.module';
 import { HttpLoggerMiddleware } from './utils/logger/http-logger';
 import { MailModule } from './utils/mail/mail.module';
 import { LoggerModule } from './utils/logger/logger.module';
@@ -47,7 +46,6 @@ import { join } from 'path';
     SocketModule,
     AuthModule,
     ResumeModule,
-    SearchModule,
     MongooseModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
       uri: config.get('DB_URL'),

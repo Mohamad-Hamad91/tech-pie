@@ -16,3 +16,16 @@ export class Skill {
     expertLevel: string;
     value: string;
 }
+
+export class QueryDto {
+    search: string;
+    pageSize: number;
+    pageNumber: number;
+    criteria: Criteria[] = [];
+}
+
+export class Criteria {
+    key: string;
+    value: any;
+    operation: string;
+}

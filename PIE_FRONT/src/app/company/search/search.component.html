@@ -7,50 +7,67 @@
                 <img src="assets/imgs/search-emp.svg" alt="search" width="190">
             </div>
             <h2>Search for Developers</h2>
-            <div class="input-group mb-3">
-                <input name="search" type="search" class="search-input" placeholder="Search By Name/ E-mail/ Title">
-                <div class="input-group-prepend" style="margin: 0%;">
-                    <button class="btn btn-outline-secondary search-btn" type="button">
-                        <img src="assets/imgs/search.svg" alt="search" width="27">
-                    </button>
+
+            <form (ngSubmit)="search()">
+                <div class="input-group mb-3">
+                    <input name="search" [(ngModel)]="query.search" type="search" class="search-input"
+                        placeholder="Search By Name/ E-mail/ Title">
+                    <div class="input-group-prepend" style="margin: 0%;">
+                        <button class="btn btn-outline-secondary search-btn" type="submit">
+                            <img src="assets/imgs/search.svg" alt="search" width="27">
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <div class="advanced-search">
         <h6 (click)="flipArrow()">Advanced Search <img #arrow src="assets/imgs/arraow-bottom.svg" alt="arrow bottom"
                 width="25"></h6>
+        <form (ngSubmit)="search()">
+            <div #advancedSearch class="row advanced-search-input-wrapper"
+                [ngClass]="{'hide-advanced-search': !displayAdvanceSearch}">
+                <div class="col-12 col-md-6">
+                    <label for="">Totla Experience</label>&nbsp;
+                    <p-inputNumber name="totalExperience" [(ngModel)]="tempQuery.totalExperience" [showButtons]="true"
+                        buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.25"
+                        decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
+                        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal">
+                    </p-inputNumber> years
+                    <br>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label for="">Minimum Expected Salary</label>&nbsp;
+                    <p-inputNumber name="expectedPriceMin" [(ngModel)]="tempQuery.expectedPriceMin" [showButtons]="true"
+                        buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.25"
+                        decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
+                        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal">
+                    </p-inputNumber> SYP
+                </div>
+                <div class="advanced-search-btn-wrapper">
+                    <button class="pi-btn" type="submit">
+                        Search &nbsp;&nbsp; <img src="assets/imgs/search.svg" alt="search" width="20">
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
 
-        <div #advancedSearch class="row advanced-search-input-wrapper"
-            [ngClass]="{'hide-advanced-search': !displayAdvanceSearch}">
-            <div class="col-12 col-md-6">
-                <input name="search" type="search" class="advanced-search-input"
-                    placeholder="Search By Name/ E-mail/ Title">
-                <br>
-                <input name="search" type="search" class="advanced-search-input"
-                    placeholder="Search By Name/ E-mail/ Title">
-                <br>
-                <input name="search" type="search" class="advanced-search-input"
-                    placeholder="Search By Name/ E-mail/ Title">
-            </div>
-            <div class="col-12 col-md-6">
-                <input name="search" type="search" class="advanced-search-input"
-                    placeholder="Search By Name/ E-mail/ Title">
-                <br>
-                <input name="search" type="search" class="advanced-search-input"
-                    placeholder="Search By Name/ E-mail/ Title">
-                <br>
-                <input name="search" type="search" class="advanced-search-input"
-                    placeholder="Search By Name/ E-mail/ Title">
-            </div>
-            <div class="advanced-search-btn-wrapper">
-                <button class="pi-btn">
-                    Search &nbsp;&nbsp; <img src="assets/imgs/search.svg" alt="search" width="20">
-                </button>
+</section>
+
+<section class="container search-results">
+    <div class="row">
+        <div class="col-3" *ngFor="let result of data; index as i">
+            <div (click)="browseResume(result._id)" style="cursor: pointer;">
+                <img [src]="result.photo?.url" alt="Employee Photo" width="150">
+                <h3>{{result.name}}</h3>
+                <p>{{result.title}}</p>
+                <p>{{result.city}} - {{result.city}}</p>
+                <p>Total Experience: {{result.totalExperience}}</p>
+                <p>Gender: {{result.gender}}</p>
             </div>
         </div>
     </div>
-
 </section>
 
 <app-footer></app-footer>

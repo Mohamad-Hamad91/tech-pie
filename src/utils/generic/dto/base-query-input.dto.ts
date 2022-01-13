@@ -1,36 +1,55 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsInt, IsNumber, IsString, ValidateNested } from "class-validator";
+import { IsBoolean, IsInt, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
 
 export class BaseQueryInputDto {
 
     @IsNumber()
     @Type(() => Number)
+    @ApiProperty({ type: () => Number })
+    @IsOptional()
     readonly pageSize: number = 25;
 
     @IsInt()
     @Type(() => Number)
+    @ApiProperty({ type: () => Number })
+    @IsOptional()
     readonly pageNumber: number = 1;
 
     @IsString()
+    @ApiProperty()
+    @IsOptional()
     readonly sortBy: string;
 
-    @Type(() => Number)
-    @IsInt()
-    readonly sortOrder?: number = 1;
+    @Type(() => Boolean)
+    @IsBoolean()
+    @ApiProperty({ type: () => Boolean })
+    @IsOptional()
+    readonly sortOrder?: boolean = true;
 
     @ValidateNested({ each: true })
     @Type(() => Criteria)
+    @ApiProperty({ type: () => [Criteria] })
+    @IsOptional()
     criteria?: Criteria[];
 
     formatCriteria() {
-        return this.criteria.reduce((acc, field) => acc[field.key] = field.value, {});
+        const result = this.criteria.reduce((acc, field) => {
+            let temp: any = {};
+            temp['$' + field.operation] = field.value;
+            acc[field.key] = temp;
+            return acc;
+        }, {});
+        return result;
     }
 }
 
 export class Criteria {
     @IsString()
     key: string;
+    
     value: any;
+    
     @IsString()
     operation: string;
 }

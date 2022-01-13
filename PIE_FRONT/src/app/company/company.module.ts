@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { SearchComponent } from './search/search.component';
 import { CompRoutingModule } from './comp-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
+import { InputNumberModule } from 'primeng-lts/inputnumber';
 
 
 
@@ -13,7 +15,9 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     CompRoutingModule,
-    SharedModule
+    FormsModule,
+    SharedModule,
+    InputNumberModule
   ]
 })
 export class CompanyModule { }

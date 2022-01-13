@@ -22,6 +22,8 @@ import { UsersService } from '../users/users.service';
 import { UsersModule } from '../users/users.module';
 import { FileSchema, MyFile } from 'src/utils/file/file.schema';
 import { User, UserSchema } from '../users/users.schema';
+import { SearchService } from './search/search.service';
+import { SearchController } from './search/search.controller';
 
 @Module({
   imports: [
@@ -44,8 +46,8 @@ import { User, UserSchema } from '../users/users.schema';
     UsersModule,
     CacheModule.register()
   ],
-  controllers: [ResumeController],
-  providers: [FileService, UsersService, ResumeService, AutoCompleteService],
+  controllers: [ResumeController, SearchController],
+  providers: [FileService, UsersService, ResumeService, AutoCompleteService, SearchService],
   exports: [ResumeService],
 })
 export class ResumeModule { }
