@@ -10,6 +10,7 @@ import { Resume, ResumeDocument } from './schema/resume.schema';
 import { User } from '../users/users.schema';
 import { UsersService } from '../users/users.service';
 import { BaseQueryInputDto } from 'src/utils/generic/dto/base-query-input.dto';
+import { CALC_PRICE_PER_HOUR } from 'src/utils/helpers/clac-price-per-hour.helper';
 
 @Injectable()
 export class ResumeService {
@@ -30,7 +31,8 @@ export class ResumeService {
   }
 
   async getOne(id: string): Promise<Resume> {
-    return await this.resumeModel.findById(id).exec();
+    return await this.resumeModel.findById(id)
+      .select(['-email', '-phone']).populate('photo').exec();
   }
 
   async getByUserId(id: string): Promise<Resume> {
@@ -48,14 +50,14 @@ export class ResumeService {
       temp.user = user;
       temp.photo = photoId;
       // because of open issue #1980 in typeORM
-      temp.employmentHistory = resume.employmentHistory ?? [];
-      temp.courses = resume.courses ?? [];
-      temp.education = resume.education ?? [];
-      temp.links = resume.links ?? [];
-      temp.projects = resume.projects ?? [];
-      temp.references = resume.references ?? [];
-      temp.languages = resume.languages ?? [];
-      temp.skills = resume.skills ?? [];
+      // temp.employmentHistory = resume.employmentHistory ?? [];
+      // temp.courses = resume.courses ?? [];
+      // temp.education = resume.education ?? [];
+      // temp.links = resume.links ?? [];
+      // temp.projects = resume.projects ?? [];
+      // temp.references = resume.references ?? [];
+      // temp.languages = resume.languages ?? [];
+      // temp.skills = resume.skills ?? [];
       result = await temp.save({ session });
     });
     session.endSession();
@@ -68,11 +70,13 @@ export class ResumeService {
     const session: ClientSession = await this.resumeModel.startSession();
     await session.withTransaction(async (session) => {
       const temp = new this.resumeModel(resume);
-      if(file) {
+      if (file) {
         temp.photo = await this.fileService.save(file, false, session);
       }
+      if (temp.expectedPriceCurrency && temp.expectedPriceMin && temp.expectedPriceUnit)
+        temp.pricePerHour = CALC_PRICE_PER_HOUR(temp.expectedPriceMin, temp.expectedPriceCurrency, temp.expectedPriceUnit);
       const old = await this.resumeModel.findOneAndUpdate({ id }, temp);
-      if(file) this.fileService.delete( old.photo._id.toString(), false);
+      if (file) this.fileService.delete(old.photo._id.toString(), false);
     });
     return result;
   }

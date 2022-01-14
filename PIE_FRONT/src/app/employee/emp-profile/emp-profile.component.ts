@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng-lts/api';
 import { AuthService } from 'src/app/service/auth.service';
 import { ConstantsService } from 'src/app/service/constants.service';
+import { Constant } from 'src/app/shared/constants/constant.model';
+import { CURRENCY } from 'src/app/shared/constants/currency.const';
+import { GENDER } from 'src/app/shared/constants/gender.const';
+import { GET_LANG_VALUE, LANG_LEVELS } from 'src/app/shared/constants/lang-levels.enum';
+import { PRICE_UNIT } from 'src/app/shared/constants/price-unit.const';
+import { GET_SKILL_VALUE, SKILL_LEVELS } from 'src/app/shared/constants/skill-levels.const';
 import { ProfileService } from '../service/profile.service';
 import { CourseDto } from './dto/courses.dto';
 import { EducationDto } from './dto/education.dto';
@@ -30,34 +36,14 @@ export class EmpProfileComponent implements OnInit {
   nationalities: string[];
   tempNationalities: string[];
 
-  gender: any[] = [{ value: 'Male' }, { value: 'Female' }];
+  gender: Constant[] = GENDER;
 
-  currency: any[] = [{ value: 'SYP' }, { value: 'USD' }, { value: 'EURO' }, { value: 'EAD' }];
+  currency: Constant[] = CURRENCY;
 
-  priceUnit: any[] = [{ value: 'Hour' }, { value: 'Month' }, { value: 'Year' }];
+  priceUnit: Constant[] = PRICE_UNIT;
 
-  expertLevels: any[] = [
-    { value: 'NoVice' },
-    { value: 'Beginner' },
-    { value: 'Skillful' },
-    { value: 'Experienced' },
-    { value: 'Expert' }
-  ];
-
-  langLevels: any[] = [
-    { value: 'A1', label: 'A1' },
-    { value: 'A2', label: 'A2' },
-    { value: 'Working_Knowledge', label: 'Working Knowledge' },
-    { value: 'B1', label: 'B1' },
-    { value: 'Good_Working_Knowledge', label: 'Good Working Knowledge' },
-    { value: 'Very_Good_Command', label: 'Very Good Command' },
-    { value: 'B2', label: 'B2' },
-    { value: 'C1', label: 'C1' },
-    { value: 'Highly_Proficient', label: 'Highly Proficient' },
-    { value: 'C2', label: 'C2' },
-    { value: 'Native_Speaker', label: 'Native Speaker' }
-  ];
-
+  expertLevels: Constant[] = SKILL_LEVELS;
+  langLevels: Constant[] = LANG_LEVELS;
   languages: string[];
   tempLanguages: string[];
 
@@ -115,10 +101,10 @@ export class EmpProfileComponent implements OnInit {
         this.data = res;
         this.data.birthDate = this.data.birthDate ? new Date(this.data.birthDate) : null;
         this.data.skills = this.data.skills.map((val): SkillDto => {
-          return { ...val, expertLevelValue: this.getSkillValue(val.expertLevel) };
+          return { ...val, expertLevelValue: GET_SKILL_VALUE(val.expertLevel) };
         });
         this.data.languages = this.data.languages.map((val): LanguageDto => {
-          return { ...val, expertValue: this.getLangValue(val.level) };
+          return { ...val, expertValue: GET_LANG_VALUE(val.level) };
         });
       });
   }
@@ -443,36 +429,13 @@ export class EmpProfileComponent implements OnInit {
 
 
   //#region Skills section
-  getSkillValue(val): number {
-    let _temp;
-    switch (val) {
-      case 'NoVice':
-        _temp = 20;
-        break;
-      case 'Beginner':
-        _temp = 40;
-        break;
-      case 'Skillful':
-        _temp = 60;
-        break;
-      case 'Experienced':
-        _temp = 80;
-        break;
-      case 'Expert':
-        _temp = 100;
-        break;
-      default: _temp = 0;
-    }
-    return _temp;
-  }
-
   displaySkill() {
     this.tempSkill = new SkillDto();
     this.skillDialog = true;
   }
 
   addSkill() {
-    this.tempSkill.expertLevelValue = this.getSkillValue(this.tempSkill.expertLevel);
+    this.tempSkill.expertLevelValue = GET_SKILL_VALUE(this.tempSkill.expertLevel);
     if (this.tempSkill._id && this.tempSkill.myIndex >= 0)
       this.data.skills[this.tempSkill.myIndex] = { ...this.tempSkill };
     else
@@ -499,45 +462,13 @@ export class EmpProfileComponent implements OnInit {
 
 
   //#region Languages section
-  getLangValue(val): number {
-    let _temp;
-    switch (val) {
-      case 'A1':
-        _temp = 10;
-        break;
-      case 'A2':
-        _temp = 20;
-        break;
-      case 'Working_Knowledge': case 'B1':
-        _temp = 30;
-        break;
-      case 'Good_Working_Knowledge':
-        _temp = 40;
-        break;
-      case 'Very_Good_Command': case 'B2':
-        _temp = 50;
-        break;
-      case 'C1': case 'Highly_Proficient':
-        _temp = 70;
-        break;
-      case 'C2':
-        _temp = 80;
-        break;
-      case 'Native_Speaker':
-        _temp = 100;
-        break;
-      default: _temp = 0;
-    }
-    return _temp;
-  }
-
   displayLang() {
     this.tempLang = new LanguageDto();
     this.langDialog = true;
   }
 
   addLang() {
-    this.tempLang.expertValue = this.getLangValue(this.tempLang.level);
+    this.tempLang.expertValue = GET_LANG_VALUE(this.tempLang.level);
     if (this.tempLang._id && this.tempLang.myIndex >= 0)
       this.data.languages[this.tempLang.myIndex] = { ...this.tempLang };
     else

@@ -5,6 +5,8 @@ import { CompRoutingModule } from './comp-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng-lts/inputnumber';
+import { AutoCompleteModule } from 'primeng-lts/autocomplete';
+import { DropdownModule } from 'primeng-lts/dropdown';
 
 
 
@@ -17,7 +19,9 @@ import { InputNumberModule } from 'primeng-lts/inputnumber';
     CompRoutingModule,
     FormsModule,
     SharedModule,
-    InputNumberModule
+    InputNumberModule,
+    AutoCompleteModule,
+    DropdownModule
   ]
 })
 export class CompanyModule { }

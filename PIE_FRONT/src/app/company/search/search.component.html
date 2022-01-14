@@ -11,7 +11,7 @@
             <form (ngSubmit)="search()">
                 <div class="input-group mb-3">
                     <input name="search" [(ngModel)]="query.search" type="search" class="search-input"
-                        placeholder="Search By Name/ E-mail/ Title">
+                        placeholder="Search By Name/ Title">
                     <div class="input-group-prepend" style="margin: 0%;">
                         <button class="btn btn-outline-secondary search-btn" type="submit">
                             <img src="assets/imgs/search.svg" alt="search" width="27">
@@ -28,22 +28,85 @@
             <div #advancedSearch class="row advanced-search-input-wrapper"
                 [ngClass]="{'hide-advanced-search': !displayAdvanceSearch}">
                 <div class="col-12 col-md-6">
-                    <label for="">Totla Experience</label>&nbsp;
-                    <p-inputNumber name="totalExperience" [(ngModel)]="tempQuery.totalExperience" [showButtons]="true"
-                        buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.25"
-                        decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
-                        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal">
-                    </p-inputNumber> years
-                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="">Totla Minimum Experience</label>&nbsp;
+                        </div>
+                        <div class="col-8">
+                            <p-inputNumber name="totalExperience" [(ngModel)]="tempQuery.totalExperience"
+                                [showButtons]="true" buttonLayout="horizontal" inputId="horizontal"
+                                spinnerMode="horizontal" [step]="0.25" decrementButtonClass="p-button-danger"
+                                incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus"
+                                decrementButtonIcon="pi pi-minus" mode="decimal">
+                            </p-inputNumber> years
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Preferrable Work Type:(OR)</label>
+                        </div>
+                        <div class="col-8">
+                            <p-autoComplete name="workType" [(ngModel)]="tempQuery.workType" [suggestions]="workType"
+                                (completeMethod)="searchWorkType($event)" [dropdown]="true" Placeholder="Work Type"
+                                [multiple]="true" class="just-white" [inputStyle]="{'width': '100%'}">
+                            </p-autoComplete>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="">Skills/ Technologies (OR)</label>
+                        </div>
+                        <div class="col-8">
+                            <p-autoComplete name="skills" [(ngModel)]="tempQuery.skills" [suggestions]="skills"
+                                (completeMethod)="searchSkills($event)" [dropdown]="true" Placeholder="Skill"
+                                appendTo="body" [multiple]="true"
+                                [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+                            </p-autoComplete>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="col-12 col-md-6">
-                    <label for="">Minimum Expected Salary</label>&nbsp;
-                    <p-inputNumber name="expectedPriceMin" [(ngModel)]="tempQuery.expectedPriceMin" [showButtons]="true"
-                        buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="0.25"
-                        decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
-                        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal">
-                    </p-inputNumber> SYP
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="">Maximun Expected Salary</label>&nbsp;
+                        </div>
+                        <div class="col-8">
+                            <p-inputNumber name="pricePerHour" [(ngModel)]="tempQuery.pricePerHour" [showButtons]="true"
+                                buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="100000"
+                                decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
+                                incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="decimal">
+                            </p-inputNumber> SYP Per Month
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="city">City</label>
+                        </div>
+                        <div class="col-8">
+                            <p-autoComplete name="city" [(ngModel)]="tempQuery.city" [suggestions]="cities" id="city"
+                                (completeMethod)="searchCities($event)" [dropdown]="true" Placeholder="City"
+                                appendTo="body" [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+                            </p-autoComplete>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="">Gender</label>
+                        </div>
+                        <div class="col-8">
+                            <p-dropdown name="gender" [options]="gender" [(ngModel)]="tempQuery.gender"
+                                optionLabel="value" optionValue="value">
+                            </p-dropdown>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="advanced-search-btn-wrapper">
                     <button class="pi-btn" type="submit">
                         Search &nbsp;&nbsp; <img src="assets/imgs/search.svg" alt="search" width="20">
@@ -57,14 +120,17 @@
 
 <section class="container search-results">
     <div class="row">
-        <div class="col-3" *ngFor="let result of data; index as i">
-            <div (click)="browseResume(result._id)" style="cursor: pointer;">
-                <img [src]="result.photo?.url" alt="Employee Photo" width="150">
-                <h3>{{result.name}}</h3>
-                <p>{{result.title}}</p>
-                <p>{{result.city}} - {{result.city}}</p>
-                <p>Total Experience: {{result.totalExperience}}</p>
-                <p>Gender: {{result.gender}}</p>
+        <h5 *ngIf="expectResult && !data?.length">No result found!</h5>
+        <div *ngIf="expectResult && data?.length">
+            <div class="col-3" *ngFor="let result of data; index as i">
+                <div (click)="browseResume(result._id)" style="cursor: pointer;">
+                    <img [src]="result.photo?.url" alt="Employee Photo" width="150">
+                    <h3>{{result.name}}</h3>
+                    <p>{{result.title}}</p>
+                    <p>{{result.city}} - {{result.city}}</p>
+                    <p>Total Experience: {{result.totalExperience}} Years</p>
+                    <p>Gender: {{result.gender}}</p>
+                </div>
             </div>
         </div>
     </div>

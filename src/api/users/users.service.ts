@@ -23,6 +23,7 @@ export class UsersService {
         const hash = await bcrypt.hash(user.password, salt);
         user.password = hash;
         const result = new this.userModel(user);
+        result.roles = ['USER'];
         try {
             await result.save();
         } catch (e) {

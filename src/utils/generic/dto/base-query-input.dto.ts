@@ -37,6 +37,7 @@ export class BaseQueryInputDto {
         const result = this.criteria.reduce((acc, field) => {
             let temp: any = {};
             temp['$' + field.operation] = field.value;
+            if(field.ignoreCase) temp['$options'] = 'i';
             acc[field.key] = temp;
             return acc;
         }, {});
@@ -52,4 +53,6 @@ export class Criteria {
     
     @IsString()
     operation: string;
+
+    ignoreCase: boolean = false;
 }
