@@ -7,12 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng-lts/inputnumber';
 import { AutoCompleteModule } from 'primeng-lts/autocomplete';
 import { DropdownModule } from 'primeng-lts/dropdown';
+import { OfferComponent } from './offer/offer.component';
 
 
 
 @NgModule({
   declarations: [
-    SearchComponent
+    SearchComponent,
+    OfferComponent
   ],
   imports: [
     CommonModule,

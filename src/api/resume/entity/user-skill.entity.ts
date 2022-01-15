@@ -7,5 +7,5 @@ export class UserSkill {
   expertLevel: SkillExpertLevel = SkillExpertLevel.Beginner;
 
   @Column()
-  value: Skill | string = Skill.UNSPECIFIED;
+  value: Skill | string;
 }

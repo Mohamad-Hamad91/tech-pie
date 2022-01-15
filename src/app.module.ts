@@ -20,6 +20,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ConstantsModule } from './api/constants/constants.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { OfferModule } from './api/offer/offer.module';
 
 @Module({
   imports: [
@@ -74,7 +75,8 @@ import { join } from 'path';
     UsersModule,
     FileModule,
     SseModule,
-    ConstantsModule
+    ConstantsModule,
+    OfferModule
   ],
   controllers: [],
   providers: [SeedService,

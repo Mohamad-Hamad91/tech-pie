@@ -1,0 +1,31 @@
+<app-navbar></app-navbar>
+
+<div class="offer-wrapper">
+    <section class="offer-section">
+        <main class="col-xs-12 col-lg-6 offset-lg-3 offer-content">
+            <div class="form-wrapper">
+                <div class="center-image-wrapper">
+                    <img class="center-image" src="assets/imgs/private.svg" alt="" srcset="">
+                </div>
+                <h2>Offer Employee</h2>
+                <form class="offer-form" (ngSubmit)="sendOffer()">
+                    <div class="offer-input-wrapper">
+                        <input name="email" autocapitalize="none" placeholder="E-mail"
+                            class="offer-input" [(ngModel)]="offer.compEmail">
+                    </div>
+                    <div class="offer-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="email" autocapitalize="none" placeholder="Mobile number"
+                                class="offer-input" [(ngModel)]="offer.compPhone">
+                        </div>
+                    </div>
+                    <div class="offer-input-wrapper">
+                        <button class="pi-btn">offer</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </section>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,43 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng-lts/api';
+import { AuthService } from 'src/app/service/auth.service';
+import { OfferService } from '../service/offer.service';
+import { OfferDto } from './offer.dto';
+
+@Component({
+  selector: 'app-offer',
+  templateUrl: './offer.component.html',
+  styleUrls: ['./offer.component.scss']
+})
+export class OfferComponent implements OnInit {
+
+  compId: string;
+  empId: string;
+  offer: OfferDto;
+
+  constructor(private _offerService: OfferService, private _route: ActivatedRoute,
+    private _authService: AuthService, private _messageService: MessageService) { }
+
+  ngOnInit(): void {
+    this.compId = this._authService.getId();
+    this._route.params.subscribe(params => {
+      this.empId = this._route.snapshot.params.id;
+    });
+  }
+
+  sendOffer() {
+    this.offer.user = this.empId;
+    this.offer.employer = this.compId;
+    this.offer.employerType = this._authService.getRole();
+    this._offerService
+      .add(this.offer)
+      .subscribe(res => {
+        this._messageService.add({
+          severity: 'success',
+          detail: 'Offer sent!'
+        });
+      });
+  }
+
+}

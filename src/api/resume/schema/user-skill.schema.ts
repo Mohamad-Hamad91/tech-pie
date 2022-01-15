@@ -11,7 +11,7 @@ export class UserSkill {
   expertLevel: SkillExpertLevel = SkillExpertLevel.Beginner;
 
   @Prop()
-  value: Skill | string = Skill.UNSPECIFIED;
+  value: Skill | string;
 }
 
 export const UserSkillSchema = SchemaFactory.createForClass(UserSkill);

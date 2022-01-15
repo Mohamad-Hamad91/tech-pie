@@ -11,7 +11,7 @@
                 <img class="emp-photo" [src]="data?.photo ? data.photo.url: 'assets/imgs/resume/resume-def-profile.svg'"
                     alt="profile photo" width="150">
             </div>
-            <div class="col-6 col-md-4 main-info">
+            <div class="col-6 col-md-6 main-info">
                 <div class="name-wrapper">
                     <h2 class="name">
                         {{data?.name}}
@@ -22,6 +22,9 @@
                         {{data?.title}}
                     </h4>
                 </div>
+            </div>
+            <div class="col-2">
+                <button *ngIf="isLoggedIn" class="pi-btn" (click)="offer()">Offer</button>
             </div>
         </div>
         <!--------------- Main header ends ----------------->
