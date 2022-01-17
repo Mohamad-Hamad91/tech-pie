@@ -6,13 +6,15 @@ import { Nationality } from 'src/utils/constants/nationalits';
 import { Shift } from 'src/utils/constants/shift';
 import { WorkType } from 'src/utils/constants/workType';
 import { ObjectID } from 'mongodb';
+import { UsersService } from 'src/api/users/users.service';
 
 @Console()
 export class SeedService {
 
     private logger = new Logger(SeedService.name);
 
-    constructor(@Inject(ResumeService) private usersService: ResumeService,) { }
+    constructor(@Inject(ResumeService) private resumeService: ResumeService,
+        @Inject(UsersService) private userService: UsersService,) { }
 
     @Command({
         command: 'seed',
@@ -23,12 +25,13 @@ export class SeedService {
         const spin = createSpinner();
         spin.start('Seeding the DB...');
         this.logger.log('Seeding Resumes...');
+        await this.seedAdmin();
         await this.seedResume();
         spin.succeed('Seeding done.');
     }
 
     async seedResume() {
-        await this.usersService.create({
+        await this.resumeService.create({
             email: 'any@mail.com',
             name: 'Emp name',
             photo: '',
@@ -54,5 +57,14 @@ export class SeedService {
             skills: []
         }, new ObjectID('61c1d652d3fa6d932bbdef3a')
         );
+    }
+
+    async seedAdmin() {
+        await this.userService.seedAdmin({
+            _id: '61c1d652d3fa6d932bbdef3a',
+            email: 'admin',
+            password: 'admin',
+            roles: ['ADMIN']
+        });
     }
 }

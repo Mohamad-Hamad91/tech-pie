@@ -37,4 +37,17 @@ export class UsersService {
         return this.userModel.findById(id, null, { session }).exec();
     }
 
+    async seedAdmin(user: any) {
+        const salt = await bcrypt.genSalt();
+        const hash = await bcrypt.hash(user.password, salt);
+        user.password = hash;
+        const result = new this.userModel(user);
+        try {
+            await result.save();
+        } catch (e) {
+            console.log(e);
+
+        }
+    }
+
 }

@@ -15,16 +15,21 @@ export class OfferService {
     public get(input: BaseQueryInputDto) {
         return this.offerModel
             .find()
+            .populate([{ path: 'user', select: 'email' }, { path: 'employer', select: 'email' }])
             .limit(input.pageSize)
             .skip(input.pageSize * (input.pageNumber - 1))
             .sort(input.sortBy)
-            .exec;
+            .exec();
     }
 
     public add(offer: OfferDto) {
         //TODO: check if user found, else throw an error!
         let temp = new this.offerModel(offer);
         return temp.save();
+    }
+
+    public async edit(id: string, offer: OfferDto) {
+        return await this.offerModel.findOneAndUpdate({id}, offer);
     }
 
 }

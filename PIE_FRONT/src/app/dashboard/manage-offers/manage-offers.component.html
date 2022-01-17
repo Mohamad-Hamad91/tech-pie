@@ -1,0 +1,27 @@
+<p-table [value]="data">
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of cols">
+                {{col.header}}
+            </th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row let-columns="cols" let-i="rowIndex">
+        <tr>
+            <td *ngFor="let col of cols">
+                <div *ngIf="col.subfield;then nested_object_content else normal_content"></div>
+                <ng-template #nested_object_content>
+                    {{row[col.field][col.subfield]}}
+                </ng-template>
+                <ng-template #normal_content>
+                    {{row[col.field]}}
+                </ng-template>
+            </td>
+            <td>
+                <button class="btn btn-outline-success" (click)="approve(row._id, i)">Approve</button>
+                <button class="btn btn-outline-secondary" (click)="reject(row._id, i)">Reject</button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

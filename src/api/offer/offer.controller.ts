@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/utils/decorator/roles.decorator';
 import { BaseQueryInputDto } from 'src/utils/generic/dto/base-query-input.dto';
@@ -31,4 +31,10 @@ export class OfferController {
         return this.offerService.add(offer);
     }
 
+    @Put('/:id')
+    @Roles('ADMIN')
+    @UsePipes(new ValidationPipe({ transform: true }))
+    async update(@Body() offer: OfferDto, @Param() id: string) {
+        return await this.offerService.edit(id, offer);
+    }
 }

@@ -8,6 +8,7 @@ import { InputNumberModule } from 'primeng-lts/inputnumber';
 import { AutoCompleteModule } from 'primeng-lts/autocomplete';
 import { DropdownModule } from 'primeng-lts/dropdown';
 import { OfferComponent } from './offer/offer.component';
+import { ToastModule } from 'primeng-lts/toast';
 
 
 
@@ -23,7 +24,8 @@ import { OfferComponent } from './offer/offer.component';
     SharedModule,
     InputNumberModule,
     AutoCompleteModule,
-    DropdownModule
+    DropdownModule,
+    ToastModule
   ]
 })
 export class CompanyModule { }

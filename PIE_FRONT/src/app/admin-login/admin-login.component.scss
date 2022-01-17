@@ -1,7 +1,3 @@
-.offer-wrapper {
-    min-height: 94vh;
-}
-
 .form-wrapper {
     padding-left: 16px;
     padding-right: 16px;
@@ -25,7 +21,7 @@
     display: block;
 }
 
-.offer-form {
+.login-form {
     -webkit-text-size-adjust: 100%;
 }
 
@@ -44,14 +40,14 @@ h2 {
     font-family: 'Ropa Sans', 'Lato', 'Courier New', Courier, monospace;
 }
 
-.offer-input-wrapper {
+.login-input-wrapper {
     margin-bottom: 24px;
     color: rgb(29, 33, 36);
     font-size: 14px;
     line-height: 20px;
 }
 
-.offer-input {
+.login-input {
     background: rgb(244, 244, 245);
     border-width: 1px 1px 2px;
     border-style: solid;
@@ -66,18 +62,18 @@ h2 {
     height: 48px;
 }
 
-.offer-input:hover {
+.login-input:hover {
     border-bottom: 2px solid rgb(29, 33, 36);
 }
 
-.offer-input:focus{
+.login-input:focus{
     background: none;
     border-width: 1px 1px 2px;
     border-style: solid;
     border-color: rgb(188, 201, 209);
 }
 
-.offer-eye-btn {
+.login-eye-btn {
     height: 48px;
     background: rgb(244, 244, 245);
     border-top-left-radius: 0%;
@@ -90,17 +86,17 @@ h2 {
     transform: translatex(-3px);
 }
 
-.offer-eye-btn:hover {
+.login-eye-btn:hover {
     color: #fff;
     background-color: #6c757d;
     border-color: #6c757d;
 }
 
-.offer-eye{
+.login-eye{
     transform: translate(91%, -135%);
 }
 
-.offer-input-pass {
+.login-input-pass {
     flex: 1 1 auto;
     width: 1%;
 }

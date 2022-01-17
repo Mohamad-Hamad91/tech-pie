@@ -14,7 +14,8 @@ export class OfferComponent implements OnInit {
 
   compId: string;
   empId: string;
-  offer: OfferDto;
+  offer: OfferDto = new OfferDto();
+  sent: boolean = false;
 
   constructor(private _offerService: OfferService, private _route: ActivatedRoute,
     private _authService: AuthService, private _messageService: MessageService) { }
@@ -33,6 +34,7 @@ export class OfferComponent implements OnInit {
     this._offerService
       .add(this.offer)
       .subscribe(res => {
+        this.sent = true;
         this._messageService.add({
           severity: 'success',
           detail: 'Offer sent!'

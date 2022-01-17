@@ -22,12 +22,16 @@ export class AuthService {
     return this._http.post<LoginResDto>(this._baseURL + 'login', data);
   }
 
+  public adminLogin(data: LoginDto): Observable<LoginResDto> {
+    return this._http.post<LoginResDto>(this._baseURL + 'admin-login', data);
+  }
+
   isLoggedIn() {
     return !!localStorage.getItem('token');
   }
 
   getRole() {
-    return 'EMPLOYEE';
+    return localStorage.getItem('roles');
   }
 
   getEmail() {

@@ -44,6 +44,9 @@ export class Offer {
     @Prop()
     message: string;
 
+    @Prop()
+    status?: 'APPROVED' | 'REJECTED' | null; 
+
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);

@@ -6,7 +6,7 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 
 @Controller({
-  path:'auth',
+  path: 'auth',
   version: '1'
 })
 @UsePipes(ValidationPipe)
@@ -22,6 +22,11 @@ export class AuthController {
 
   @Post('/login')
   async login(@Body() user: LoginDto) {
+    return this.authService.login(user);
+  }
+
+  @Post('/admin-login')
+  async adminLogin(@Body() user: { email: string, password: string }) {
     return this.authService.login(user);
   }
 

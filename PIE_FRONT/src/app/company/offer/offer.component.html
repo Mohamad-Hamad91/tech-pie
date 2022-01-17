@@ -1,3 +1,4 @@
+<p-toast position="bottom-right"></p-toast>
 <app-navbar></app-navbar>
 
 <div class="offer-wrapper">
@@ -5,22 +6,64 @@
         <main class="col-xs-12 col-lg-6 offset-lg-3 offer-content">
             <div class="form-wrapper">
                 <div class="center-image-wrapper">
-                    <img class="center-image" src="assets/imgs/private.svg" alt="" srcset="">
+                    <img class="center-image" src="assets/imgs/offer/contract.svg" alt="" srcset="">
                 </div>
                 <h2>Offer Employee</h2>
                 <form class="offer-form" (ngSubmit)="sendOffer()">
                     <div class="offer-input-wrapper">
-                        <input name="email" autocapitalize="none" placeholder="E-mail"
-                            class="offer-input" [(ngModel)]="offer.compEmail">
+                        <input name="email" autocapitalize="none" placeholder="E-mail" class="offer-input"
+                            [(ngModel)]="offer.compEmail">
                     </div>
                     <div class="offer-input-wrapper">
                         <div class="input-group mb-3">
-                            <input name="email" autocapitalize="none" placeholder="Mobile number"
-                                class="offer-input" [(ngModel)]="offer.compPhone">
+                            <input name="phone" autocapitalize="none" placeholder="Mobile number" class="offer-input"
+                                [(ngModel)]="offer.compPhone">
                         </div>
                     </div>
                     <div class="offer-input-wrapper">
-                        <button class="pi-btn">offer</button>
+                        <div class="input-group mb-3">
+                            <input name="name" autocapitalize="none" placeholder="Name" class="offer-input"
+                                [(ngModel)]="offer.compName">
+                        </div>
+                    </div>
+                    <div class="offer-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="position" autocapitalize="none" placeholder="Position" class="offer-input"
+                                [(ngModel)]="offer.position">
+                        </div>
+                    </div>
+                    <div class="offer-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="workType" autocapitalize="none" placeholder="Work Type" class="offer-input"
+                                [(ngModel)]="offer.workType">
+                        </div>
+                    </div>
+                    <div class="offer-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="workPlace" autocapitalize="none" placeholder="Work Place" class="offer-input"
+                                [(ngModel)]="offer.workPlace">
+                        </div>
+                    </div>
+                    <div class="offer-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="minPrice" autocapitalize="none" placeholder="Min Price" class="offer-input"
+                                [(ngModel)]="offer.minPrice">
+                        </div>
+                    </div>
+                    <div class="offer-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="maxPrice" autocapitalize="none" placeholder="Max Price" class="offer-input"
+                                [(ngModel)]="offer.maxPrice">
+                        </div>
+                    </div>
+                    <div class="offer-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="message" autocapitalize="none" placeholder="Message" class="offer-input"
+                                [(ngModel)]="offer.message">
+                        </div>
+                    </div>
+                    <div class="offer-input-wrapper">
+                        <button type="submit" class="pi-btn" [disabled]="sent==true">offer</button>
                     </div>
                 </form>
             </div>

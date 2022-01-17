@@ -22,6 +22,7 @@ import { GeneralInterceptor } from './general.interceptor';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './auth.guard';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AuthGuard } from './auth.guard';
     LoginComponent,
     RegisterComponent,
     UnauthorizedComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

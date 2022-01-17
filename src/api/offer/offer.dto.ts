@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 import { IsEmail, IsNumber, IsOptional, IsPhoneNumber } from "class-validator";
 import { WorkType } from "src/utils/constants/workType";
 
@@ -15,6 +16,10 @@ export class OfferDto {
     @ApiProperty()
     compPhone?: string;
 
+    @IsOptional()
+    @ApiProperty()
+    compName?: string;
+
     @ApiProperty()
     user?: any;
 
@@ -27,11 +32,13 @@ export class OfferDto {
     @ApiProperty()
     @IsOptional()
     @IsNumber()
+    @Type(() => Number)
     minPrice?: number;
 
     @ApiProperty()
     @IsOptional()
     @IsNumber()
+    @Type(() => Number)
     maxPrice?: number;
 
     @ApiProperty()
@@ -49,4 +56,7 @@ export class OfferDto {
     @ApiProperty()
     @IsOptional()
     message?: string;
+
+    @IsOptional()
+    status?: 'APPROVED' | 'REJECTED' | null;
 }

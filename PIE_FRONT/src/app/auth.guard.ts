@@ -15,6 +15,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
   
   canActivate(route: ActivatedRouteSnapshot): boolean {
     this.authorized = false;
+    // debugger;
     if (this._authSrvc.isLoggedIn()) {
       const currentUserRole = this._authSrvc.getRole();
       
