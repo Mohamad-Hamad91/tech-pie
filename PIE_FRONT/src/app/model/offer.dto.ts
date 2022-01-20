@@ -1,3 +1,5 @@
+import { OfferStatus } from "./offer-status";
+
 export class OfferDto {
     _id?: string;
     compEmail?: string;
@@ -12,4 +14,5 @@ export class OfferDto {
     position?: string;
     workType?: string;
     message?: string;
+    status?: OfferStatus = OfferStatus.IN_PROGRESS;
 }

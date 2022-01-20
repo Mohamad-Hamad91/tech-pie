@@ -1,0 +1,73 @@
+<p-toast position="bottom-right"></p-toast>
+<app-navbar></app-navbar>
+
+<section class="profile-wrapper">
+    <section class="company-section">
+        <main class="col-xs-12 col-lg-6 offset-lg-3 company-content">
+            <div class="form-wrapper">
+                <!-- <div class="center-image-wrapper">
+                    <img class="center-image" src="assets/imgs/company/profile.svg" alt="" srcset="">
+                </div> -->
+                <form class="company-form" (ngSubmit)="save()">
+                    <div class="company-input-wrapper">
+                        <input name="email" autocapitalize="none" placeholder="E-mail" class="company-input"
+                            [(ngModel)]="data.email">
+                    </div>
+                    <div class="company-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="phone" autocapitalize="none" placeholder="Mobile number" class="company-input"
+                                [(ngModel)]="data.phone">
+                        </div>
+                    </div>
+                    <div class="company-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="name" autocapitalize="none" placeholder="Name" class="company-input"
+                                [(ngModel)]="data.name">
+                        </div>
+                    </div>
+                    <div class="company-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input type="url" name="website" autocapitalize="none" placeholder="website" class="company-input"
+                                [(ngModel)]="data.website">
+                        </div>
+                    </div>
+                    <div class="company-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="address" autocapitalize="none" placeholder="address" class="company-input"
+                                [(ngModel)]="data.address">
+                        </div>
+                    </div>
+                    <div class="company-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="city" autocapitalize="none" placeholder="city" class="company-input"
+                                [(ngModel)]="data.city">
+                        </div>
+                    </div>
+                    <div class="company-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="description" autocapitalize="none" placeholder="description" class="company-input"
+                                [(ngModel)]="data.description">
+                        </div>
+                    </div>
+                    <div class="company-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="empBenifits" autocapitalize="none" placeholder="Employees Benifits" class="company-input"
+                                [(ngModel)]="data.empBenifits">
+                        </div>
+                    </div>
+                    <div class="company-input-wrapper">
+                        <div class="input-group mb-3">
+                            <input name="compSize" autocapitalize="none" placeholder="compSize" class="company-input"
+                                [(ngModel)]="data.compSize">
+                        </div>
+                    </div>
+                    <div class="company-input-wrapper">
+                        <button type="submit" class="pi-btn" >Save</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </section>
+</section>
+
+<app-footer></app-footer>

@@ -13,8 +13,8 @@ export class ProfileService {
 
   constructor(private _http: HttpClient) { }
 
-  getByUserId(id: string): Observable<EmpProfileDto> {
-    return this._http.get<EmpProfileDto>(this._URL + 'user/' + id);
+  getMyProfile(): Observable<EmpProfileDto> {
+    return this._http.get<EmpProfileDto>(this._URL + 'my-profile/');
   }
 
   createResume(data: FormData): Observable<EmpProfileDto> {

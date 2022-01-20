@@ -9,13 +9,14 @@ import { AutoCompleteModule } from 'primeng-lts/autocomplete';
 import { DropdownModule } from 'primeng-lts/dropdown';
 import { OfferComponent } from './offer/offer.component';
 import { ToastModule } from 'primeng-lts/toast';
-
+import { CompProfileComponent } from './comp-profile/comp-profile.component';
 
 
 @NgModule({
   declarations: [
     SearchComponent,
-    OfferComponent
+    OfferComponent,
+    CompProfileComponent
   ],
   imports: [
     CommonModule,

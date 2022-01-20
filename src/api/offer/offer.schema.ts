@@ -2,11 +2,15 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { User } from '../users/users.schema';
+import { OfferStatus } from 'src/utils/constants/offer-status.const';
+import { ROLE } from 'src/utils/constants/role.const';
 
 export type OfferDocument = Offer & Document;
 
 @Schema()
 export class Offer {
+
+    id: mongoose.ObjectId;
 
     @Prop()
     compEmail: string;
@@ -24,7 +28,7 @@ export class Offer {
     employer: User;
 
     @Prop()
-    employerType?: 'USER' | 'COMPANY';
+    employerType?: ROLE.USER | ROLE.COMPANY;
 
     @Prop()
     minPrice: number;
@@ -45,7 +49,7 @@ export class Offer {
     message: string;
 
     @Prop()
-    status?: 'APPROVED' | 'REJECTED' | null; 
+    status?: OfferStatus = OfferStatus.IN_PROGRESS;
 
 }
 

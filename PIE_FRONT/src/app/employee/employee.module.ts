@@ -16,6 +16,7 @@ import { InputNumberModule } from 'primeng-lts/inputnumber';
 import { DialogModule } from 'primeng-lts/dialog';
 import { InputTextModule } from 'primeng-lts/inputtext';
 import { FileUploadModule } from 'primeng-lts/fileupload';
+import { OfferInboxComponent } from './offer-inbox/offer-inbox.component';
 
 
 
@@ -24,7 +25,8 @@ import { FileUploadModule } from 'primeng-lts/fileupload';
 @NgModule({
   declarations: [
 
-    EmpProfileComponent
+    EmpProfileComponent,
+     OfferInboxComponent
   ],
   imports: [
     CommonModule,

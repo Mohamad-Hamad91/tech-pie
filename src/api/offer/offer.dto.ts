@@ -1,6 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsEmail, IsNumber, IsOptional, IsPhoneNumber } from "class-validator";
+import { OfferStatus } from "src/utils/constants/offer-status.const";
+import { ROLE } from "src/utils/constants/role.const";
 import { WorkType } from "src/utils/constants/workType";
 
 export class OfferDto {
@@ -27,7 +29,7 @@ export class OfferDto {
     employer?: any;
 
     @ApiProperty()
-    employerType?: 'USER' | 'COMPANY';
+    employerType?: ROLE.USER | ROLE.COMPANY;
 
     @ApiProperty()
     @IsOptional()
@@ -58,5 +60,5 @@ export class OfferDto {
     message?: string;
 
     @IsOptional()
-    status?: 'APPROVED' | 'REJECTED' | null;
+    status?: OfferStatus = OfferStatus.IN_PROGRESS;
 }

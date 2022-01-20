@@ -1,5 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Container } from 'tsparticles';
+import { ROLE } from '../model/roles.enum';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +14,11 @@ export class HomeComponent implements OnInit {
   particlesOptions: any;
   @ViewChild('emp') emp: ElementRef;
   @ViewChild('comp') comp: ElementRef;
+  isLoggedIn: boolean = false;
+  isCompany: boolean = false;
+  isEmployee: boolean = false;
 
-  constructor() { }
+  constructor(private _authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -95,6 +100,10 @@ export class HomeComponent implements OnInit {
       detectRetina: true
     };
 
+    this.isLoggedIn = this._authService.isLoggedIn();
+    this.isCompany = this._authService.getRole() === ROLE.COMPANY;
+    this.isEmployee = this._authService.getRole() === ROLE.USER;
+
   }
 
 
@@ -104,25 +113,26 @@ export class HomeComponent implements OnInit {
     // canvs.item(0).style.zIndex = '-100';
   }
 
-  @HostListener('window:scroll', ['$event']) 
+  @HostListener('window:scroll', ['$event'])
   scrollHandler(e: Event) {
     const windowPos = window.scrollY;
     const empPos = this.emp.nativeElement.scrollHeight;
     const compPos = this.comp.nativeElement.scrollHeight;
     if (windowPos >= empPos) {
-      debugger;
       this.emp.nativeElement.classList.add('choose-user-content-img-anim');
     }
     if (windowPos >= compPos) {
-      debugger;
       this.comp.nativeElement.classList.add('choose-user-content-img-anim');
     }
     // this[name].nativeElement.classList.add('choose-user-content-img-anim');
   }
 
-  // @HostListener('window:scroll') 
-  // myOnScrollComp(e: Event) {
-  //   this.comp.nativeElement.classList.add('choose-user-content-img-anim');
-  // }
+  scrollToEmpSection() {
+    this.emp.nativeElement.scrollIntoView();
+  }
+
+  scrollToCompSection() {
+    this.comp.nativeElement.scrollIntoView();
+  }
 
 }

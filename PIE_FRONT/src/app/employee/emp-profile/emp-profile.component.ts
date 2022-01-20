@@ -8,6 +8,7 @@ import { GENDER } from 'src/app/shared/constants/gender.const';
 import { GET_LANG_VALUE, LANG_LEVELS } from 'src/app/shared/constants/lang-levels.enum';
 import { PRICE_UNIT } from 'src/app/shared/constants/price-unit.const';
 import { GET_SKILL_VALUE, SKILL_LEVELS } from 'src/app/shared/constants/skill-levels.const';
+import { environment } from 'src/environments/environment';
 import { ProfileService } from '../service/profile.service';
 import { CourseDto } from './dto/courses.dto';
 import { EducationDto } from './dto/education.dto';
@@ -18,6 +19,7 @@ import { LinkDto } from './dto/links.dto';
 import { ProjectDto } from './dto/project.dto';
 import { ReferencesDto } from './dto/references.dto';
 import { SkillDto } from './dto/skills.dto';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-emp-profile',
@@ -29,6 +31,10 @@ export class EmpProfileComponent implements OnInit {
   //#region Data members definition
   data: EmpProfileDto = new EmpProfileDto();
   id: string;
+
+  frontDomain: string = environment.frontDomain;
+
+  shareDialog: boolean = false;
 
   cities: string[];
   tempCities: string[];
@@ -87,7 +93,8 @@ export class EmpProfileComponent implements OnInit {
   constructor(private _authService: AuthService,
     private _profileService: ProfileService,
     private _constService: ConstantsService,
-    private _messageService: MessageService) { }
+    private _messageService: MessageService,
+    private clipboard: Clipboard) { }
 
   ngOnInit(): void {
     this.id = this._authService.getId();
@@ -96,14 +103,14 @@ export class EmpProfileComponent implements OnInit {
 
   getData() {
     this._profileService
-      .getByUserId(this.id)
+      .getMyProfile()
       .subscribe(res => {
-        this.data = res;
-        this.data.birthDate = this.data.birthDate ? new Date(this.data.birthDate) : null;
-        this.data.skills = this.data.skills.map((val): SkillDto => {
+        this.data = res ?? new EmpProfileDto();
+        this.data.birthDate = this.data?.birthDate ? new Date(this.data.birthDate) : null;
+        this.data.skills = this.data?.skills.map((val): SkillDto => {
           return { ...val, expertLevelValue: GET_SKILL_VALUE(val.expertLevel) };
         });
-        this.data.languages = this.data.languages.map((val): LanguageDto => {
+        this.data.languages = this.data?.languages.map((val): LanguageDto => {
           return { ...val, expertValue: GET_LANG_VALUE(val.level) };
         });
       });
@@ -493,5 +500,25 @@ export class EmpProfileComponent implements OnInit {
   }
   //#endregion Languages section
 
+
+  share() {
+    this.shareDialog = true;
+  }
+
+  cancelShare() {
+    this.shareDialog = false;
+  }
+
+  copyLink(linkInput: HTMLInputElement) {
+    // linkInput.select();
+    // document.execCommand('copy');
+    let value = linkInput.value;
+    this.clipboard.copy(value);
+    // linkInput.setSelectionRange(0, 0);
+    this._messageService.add({
+      severity: 'info',
+      detail: 'Link Copied to clipboard!'
+    });
+  }
 
 }

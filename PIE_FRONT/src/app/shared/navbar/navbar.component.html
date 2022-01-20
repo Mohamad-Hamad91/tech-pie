@@ -14,13 +14,26 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/c/search" routerLinkActive="active-nav-link">Search</a>
             </li>
-            <li *ngIf="isLoggedin">
+            <li *ngIf="isLoggedin && isEmployee">
                 <a class="nav-link" routerLink="/e/profile" routerLinkActive="active-nav-link">Resume</a>
+            </li>
+            <li *ngIf="isLoggedin && isCompany">
+                <a class="nav-link" routerLink="/c/profile" routerLinkActive="active-nav-link">Profile</a>
+            </li>
+            <li *ngIf="isLoggedin && isEmployee">
+                <a class="nav-link" routerLink="/e/inbox" routerLinkActive="active-nav-link">Inbox</a>
+            </li>
+            <li *ngIf="isLoggedin && isCompany">
+                <a class="nav-link" routerLink="/c/sent-offers" routerLinkActive="active-nav-link">Sent Offers</a>
+            </li>
+            <li *ngIf="isLoggedin && isEmployee">
+                <a class="nav-link" routerLink="/e/sent-offers" routerLinkActive="active-nav-link">Sent Offers</a>
             </li>
         </ul>
 
-        <span >
-                <a *ngIf="!isLoggedin" class="pi-btn" routerLink="/register">Register</a>
+        <span>
+            <a *ngIf="!isLoggedin" class="pi-btn" routerLink="/register">Register</a>
+            <a *ngIf="isLoggedin" class="pi-btn" (click)="logout()">Logout</a>
         </span>
     </div>
 </nav>

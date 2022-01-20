@@ -16,10 +16,10 @@
                     <br><br><br>
                     <div class="row">
                         <div class="col-6">
-                            <a class="pi-btn" routerLink="/register">Employee</a>
+                            <a class="pi-btn" (click)="scrollToEmpSection()">Employee</a>
                         </div>
                         <div class="col-6">
-                            <a class="pi-btn" routerLink="/c/search">Company</a>
+                            <a class="pi-btn" (click)="scrollToCompSection()">Company</a>
                         </div>
                     </div>
                 </div>
@@ -56,10 +56,11 @@
                         pariatur.</p>
                     <div class="row">
                         <div class="col-6">
-                            <a class="pi-btn" routerLink="/login">Login</a>
+                            <a *ngIf="!isLoggedIn" class="pi-btn" routerLink="/login">Login</a>
+                            <a *ngIf="isLoggedIn" class="pi-btn" routerLink="/e/profile">Edit Resume</a>
                         </div>
                         <div class="col-6">
-                            <a class="pi-btn" routerLink="/register">Register</a>
+                            <a *ngIf="!isLoggedIn" class="pi-btn" routerLink="/register">Register</a>
                         </div>
                     </div>
 
@@ -83,7 +84,7 @@
             <div class="col-12 col-sm-12 col-md-8">
                 <div class="choose-user-content">
                     <h2>Company</h2>
-                    <h4>Are you Lookin for a developer?</h4>
+                    <h4>Are you Looking for a developer?</h4>
                     <p>You can search over hundreds of structyred data</p>
                     <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
                         magni dolores eos qui ratione
@@ -97,7 +98,11 @@
                         pariatur.</p>
                     <div class="row">
                         <div class="col-6">
-                            <a class="pi-btn" routerLink="/c/search">Search</a>
+                            <a *ngIf="isLoggedIn" class="pi-btn" routerLink="/c/search">Search</a>
+                            <a *ngIf="!isLoggedIn" class="pi-btn" routerLink="/login">Login</a>
+                        </div>
+                        <div class="col-6">
+                            <a *ngIf="!isLoggedIn" class="pi-btn" routerLink="/register/co">Register</a>
                         </div>
                     </div>
 

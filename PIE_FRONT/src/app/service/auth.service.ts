@@ -42,4 +42,8 @@ export class AuthService {
     return localStorage.getItem('id');
   }
 
+  logout() {
+    localStorage.clear();
+  }
+
 }

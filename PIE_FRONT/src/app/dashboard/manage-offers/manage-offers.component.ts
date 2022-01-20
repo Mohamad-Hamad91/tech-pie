@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng-lts/api';
+import { OfferStatus } from 'src/app/model/offer-status';
 import { OfferDto } from '../model/offer.dto';
 import { OfferService } from '../service/offer.service';
 
@@ -19,10 +20,11 @@ export class ManageOffersComponent implements OnInit {
 
     this.cols = [
       { field: 'compEmail', header: 'Company Email' },
-      { field: 'compPhone', header: 'Company Phone' },
+      // { field: 'compPhone', header: 'Company Phone' },
       { field: 'compName', header: 'Company name' },
-      { field: 'workPlace', header: 'Work Place' },
+      // { field: 'workPlace', header: 'Work Place' },
       // { field: 'workType', header: 'Work Type' },
+      { field: 'status', header: 'status' },
       { field: 'employer', subfield: 'email', header: 'Employer' },
       { field: 'user', subfield: 'email', header: 'Employee' },
     ];
@@ -38,8 +40,7 @@ export class ManageOffersComponent implements OnInit {
   }
 
   approve(offerId: string, index: number) {
-    let tempOffer = { status: 'APPROVED' };
-    // tempOffer.status = 'APPROVED';
+    let tempOffer = { status: OfferStatus.APPROVED };
     this._offerService.edit(offerId, tempOffer)
       .subscribe(res => {
         this._messageService.add({
@@ -50,8 +51,7 @@ export class ManageOffersComponent implements OnInit {
   }
 
   reject(offerId: string, index: number) {
-    let tempOffer = { status: 'REJECTED' };
-    // tempOffer.status = 'REJECTED';
+    let tempOffer = { status: OfferStatus.REJECTED };
     this._offerService.edit(offerId, tempOffer)
       .subscribe(res => {
         this._messageService.add({

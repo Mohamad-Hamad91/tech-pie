@@ -15,13 +15,10 @@ import { CALC_PRICE_PER_HOUR } from 'src/utils/helpers/clac-price-per-hour.helpe
 @Injectable()
 export class ResumeService {
 
-  // constructor(@InjectRepository(Resume) private resumeRepository: Repository<Resume>,
-  //   private fileService: FileService) { }
   constructor(@InjectModel(Resume.name) private resumeModel: Model<ResumeDocument>,
     private fileService: FileService, private userService: UsersService) { }
 
   async get(input: BaseQueryInputDto) {
-    const temp = input;
     const result = await this.resumeModel.find()
       // .sort(input.sortBy)
       .limit(input.pageSize)
@@ -65,7 +62,7 @@ export class ResumeService {
     return result;
   }
 
-  async update(id: string, resume: ResumeDto, file?: Express.Multer.File): Promise<Resume> {
+  async update(_id: string, resume: ResumeDto, file?: Express.Multer.File): Promise<Resume> {
     let result;
     const session: ClientSession = await this.resumeModel.startSession();
     await session.withTransaction(async (session) => {
@@ -75,13 +72,13 @@ export class ResumeService {
       }
       if (temp.expectedPriceCurrency && temp.expectedPriceMin && temp.expectedPriceUnit)
         temp.pricePerHour = CALC_PRICE_PER_HOUR(temp.expectedPriceMin, temp.expectedPriceCurrency, temp.expectedPriceUnit);
-      const old = await this.resumeModel.findOneAndUpdate({ id }, temp);
+      const old = await this.resumeModel.findOneAndUpdate({ _id }, temp);
       if (file) this.fileService.delete(old.photo._id.toString(), false);
     });
     return result;
   }
 
-  async delete(id: string): Promise<void> {
-    (await this.resumeModel.findOneAndDelete({ id }));
+  async delete(_id: string): Promise<void> {
+    (await this.resumeModel.findOneAndDelete({ _id }));
   }
 }

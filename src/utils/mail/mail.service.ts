@@ -38,4 +38,16 @@ export class MailService {
         });
     }
 
+
+    async sendOfferToEmployee(offer: any) {
+
+        await this.mailerService.sendMail({
+            to: offer.user.email,
+            // from: '"Support Team" <support@example.com>',
+            subject: 'Job Offer',
+            template: './offer-template',
+            context: { ...offer },
+        });
+    }
+
 }

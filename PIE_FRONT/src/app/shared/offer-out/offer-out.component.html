@@ -1,0 +1,31 @@
+<p-toast></p-toast>
+
+<app-navbar></app-navbar>
+
+<section class="inbox-wrapper">
+    <div class="container">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <th scope="col">#</th>
+                <th scope="col" *ngFor="let col of cols"> {{col.header}}</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let offer of data; index as i">
+                    <th scope="row">{{i + 1}}</th>
+                    <td *ngFor="let col of cols">
+                        <div *ngIf="col.subfield;then nested_object_content else normal_content"></div>
+                        <ng-template #nested_object_content>
+                            {{offer[col.field][col.subfield]}}
+                        </ng-template>
+                        <ng-template #normal_content>
+                            {{offer[col.field]}}
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+<app-footer></app-footer>

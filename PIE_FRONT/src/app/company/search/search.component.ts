@@ -93,7 +93,7 @@ export class SearchComponent implements OnInit {
   }
 
   browseResume(id) {
-    this._router.navigate(['/r/v/' + id]);
+    this._router.navigate(['/v/r/' + id]);
   }
 
 

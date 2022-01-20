@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng-lts/api';
 import { AuthService } from 'src/app/service/auth.service';
-import { OfferService } from '../service/offer.service';
-import { OfferDto } from './offer.dto';
+import { OfferService } from 'src/app/service/offer.service';
+import { OfferDto } from '../../model/offer.dto';
 
 @Component({
   selector: 'app-offer',

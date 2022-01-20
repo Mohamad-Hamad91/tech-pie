@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ROLE } from '../model/roles.enum';
 import { AuthService } from '../service/auth.service';
 import { RegisterDto } from './register.dto';
 
@@ -16,11 +17,12 @@ export class RegisterComponent implements OnInit {
 
   data: RegisterDto = new RegisterDto();
 
-  constructor(private _authService: AuthService, 
-    private toastr: ToastrService,
+  constructor(private _authService: AuthService,
+    private toastr: ToastrService, private _route: ActivatedRoute,
     private _router: Router) { }
 
   ngOnInit(): void {
+    this.data.userType = this._route.snapshot.params.userType === 'co' ? ROLE.COMPANY : ROLE.USER;
   }
 
   displayPass(pass: HTMLInputElement, confpass: HTMLInputElement) {

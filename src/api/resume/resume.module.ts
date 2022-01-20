@@ -44,7 +44,7 @@ import { SearchController } from './search/search.controller';
     AuthModule,
     FileModule,
     UsersModule,
-    CacheModule.register()
+    // CacheModule.register() // is global
   ],
   controllers: [ResumeController, SearchController],
   providers: [FileService, UsersService, ResumeService, AutoCompleteService, SearchService],

@@ -40,7 +40,6 @@ export class ResumeDto {
   @IsOptional()
   email?: string;
 
-  @IsNotEmpty()
   @MinLength(3)
   @ApiProperty()
   @IsOptional()

@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { ROLE } from 'src/app/model/roles.enum';
 import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
@@ -12,11 +14,15 @@ export class NavbarComponent implements OnInit {
   @ViewChild('nav') nav: ElementRef;
   collapsed: boolean = true;
   isLoggedin: boolean = false;
+  isCompany: boolean = false;
+  isEmployee: boolean = false;
 
-  constructor(private _authService: AuthService) { }
+  constructor(private _authService: AuthService, private _router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedin = this._authService.isLoggedIn();
+    this.isCompany = this._authService.getRole() === ROLE.COMPANY;
+    this.isEmployee = this._authService.getRole() === ROLE.USER;
   }
 
   collapseNav() {
@@ -29,4 +35,10 @@ export class NavbarComponent implements OnInit {
     }
     this.collapsed = !this.collapsed;
   }
+
+  logout() {
+    this._authService.logout();
+    this._router.navigate(['/login']);
+  }
+
 }

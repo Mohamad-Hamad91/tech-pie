@@ -9,10 +9,16 @@ export class DataService {
 
   private _URL: string = environment.baseURL + 'resume/';
 
+  private _compURL: string = environment.baseURL + 'company/';
+
   constructor(private _http: HttpClient) { }
 
   getOne(resumeId: string) {
     return this._http.get<any>(this._URL + resumeId);
+  }
+
+  getOneComp(profileId: string) {
+    return this._http.get<any>(this._compURL + profileId);
   }
 
 }

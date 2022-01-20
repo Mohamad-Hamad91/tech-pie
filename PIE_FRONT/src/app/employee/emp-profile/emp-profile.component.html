@@ -1,7 +1,13 @@
 <p-toast position="bottom-right"></p-toast>
 <app-navbar></app-navbar>
 <div class="toolbar">
-    <button class="pi-btn" (click)="save()">Save</button>
+    <button class="pi-btn" icon="" (click)="save()">Save &nbsp;
+        <i class="pi pi-save"></i>
+    </button>
+    <button class="pi-btn" (click)="share()">
+        Share &nbsp; <i class="pi pi-share-alt"></i> </button>
+        <a [routerLink]="'/v/r/' + data._id" target="_blank" class="pi-btn">
+            Preview &nbsp; <i class="pi pi-image"></i> </a>
 </div>
 <section class="container resume">
     <div class="resume-wrapper">
@@ -11,11 +17,13 @@
         <!--------------- Main header starts -------------->
         <div class="row resume-header">
             <div class="col-4 emp-photo-wrapper">
-                <img *ngIf="!fromFrontAvatar" class="emp-photo" [src]="data.photo? data.photo.url: 'assets/imgs/resume/resume-def-profile.svg'"
-                    alt="profile photo" width="150">
-                    <img *ngIf="fromFrontAvatar" src="{{imageSrc}}" alt="avatar" width="150">
+                <img *ngIf="!fromFrontAvatar" class="emp-photo"
+                    [src]="data.photo? data.photo.url: 'assets/imgs/resume/resume-def-profile.svg'" alt="profile photo"
+                    width="150">
+                <img *ngIf="fromFrontAvatar" src="{{imageSrc}}" alt="avatar" width="150">
                 <p-fileUpload mode="advanced" name="demo" accept="image/*" maxFileSize="1000000" customUpload="true"
-                    (uploadHandler)="onAvatarUpload($event)" [auto]="true" chooseLabel="Change Photo" chooseIcon=" pi pi-upload"></p-fileUpload>
+                    (uploadHandler)="onAvatarUpload($event)" [auto]="true" chooseLabel="Change Photo"
+                    chooseIcon=" pi pi-upload"></p-fileUpload>
             </div>
             <div class="col-6 col-md-4 main-info">
                 <div class="name-wrapper">
@@ -530,5 +538,18 @@
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" (click)="cancelLang()" label="Cancel" styleClass="p-button-text"></p-button>
         <p-button icon="pi pi-check" (click)="addLang()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Share Link" [(visible)]="shareDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <div class="input-group mb-3">
+        <input pInputText type="text" name="label" [value]="frontDomain + 'v/r/' + data._id" placeholder="Label"
+            style="width: 100%;" #sharableLink>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelShare()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="copyLink(sharableLink)" label="Copy To Clipboard" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>

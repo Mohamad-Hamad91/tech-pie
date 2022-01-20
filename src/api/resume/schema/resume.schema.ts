@@ -25,6 +25,8 @@ export type ResumeDocument = Resume & Document;
 @Schema()
 export class Resume {
 
+  id: mongoose.ObjectId;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 

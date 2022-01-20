@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { ROLE } from "src/utils/constants/role.const";
 
 export class RegisterDto {
 
@@ -15,5 +16,7 @@ export class RegisterDto {
         { message: 'Password Weak, it must have a one number, Capital, small and a special char!' })
     @ApiProperty()
     password: string;
+
+    userType?: ROLE.USER | ROLE.COMPANY;
 
 }

@@ -6,11 +6,11 @@ import { GET_SKILL_VALUE } from 'src/app/shared/constants/skill-levels.const';
 import { DataService } from '../service/data.service';
 
 @Component({
-  selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.scss']
+  selector: 'app-view-emp-profile',
+  templateUrl: './view-emp-profile.component.html',
+  styleUrls: ['./view-emp-profile.component.scss']
 })
-export class ViewComponent implements OnInit {
+export class ViewEmpProfileComponent implements OnInit {
 
   resumeId: string;
   data: any;

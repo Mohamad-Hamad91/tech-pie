@@ -67,6 +67,13 @@ export class ResumeController {
     return this.resumeService.getByUserId(id);
   }
 
+   // get my profile
+   @Get('/my-profile')
+   @UsePipes(new ValidationPipe({ transform: true }))
+   async getMyProfile(@GetUser() user) {
+       return this.resumeService.getByUserId(user._id);
+   }
+
 
   @Get('/:id')
   @UsePipes(new ValidationPipe({ transform: true }))
