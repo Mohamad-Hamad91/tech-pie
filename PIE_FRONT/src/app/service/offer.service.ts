@@ -25,4 +25,8 @@ export class OfferService {
     return this._http.get<OfferDto[]>(this._URL + 'sent');
   }
 
+  edit(id: string, offer: OfferDto) {
+    return this._http.put(this._URL + id, offer);
+  }
+
 }

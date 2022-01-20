@@ -8,6 +8,7 @@
             <thead class="thead-dark">
                 <th scope="col">#</th>
                 <th scope="col" *ngFor="let col of cols"> {{col.header}}</th>
+                <th>Actions</th>
             </thead>
             <tbody>
                 <tr *ngFor="let offer of data; index as i">
@@ -21,6 +22,7 @@
                             {{offer[col.field]}}
                         </ng-template>
                     </td>
+                    <td><button [disabled]="offer.status === OfferStatus.ACCEPTED" class="btn btn-outline-success" (click)="acceptOffer(i)">Accept</button></td>
                 </tr>
             </tbody>
         </table>

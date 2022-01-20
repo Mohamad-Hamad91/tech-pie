@@ -13,6 +13,7 @@ import { DataService } from '../service/data.service';
 export class ViewEmpProfileComponent implements OnInit {
 
   resumeId: string;
+  byuser: boolean = false;
   data: any;
   isLoggedIn: boolean = false;
 
@@ -23,6 +24,7 @@ export class ViewEmpProfileComponent implements OnInit {
 
     this._route.params.subscribe(params => {
       this.resumeId = this._route.snapshot.params.id;
+      this.byuser = this._route.snapshot.params.user?.trim() ? true : false;
       this.getData();
       this.isLoggedIn = this._authService.isLoggedIn();
     });
@@ -30,16 +32,30 @@ export class ViewEmpProfileComponent implements OnInit {
   }
 
   getData() {
-    this._dataService.getOne(this.resumeId)
-      .subscribe(res => {
-        this.data = res;
-        this.data.skills = this.data.skills.map((val) => {
-          return { ...val, expertLevelValue: GET_SKILL_VALUE(val.expertLevel) };
+    if (this.byuser) {
+      this._dataService.getByUserId(this.resumeId)
+        .subscribe(res => {
+          this.data = res;
+          this.data.skills = this.data.skills.map((val) => {
+            return { ...val, expertLevelValue: GET_SKILL_VALUE(val.expertLevel) };
+          });
+          this.data.languages = this.data.languages.map((val) => {
+            return { ...val, expertValue: GET_LANG_VALUE(val.level) };
+          });
         });
-        this.data.languages = this.data.languages.map((val) => {
-          return { ...val, expertValue: GET_LANG_VALUE(val.level) };
+    } else {
+      this._dataService.getOne(this.resumeId)
+        .subscribe(res => {
+          this.data = res;
+          this.data.skills = this.data.skills.map((val) => {
+            return { ...val, expertLevelValue: GET_SKILL_VALUE(val.expertLevel) };
+          });
+          this.data.languages = this.data.languages.map((val) => {
+            return { ...val, expertValue: GET_LANG_VALUE(val.level) };
+          });
         });
-      });
+    }
+
   }
 
   @HostListener('window:keydown', ['$event'])

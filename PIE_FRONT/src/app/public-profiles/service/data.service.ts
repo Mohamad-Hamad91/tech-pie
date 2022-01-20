@@ -21,4 +21,12 @@ export class DataService {
     return this._http.get<any>(this._compURL + profileId);
   }
 
+  getByUserId(id: string) {
+    return this._http.get<any>(this._URL + 'user/' + id);
+  }
+
+  getByCompId(id: string) {
+    return this._http.get<any>(this._compURL + 'user/' + id);
+  }
+
 }

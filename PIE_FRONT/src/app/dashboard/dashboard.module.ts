@@ -9,6 +9,8 @@ import { ManageOffersComponent } from './manage-offers/manage-offers.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ToastModule } from 'primeng-lts/toast';
 import {TableModule} from 'primeng-lts/table';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng-lts/dialog';
 
 
 
@@ -21,11 +23,13 @@ import {TableModule} from 'primeng-lts/table';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     DashboardRoutingModule,
     MegaMenuModule,
     SharedModule,
     ToastModule,
-    TableModule
+    TableModule,
+    DialogModule
   ]
 })
 export class DashboardModule { }

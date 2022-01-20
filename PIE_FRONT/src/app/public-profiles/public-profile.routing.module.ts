@@ -5,8 +5,10 @@ import { ViewEmpProfileComponent } from './view-emp-profile/view-emp-profile.com
 
 const routes: Routes = [
     // { path: '', redirectTo: 'v', pathMatch: 'full' },
-    {path: 'r/:id', component: ViewEmpProfileComponent},
-    {path: 'c/:id', component: ViewCompProfileComponent}
+    { path: 'r/:user/:id', component: ViewEmpProfileComponent },
+    { path: 'c/:user/:id', component: ViewCompProfileComponent },
+    { path: 'r/:id', component: ViewEmpProfileComponent },
+    { path: 'c/:id', component: ViewCompProfileComponent }
 ];
 
 @NgModule({

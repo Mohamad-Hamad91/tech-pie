@@ -61,4 +61,8 @@ export class OfferDto {
 
     @IsOptional()
     status?: OfferStatus = OfferStatus.IN_PROGRESS;
+
+    @ApiProperty()
+    @IsOptional()
+    rejectMessage: string;
 }

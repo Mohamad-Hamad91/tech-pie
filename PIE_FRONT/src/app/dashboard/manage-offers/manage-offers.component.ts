@@ -13,6 +13,10 @@ export class ManageOffersComponent implements OnInit {
 
   data: OfferDto[] = [];
   cols: { field: string; header: string; subfield?: string }[];
+  OfferStatus = OfferStatus;
+  displayRejectDialog: boolean = false;
+  tempRejectMessage: string;
+  tempIndex: number;
 
   constructor(private _offerService: OfferService, private _messageService: MessageService) { }
 
@@ -40,9 +44,10 @@ export class ManageOffersComponent implements OnInit {
   }
 
   approve(offerId: string, index: number) {
-    let tempOffer = { status: OfferStatus.APPROVED };
+    let tempOffer = { status: OfferStatus.APPROVED, rejectMessage: '' };
     this._offerService.edit(offerId, tempOffer)
       .subscribe(res => {
+        this.data[index].status = OfferStatus.APPROVED;
         this._messageService.add({
           severity: 'success',
           detail: 'Offer Approved!'
@@ -50,16 +55,65 @@ export class ManageOffersComponent implements OnInit {
       });
   }
 
-  reject(offerId: string, index: number) {
-    let tempOffer = { status: OfferStatus.REJECTED };
-    this._offerService.edit(offerId, tempOffer)
+  openRejectDialog(index: number) {
+    this.tempRejectMessage = this.data[index].rejectMessage;
+    this.tempIndex = index;
+    this.displayRejectDialog = true;
+  }
+
+  cancelReject() {
+    this.tempIndex = null;
+    this.displayRejectDialog = false;
+    this.tempRejectMessage = '';
+  }
+
+  reject() {
+    let tempOffer = { status: OfferStatus.REJECTED, rejectMessage: this.tempRejectMessage };
+    this._offerService.edit(this.data[this.tempIndex]._id, tempOffer)
       .subscribe(res => {
+        this.data[this.tempIndex].status = OfferStatus.REJECTED;
         this._messageService.add({
           severity: 'success',
           detail: 'Offer Rejected!'
         });
+        this.displayRejectDialog = false;
       });
   }
 
+  cancel(offerId: string, index: number) {
+    let tempOffer = { status: OfferStatus.CANCELED, rejectMessage: '' };
+    this._offerService.edit(offerId, tempOffer)
+      .subscribe(res => {
+        this.data[index].status = OfferStatus.CANCELED;
+        this._messageService.add({
+          severity: 'success',
+          detail: 'Offer Canceled!'
+        });
+      });
+  }
+
+  finish(offerId: string, index: number) {
+    let tempOffer = { status: OfferStatus.FINISHED, rejectMessage: '' };
+    this._offerService.edit(offerId, tempOffer)
+      .subscribe(res => {
+        this.data[index].status = OfferStatus.FINISHED;
+        this._messageService.add({
+          severity: 'success',
+          detail: 'Offer maeked as finished!'
+        });
+      });
+  }
+
+  ignore(offerId: string, index: number) {
+    let tempOffer = { status: OfferStatus.IGNORED, rejectMessage: '' };
+    this._offerService.edit(offerId, tempOffer)
+      .subscribe(res => {
+        this.data[index].status = OfferStatus.IGNORED;
+        this._messageService.add({
+          severity: 'success',
+          detail: 'Offer ignored!'
+        });
+      });
+  }
 
 }

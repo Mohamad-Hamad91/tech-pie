@@ -50,4 +50,15 @@ export class MailService {
         });
     }
 
+    async sendRejectReasonToEmployer(offer: any) {
+
+        await this.mailerService.sendMail({
+            to: offer.employer.email,
+            // from: '"Support Team" <support@example.com>',
+            subject: 'Job Offer Rejected!',
+            template: './reject-offer-template',
+            context: { ...offer },
+        });
+    }
+
 }

@@ -21,4 +21,5 @@ export class OfferDto {
     workType?: string;
     message?: string;
     status?: OfferStatus;
+    rejectMessage?: string;
 }

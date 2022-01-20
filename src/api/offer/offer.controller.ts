@@ -46,9 +46,9 @@ export class OfferController {
     }
 
     @Put('/:id')
-    @Roles(ROLE.ADMIN)
+    @Roles(ROLE.ADMIN, ROLE.USER)
     @UsePipes(new ValidationPipe({ transform: true }))
-    async update(@Body() offer: OfferDto, @Param('id') id: string) {
-        return await this.offerService.edit(id, offer);
+    async update(@Body() offer: OfferDto, @Param('id') id: string, @GetUser() user) {
+        return await this.offerService.edit(id, offer, user.email);
     }
 }

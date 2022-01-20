@@ -51,6 +51,9 @@ export class Offer {
     @Prop()
     status?: OfferStatus = OfferStatus.IN_PROGRESS;
 
+    @Prop()
+    rejectMessage?: string;
+
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);

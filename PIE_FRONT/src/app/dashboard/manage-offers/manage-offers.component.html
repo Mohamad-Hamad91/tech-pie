@@ -12,16 +12,42 @@
             <td *ngFor="let col of cols">
                 <div *ngIf="col.subfield;then nested_object_content else normal_content"></div>
                 <ng-template #nested_object_content>
-                    {{row[col.field][col.subfield]}}
+                    <span *ngIf="col.field === 'employer'">
+                        <a *ngIf="row?.employerType === 'USER'"
+                            [routerLink]="'/v/r/user/' + row?.employer?._id">{{row[col.field][col.subfield]}}</a>
+                        <a *ngIf="row?.employerType === 'COMPANY'"
+                            [routerLink]="'/v/c/user/' + row?.employer?._id">{{row[col.field][col.subfield]}}</a>
+                    </span>
+                    <span *ngIf="col.field === 'user'">
+                        <a [routerLink]="'/v/r/user/' + row?.user?._id">{{row[col.field][col.subfield]}}</a>
+                    </span>
                 </ng-template>
                 <ng-template #normal_content>
                     {{row[col.field]}}
                 </ng-template>
             </td>
             <td>
-                <button class="btn btn-outline-success" (click)="approve(row._id, i)">Approve</button>
-                <button class="btn btn-outline-secondary" (click)="reject(row._id, i)">Reject</button>
+                <button *ngIf="row.status === OfferStatus.IN_PROGRESS" class="btn btn-outline-success"
+                    (click)="approve(row._id, i)">Approve</button>
+                <button *ngIf="row.status === OfferStatus.IN_PROGRESS" class="btn btn-outline-danger"
+                    (click)="openRejectDialog(i)">Reject</button>
+                <button *ngIf="row.status === OfferStatus.IN_PROGRESS" class="btn btn-outline-warning"
+                    (click)="ignore(row._id, i)">Ignore</button>
+                <button *ngIf="row.status === OfferStatus.APPROVED" class="btn btn-outline-danger"
+                    (click)="cancel(row._id, i)">Cancel</button>
+                <button *ngIf="row.status === OfferStatus.APPROVED" class="btn btn-outline-success"
+                    (click)="finish(row._id, i)">Finished</button>
             </td>
         </tr>
     </ng-template>
 </p-table>
+
+
+<p-dialog header="Reject Offer" [(visible)]="displayRejectDialog" [breakpoints]="{'960px': '75vw'}"
+    [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+    <textarea [(ngModel)]="tempRejectMessage" style="width: 100%;"></textarea>
+    <ng-template pTemplate="footer">
+        <button (click)="cancelReject()" class="btn btn-outline-secondary">Cancel</button>
+        <button (click)="reject()" class="btn btn-outline-danger">Reject</button>
+    </ng-template>
+</p-dialog>

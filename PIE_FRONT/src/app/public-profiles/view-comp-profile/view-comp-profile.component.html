@@ -1,7 +1,14 @@
 <app-navbar></app-navbar>
 
 <section class="profile-wrapper">
-    {{data}}
+    <div class="container">
+        <div>email: {{data?.email}}</div>
+        <div> name: {{data?.name}}</div>
+        <div>phone: {{data?.phone}}</div>
+        <div>city: {{data?.city}}</div>
+        <div>address: {{data?.address}}</div>
+        <div>website: {{data?.website}}</div>
+    </div>
 </section>
 
 <app-footer></app-footer>

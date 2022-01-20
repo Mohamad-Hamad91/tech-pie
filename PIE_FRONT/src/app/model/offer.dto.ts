@@ -7,7 +7,7 @@ export class OfferDto {
     compName?: string;
     workPlace?: string;
     user?: string;
-    employer: string;
+    employer?: string;
     employerType?: string;
     minPrice?: number;
     maxPrice?: number;
@@ -15,4 +15,5 @@ export class OfferDto {
     workType?: string;
     message?: string;
     status?: OfferStatus = OfferStatus.IN_PROGRESS;
+    rejectMessage?: string;
 }
