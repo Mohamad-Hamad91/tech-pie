@@ -1,14 +1,90 @@
 <app-navbar></app-navbar>
 
-<section class="profile-wrapper">
-    <div class="container">
-        <div>email: {{data?.email}}</div>
-        <div> name: {{data?.name}}</div>
-        <div>phone: {{data?.phone}}</div>
-        <div>city: {{data?.city}}</div>
-        <div>address: {{data?.address}}</div>
-        <div>website: {{data?.website}}</div>
+<section class="container resume">
+    <div class="resume-wrapper">
+        <div class="resume-pic-wrapper">
+            <!-- <img class="resume-pic" src="assets/imgs/resume/resume-default-bg.jpg" alt="resume bg"> -->
+        </div>
+        <!--------------- Main header starts -------------->
+        <div class="row resume-header">
+            <div class="col-4 emp-photo-wrapper">
+                <img class="emp-photo" [src]="data.logo? data.logo?.url: 'assets/imgs/resume/resume-def-profile.svg'"
+                    alt="profile photo" width="150">
+            </div>
+            <div class="col-6 col-md-4 main-info">
+                <div class="name-wrapper">
+                    <h2 class="name">{{data.name}} </h2>
+                </div>
+            </div>
+            <div class="col-2">
+                <a *ngIf="isLoggedIn && isEmp" class="pi-btn" [routerLink]="'/c/offer/' + data.user">Offer</a>
+            </div>
+        </div>
+        <!--------------- Main header ends ----------------->
+
+        <!--------------- content starts -------------->
+        <div class="row resume-content">
+            <!--------------- Main content starts -------------->
+            <div class="col-9 resume-main-content">
+                <div class="resume-summary">
+                    <h3>Summary</h3>
+                    {{data.description}}
+                </div>
+                <hr>
+                <div class="resume-summary">
+                    <h3>Employee Benifits</h3>
+                    <ul>
+                        <li *ngFor="let benifit of data.empBenifits">{{benifit}}</li>
+                    </ul>
+                </div>
+                <hr>
+                <div class="resume-summary">
+                    <h3>Tech Stack</h3>
+                    <ul>
+                        <li *ngFor="let stack of data.techStack">{{stack}}</li>
+                    </ul>
+                </div>
+                <hr>
+                <div class="resume-summary">
+                    <h3>About Company</h3>
+                    {{data.aboutContent}}
+                </div>
+                <hr>
+            </div>
+            <!--------------- Main content ends -------------->
+
+            <!--------------- Side content starts -------------->
+            <div class="col-3 resume-side-content">
+                <h4>Details</h4>
+                <div class="resume-address">
+                    <img src="assets/imgs/resume/map-pin.svg" alt="map pin" width="25">
+                    {{data.address}},
+                    {{data.city}}
+                </div>
+                <div class="resume-phone">
+                    <img src="assets/imgs/resume/phone.svg" alt="phone" width="25">
+                    {{data.phone}}
+                </div>
+                <div class="resume-mail">
+                    <img src="assets/imgs/resume/mail-message-new.svg" alt="mail" width="25">
+                    {{data.email}}
+                </div>
+                <hr />
+                <div class="resume-mail">
+                    <img src="assets/imgs/global.svg" alt="website" width="25">
+                    {{data.website}}
+                </div>
+                <div class="resume-mail">
+                    <img src="assets/imgs/users1.svg" alt="users" width="25">
+                    {{data.compSize}}
+                </div>
+                <hr>
+            </div>
+            <!--------------- Side content ends -------------->
+        </div>
+        <!--------------- content ends -------------->
     </div>
 </section>
+
 
 <app-footer></app-footer>

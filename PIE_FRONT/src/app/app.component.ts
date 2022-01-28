@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from './service/auth.service';
+import { identifierModuleUrl } from '@angular/compiler';
+import { SseService } from './service/sse.service';
+import { MessageService } from 'primeng-lts/api';
 
 const EventSource: any = window['EventSource'];
 
@@ -13,31 +17,21 @@ export class AppComponent implements OnInit {
 
   baseURL = environment.baseURL;
 
-  constructor(private toastr: ToastrService) {
-    const evtSource = new EventSource('http://localhost:3001/api/' + 'notification?id=1');
-    evtSource.onmessage = ({ data }) => {
-      console.log('connection send data');
-      const message = JSON.parse(data);
-      console.log(message);
-      this.toastr.success(message.data);
-    }
-
-    evtSource.onerror = (e) => {
-      console.log('connection error');
-      console.log(e);
-      evtSource.close();
-    }
-
-    evtSource.onopen = (e) => {
-      console.log('connection open');
-      console.log(e);
-    } //
+  constructor(private sseService: SseService, private _authService: AuthService) {
 
   }
 
   ngOnInit() {
-
-
+    if (!this.sseService.evtSource)
+      this.sseService.init();
+    this.sseService.notifications.subscribe(message => {
+      // debugger;
+      // this.toastr.info(message, '', {
+      //   closeButton: true,
+      //   timeOut: 50000,
+      //   easeTime: 1000
+      // });
+    });
   }
 
 }

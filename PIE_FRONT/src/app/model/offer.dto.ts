@@ -16,4 +16,5 @@ export class OfferDto {
     message?: string;
     status?: OfferStatus = OfferStatus.IN_PROGRESS;
     rejectMessage?: string;
+    files?: string[] = [];
 }

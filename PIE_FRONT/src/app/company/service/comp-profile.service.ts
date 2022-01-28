@@ -17,12 +17,17 @@ export class CompProfileService {
     return this._http.get<CompanyDto>(this._URL + 'my-profile/');
   }
 
-  create(data: CompanyDto): Observable<any> {
+  create(data: FormData): Observable<any> {
     return this._http.post<any>(this._URL, data);
   }
 
-  update(profileId: string, data: CompanyDto): Observable<any> {
-    return this._http.put<CompanyDto>(this._URL + profileId, data);
+  update(profileId: string, data: FormData): Observable<any> {
+    return this._http.put<CompanyDto>(this._URL + profileId, data,
+      {
+        responseType: 'json',
+        reportProgress: true,
+        observe: 'events'
+      });
   }
 
 

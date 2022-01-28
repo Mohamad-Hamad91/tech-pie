@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="heading">Offer Details</h1>
+            <p>Status: {{data.status}}</p>
+        </div>
+        <div class="col-6">
+            <h1>Employer
+                <a *ngIf="data?.employerType === 'USER'" [routerLink]="'/v/r/user/' + data?.employer?._id"
+                    target="_blank" class="btn btn-outline-secondary">View</a>
+                <a *ngIf="data?.employerType === 'COMPANY'" [routerLink]="'/v/c/user/' + data?.employer?._id"
+                    target="_blank" class="btn btn-outline-secondary">View</a>
+            </h1>
+            <h6>{{data.employerType}}</h6>
+            <ul>
+                <li>E-mail: {{data.employer.email}}</li>
+                <li>Offer E-mail: {{data.compEmail}}</li>
+                <li>Name: {{data.compName}}</li>
+                <li>Phone: {{data.compPhone}}</li>
+                <li>Work Type: {{data.workType}}</li>
+                <li>Position: {{data.position}}</li>
+                <li>Work Place: {{data.workPlace}}</li>
+                <li>Price Rang: {{data.minPrice}} - {{data.maxPrice}}</li>
+                <li>{{data.message}}</li>
+                <p>{{data.rejectMessage}}</p>
+            </ul>
+        </div>
+
+        <div class="col-6">
+            <h1>Employee
+                <a class="btn btn-outline-secondary" [routerLink]="'/v/r/user/' + data?.user?._id"
+                    target="_blank">View</a>
+            </h1>
+            <ul>
+                <li>
+                    E-mail: {{data.user.email}}
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-12">
+            <button *ngIf="data.status === OfferStatus.IN_PROGRESS" class="btn btn-outline-success"
+                (click)="approve(data._id)">Approve</button>
+            <button *ngIf="data.status === OfferStatus.IN_PROGRESS" class="btn btn-outline-danger"
+                (click)="openRejectDialog()">Reject</button>
+            <button *ngIf="data.status === OfferStatus.IN_PROGRESS" class="btn btn-outline-warning"
+                (click)="ignore(data._id)">Ignore</button>
+            <button *ngIf="data.status === OfferStatus.APPROVED" class="btn btn-outline-danger"
+                (click)="cancel(data._id)">Cancel</button>
+            <button *ngIf="data.status === OfferStatus.APPROVED" class="btn btn-outline-success"
+                (click)="finish(data._id)">Finished</button>
+        </div>
+
+    </div>
+</div>

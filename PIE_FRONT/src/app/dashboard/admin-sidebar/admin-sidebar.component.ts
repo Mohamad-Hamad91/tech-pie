@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MegaMenuItem, PrimeIcons } from 'primeng-lts/api';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -10,7 +12,7 @@ export class AdminSidebarComponent implements OnInit {
 
   items: MegaMenuItem[];
 
-  constructor() { }
+  constructor(private _authService: AuthService, private _router: Router) { }
 
   ngOnInit(): void {
     this.items = [
@@ -46,8 +48,17 @@ export class AdminSidebarComponent implements OnInit {
             }
           ]
         ]
+      }, 
+      {
+        label: 'Logout', icon: PrimeIcons.SIGN_OUT,
+        command: () => this.logout()
       }
     ];
+  }
+
+  logout() {
+    this._authService.logout();
+    this._router.navigate(['/login']);
   }
 
 }

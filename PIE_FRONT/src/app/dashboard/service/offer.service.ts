@@ -21,4 +21,8 @@ export class OfferService {
     return this._http.put(this._URL + id, offer);
   }
 
+  getOne(id: string): Observable<OfferDto> {
+    return this._http.get<OfferDto>(this._URL + id);
+  }
+
 }

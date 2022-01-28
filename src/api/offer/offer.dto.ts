@@ -65,4 +65,8 @@ export class OfferDto {
     @ApiProperty()
     @IsOptional()
     rejectMessage: string;
+
+    @ApiProperty()
+    @IsOptional()
+    files?: string[];
 }

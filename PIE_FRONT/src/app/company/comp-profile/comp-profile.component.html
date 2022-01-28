@@ -1,73 +1,143 @@
 <p-toast position="bottom-right"></p-toast>
 <app-navbar></app-navbar>
-
-<section class="profile-wrapper">
-    <section class="company-section">
-        <main class="col-xs-12 col-lg-6 offset-lg-3 company-content">
-            <div class="form-wrapper">
-                <!-- <div class="center-image-wrapper">
-                    <img class="center-image" src="assets/imgs/company/profile.svg" alt="" srcset="">
-                </div> -->
-                <form class="company-form" (ngSubmit)="save()">
-                    <div class="company-input-wrapper">
-                        <input name="email" autocapitalize="none" placeholder="E-mail" class="company-input"
-                            [(ngModel)]="data.email">
-                    </div>
-                    <div class="company-input-wrapper">
-                        <div class="input-group mb-3">
-                            <input name="phone" autocapitalize="none" placeholder="Mobile number" class="company-input"
-                                [(ngModel)]="data.phone">
-                        </div>
-                    </div>
-                    <div class="company-input-wrapper">
-                        <div class="input-group mb-3">
-                            <input name="name" autocapitalize="none" placeholder="Name" class="company-input"
-                                [(ngModel)]="data.name">
-                        </div>
-                    </div>
-                    <div class="company-input-wrapper">
-                        <div class="input-group mb-3">
-                            <input type="url" name="website" autocapitalize="none" placeholder="website" class="company-input"
-                                [(ngModel)]="data.website">
-                        </div>
-                    </div>
-                    <div class="company-input-wrapper">
-                        <div class="input-group mb-3">
-                            <input name="address" autocapitalize="none" placeholder="address" class="company-input"
-                                [(ngModel)]="data.address">
-                        </div>
-                    </div>
-                    <div class="company-input-wrapper">
-                        <div class="input-group mb-3">
-                            <input name="city" autocapitalize="none" placeholder="city" class="company-input"
-                                [(ngModel)]="data.city">
-                        </div>
-                    </div>
-                    <div class="company-input-wrapper">
-                        <div class="input-group mb-3">
-                            <input name="description" autocapitalize="none" placeholder="description" class="company-input"
-                                [(ngModel)]="data.description">
-                        </div>
-                    </div>
-                    <div class="company-input-wrapper">
-                        <div class="input-group mb-3">
-                            <input name="empBenifits" autocapitalize="none" placeholder="Employees Benifits" class="company-input"
-                                [(ngModel)]="data.empBenifits">
-                        </div>
-                    </div>
-                    <div class="company-input-wrapper">
-                        <div class="input-group mb-3">
-                            <input name="compSize" autocapitalize="none" placeholder="compSize" class="company-input"
-                                [(ngModel)]="data.compSize">
-                        </div>
-                    </div>
-                    <div class="company-input-wrapper">
-                        <button type="submit" class="pi-btn" >Save</button>
-                    </div>
-                </form>
+<div class="toolbar">
+    <button class="pi-btn" icon="" (click)="save()">Save &nbsp;
+        <i class="pi pi-save"></i>
+    </button>
+    <button class="pi-btn" (click)="share()">
+        Share &nbsp; <i class="pi pi-share-alt"></i> </button>
+    <a [routerLink]="'/v/c/' + data._id" target="_blank" class="pi-btn">
+        Preview &nbsp; <i class="pi pi-image"></i> </a>
+</div>
+<section class="container resume">
+    <div class="resume-wrapper">
+        <div class="resume-pic-wrapper">
+            <!-- <img class="resume-pic" src="assets/imgs/resume/resume-default-bg.jpg" alt="resume bg"> -->
+        </div>
+        <!--------------- Main header starts -------------->
+        <div class="row resume-header">
+            <div class="col-4 emp-photo-wrapper">
+                <img *ngIf="!fromFrontLogo" class="emp-photo"
+                    [src]="data.logo? data.logo?.url: 'assets/imgs/resume/resume-def-profile.svg'" alt="profile photo"
+                    width="150">
+                <img *ngIf="fromFrontLogo" src="{{imageSrc}}" alt="Company logo" width="150">
+                <p-fileUpload mode="advanced" name="demo" accept="image/*" maxFileSize="10000000" customUpload="true"
+                    (uploadHandler)="onAvatarUpload($event)" [auto]="true" chooseLabel="Change Photo"
+                    chooseIcon=" pi pi-upload"></p-fileUpload>
             </div>
-        </main>
-    </section>
+            <div class="col-6 col-md-4 main-info">
+                <div class="name-wrapper">
+                    <h2 class="name">
+                        <input type="text" name="name" class="resume-input" [(ngModel)]="data.name"
+                        placeholder="Name">
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <!--------------- Main header ends ----------------->
+
+        <!--------------- content starts -------------->
+        <div class="row resume-content">
+            <!--------------- Main content starts -------------->
+            <div class="col-9 resume-main-content">
+                <div class="resume-summary">
+                    <h3>Summary</h3>
+                    <textarea pInputTextarea autoResize="autoResize" [(ngModel)]="data.description"
+                        style="width: 100%;"></textarea>
+                </div>
+                <hr>
+                <div class="resume-summary">
+                    <h3>Employee Benifits</h3>
+                    <ul>
+                        <li *ngFor="let benifit of data.empBenifits; index as benefitIndex">
+                            <input pInputText type="text" [(ngModel)]="data.empBenifits[benefitIndex]">
+                            <button class="btn btn-outline-danger"
+                            (click)="data.empBenifits.splice(benefitIndex, 1)">Delete</button>
+                        </li>
+                    </ul>
+                    <textarea #benifit pInputTextarea autoResize="autoResize" 
+                        style="width: 100%;"></textarea>
+                        <button (click)="data.empBenifits.push(benifit.value)"
+                        class="btn btn-outline-success">Add</button>
+                </div>
+                <hr>
+                <div class="resume-summary">
+                    <h3>Tech Stack</h3>
+                    <ul>
+                        <li *ngFor="let tech of data.techStack; index as techIndex">
+                            <input pInputText type="text" [(ngModel)]="data.techStack[techIndex]">
+                            <button class="btn btn-outline-danger"
+                            (click)="data.techStack.splice(techIndex, 1)">Delete</button>
+                        </li>
+                    </ul>
+                    <textarea #stack pInputTextarea autoResize="autoResize" 
+                        style="width: 100%;"></textarea>
+                        <button (click)="data.techStack.push(stack.value)"
+                        class="btn btn-outline-success">Add</button>
+                </div>
+                <hr>
+                <div class="resume-summary">
+                    <h3>About Company</h3>
+                    <textarea pInputTextarea autoResize="autoResize" [(ngModel)]="data.aboutContent"
+                        style="width: 100%;"></textarea>
+                </div>
+                <hr>
+            </div>
+            <!--------------- Main content ends -------------->
+
+            <!--------------- Side content starts -------------->
+            <div class="col-3 resume-side-content">
+                <h4>Details</h4>
+                <div class="resume-address">
+                    <img src="assets/imgs/resume/map-pin.svg" alt="map pin" width="25">
+                    <input type="text" name="address" class="resume-input-side" [(ngModel)]="data.address"
+                        placeholder="Address">,
+                    <p-autoComplete [(ngModel)]="data.city" [suggestions]="cities"
+                        (completeMethod)="searchCities($event)" [dropdown]="true" Placeholder="City"
+                        styleClass="resume-input-side"></p-autoComplete>
+                </div>
+                <div class="resume-phone">
+                    <img src="assets/imgs/resume/phone.svg" alt="phone" width="25">
+                    <input type="tel" name="phone" class="resume-input-side" [(ngModel)]="data.phone"
+                        placeholder="Phone">
+                </div>
+                <div class="resume-mail">
+                    <img src="assets/imgs/resume/mail-message-new.svg" alt="mail" width="25">
+                    <input type="email" name="email" class="resume-input-side" [(ngModel)]="data.email"
+                        placeholder="E-mail">
+                </div>
+                <hr />
+                <div class="resume-mail">
+                    <img src="assets/imgs/global.svg" alt="website" width="25">
+                    <input type="email" name="email" class="resume-input-side" [(ngModel)]="data.website"
+                        placeholder="E-mail">
+                </div>
+                <div class="resume-mail">
+                    <img src="assets/imgs/users1.svg" alt="users" width="25">
+                    <input type="email" name="email" class="resume-input-side" [(ngModel)]="data.compSize"
+                        placeholder="E-mail">
+                </div>
+                <hr>
+            </div>
+            <!--------------- Side content ends -------------->
+        </div>
+        <!--------------- content ends -------------->
+    </div>
 </section>
 
+
 <app-footer></app-footer>
+
+
+
+<p-dialog header="Share Link" [(visible)]="shareDialog" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <div class="input-group mb-3">
+        <input pInputText type="text" name="label" [value]="frontDomain + 'v/c/' + data._id" placeholder="Label"
+            style="width: 100%;" #sharableLink>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="cancelShare()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="copyLink(sharableLink)" label="Copy To Clipboard" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

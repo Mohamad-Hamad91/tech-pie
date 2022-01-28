@@ -37,7 +37,10 @@ export class Company {
     description?: string;
 
     @Prop()
-    empBenifits?: string;
+    empBenifits?: string[] = [];
+
+    @Prop()
+    techStack?: string[] = [];
 
     @Prop()
     compSize?: string;

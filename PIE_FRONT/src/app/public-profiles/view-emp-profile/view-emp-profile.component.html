@@ -141,7 +141,7 @@
                     <div *ngFor="let skill of data?.skills">
                         <label for="">{{skill.value}}</label>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped" style="width: {{skill.expertLevelValue}}%">
+                            <div class="progress-bar progress-bar-striped" [style.width.%]="skill.expertLevelValue">
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                     <div *ngFor="let lang of data?.languages">
                         <label for="">{{lang.value}}</label>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped" style="width: {{lang.expertValue}}%"></div>
+                            <div class="progress-bar progress-bar-striped" [style.width.%]="lang.expertValue"></div>
                         </div>
                     </div>
                 </div>

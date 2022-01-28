@@ -6,3 +6,17 @@
   color: black !important;
   text-shadow: black 1px 1px 1px;
 }
+
+:host::ng-deep.p-menuitem-link-active {
+  span {
+    color: blue !important;
+  }
+}
+
+.seen {
+  color: #999999;
+}
+
+.unseen {
+  color: #17a2b8;
+}

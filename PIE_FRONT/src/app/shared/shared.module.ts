@@ -5,6 +5,8 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { OfferOutComponent } from './offer-out/offer-out.component';
 import { ToastModule } from 'primeng-lts/toast';
+import { MenubarModule } from 'primeng-lts/menubar';
+import { MegaMenuModule } from 'primeng-lts/megamenu';
 
 
 
@@ -17,7 +19,10 @@ import { ToastModule } from 'primeng-lts/toast';
   imports: [
     CommonModule,
     RouterModule,
-    ToastModule
+    ToastModule,
+    MenubarModule,
+    MenubarModule,
+    MegaMenuModule
   ],
   exports: [
     NavbarComponent,

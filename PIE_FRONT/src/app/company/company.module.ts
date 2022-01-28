@@ -10,6 +10,10 @@ import { DropdownModule } from 'primeng-lts/dropdown';
 import { OfferComponent } from './offer/offer.component';
 import { ToastModule } from 'primeng-lts/toast';
 import { CompProfileComponent } from './comp-profile/comp-profile.component';
+import { FileUploadModule } from 'primeng-lts/fileupload';
+import { InputTextModule } from 'primeng-lts/inputtext';
+import { DialogModule } from 'primeng-lts/dialog';
+import { InputTextareaModule } from 'primeng-lts/inputtextarea';
 
 
 @NgModule({
@@ -26,7 +30,11 @@ import { CompProfileComponent } from './comp-profile/comp-profile.component';
     InputNumberModule,
     AutoCompleteModule,
     DropdownModule,
-    ToastModule
+    ToastModule,
+    FileUploadModule,
+    InputTextModule,
+    InputTextareaModule,
+    DialogModule
   ]
 })
 export class CompanyModule { }

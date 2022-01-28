@@ -54,6 +54,8 @@ export class Offer {
     @Prop()
     rejectMessage?: string;
 
+    @Prop()
+    files?: string[];
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);

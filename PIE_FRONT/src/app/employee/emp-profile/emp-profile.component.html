@@ -6,8 +6,8 @@
     </button>
     <button class="pi-btn" (click)="share()">
         Share &nbsp; <i class="pi pi-share-alt"></i> </button>
-        <a [routerLink]="'/v/r/' + data._id" target="_blank" class="pi-btn">
-            Preview &nbsp; <i class="pi pi-image"></i> </a>
+    <a [routerLink]="'/v/r/' + data._id" target="_blank" class="pi-btn">
+        Preview &nbsp; <i class="pi pi-image"></i> </a>
 </div>
 <section class="container resume">
     <div class="resume-wrapper">
@@ -231,7 +231,7 @@
                             <button (click)="deleteSkill(i)" class="btn btn-outline-danger">Delete</button>
                         </label>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped" style="width: {{skill.expertLevelValue}}%">
+                            <div class="progress-bar progress-bar-striped" [style.width.%]="skill.expertLevelValue">
                             </div>
                         </div>
                     </div>
@@ -247,7 +247,7 @@
                             <button (click)="deleteLang(i)" class="btn btn-outline-danger">Delete</button>
                         </label>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped" style="width: {{lang.expertValue}}%"></div>
+                            <div class="progress-bar progress-bar-striped" [style.width.%]="lang.expertValue"></div>
                         </div>
                     </div>
                 </div>
@@ -550,6 +550,7 @@
     </div>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" (click)="cancelShare()" label="Cancel" styleClass="p-button-text"></p-button>
-        <p-button icon="pi pi-check" (click)="copyLink(sharableLink)" label="Copy To Clipboard" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="copyLink(sharableLink)" label="Copy To Clipboard"
+            styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>

@@ -22,6 +22,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { OfferModule } from './api/offer/offer.module';
 import { CompanyModule } from './api/company/company.module';
+import { NotificationModule } from './utils/notification/notification.module';
 
 @Module({
   imports: [
@@ -78,7 +79,8 @@ import { CompanyModule } from './api/company/company.module';
     SseModule,
     ConstantsModule,
     OfferModule,
-    CompanyModule
+    CompanyModule,
+    NotificationModule
   ],
   controllers: [],
   providers: [SeedService,

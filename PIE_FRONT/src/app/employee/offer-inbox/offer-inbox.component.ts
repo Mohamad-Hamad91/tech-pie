@@ -21,13 +21,11 @@ export class OfferInboxComponent implements OnInit {
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'compEmail', header: 'Company Email' },
-      { field: 'compPhone', header: 'Company Phone' },
-      { field: 'compName', header: 'Company name' },
       { field: 'workPlace', header: 'Work Place' },
       { field: 'workType', header: 'Work Type' },
-      // { field: 'employer', subfield: 'email', header: 'Employer' },
-      // { field: 'user', subfield: 'email', header: 'Employee' },
+      { field: 'position', header: 'Position' },
+      { field: 'minPrice', header: 'Min Range' },
+      { field: 'maxPrice', header: 'Max Range' },
     ];
 
     this.getData();

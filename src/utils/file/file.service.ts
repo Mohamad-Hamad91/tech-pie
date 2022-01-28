@@ -20,7 +20,7 @@ export class FileService {
         private config: ConfigService) { }
 
 
-    async save(file: Express.Multer.File, isPrivate: boolean, session: ClientSession): Promise<MyFile> {
+    async save(file: any, isPrivate: boolean, session?: ClientSession): Promise<MyFile> {
         let filename;
         if (this.config.get('STORE_REMOTE') == true) await this.writeGCS(file);
         else filename = await this.writeLocal(isPrivate, file);
@@ -29,7 +29,7 @@ export class FileService {
     }
 
     async delete(id: string, isPrivate: boolean, session?: ClientSession) {
-        const file = await this.fileModel.findOneAndDelete({ id });
+        const file = await this.fileModel.findByIdAndDelete(id);
         if (file && file.filename)
             this.unlinkFile(isPrivate, file.filename);
     }

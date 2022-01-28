@@ -1,17 +1,20 @@
-import { Controller, Get, Logger, Res, Response, Sse, MessageEvent, Query } from '@nestjs/common';
+import { Controller, Get, Logger, Res, Response, Sse, MessageEvent, Query, Req, Post } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { interval, map, Observable, Subject } from 'rxjs';
+import { FileService } from '../file/file.service';
 import { SseQueryDto } from './query.dto';
 // import { MessageEvent } from './message.model';
 import { SseService } from './sse.service';
 
-@Controller()
+@Controller({
+    version: '1'
+})
 export class SseController {
 
     private logger = new Logger(SseController.name);
     constructor(private readonly sseService: SseService, private eventEmitter: EventEmitter2) { }
 
-    @Sse('notification')
+    @Sse('sse')
     sse(@Query() sseQuery: SseQueryDto): Observable<MessageEvent> {
         this.logger.log('id: ' + sseQuery.id);
         // return interval(1000).pipe(map((_) => ({ data: { hello: 'world' } })));
@@ -30,5 +33,4 @@ export class SseController {
             map((data: MessageEvent): MessageEvent => ({ data })),
         );
     }
-
 }

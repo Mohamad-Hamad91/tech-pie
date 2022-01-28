@@ -13,13 +13,14 @@
                 <div *ngIf="col.subfield;then nested_object_content else normal_content"></div>
                 <ng-template #nested_object_content>
                     <span *ngIf="col.field === 'employer'">
-                        <a *ngIf="row?.employerType === 'USER'"
-                            [routerLink]="'/v/r/user/' + row?.employer?._id">{{row[col.field][col.subfield]}}</a>
-                        <a *ngIf="row?.employerType === 'COMPANY'"
-                            [routerLink]="'/v/c/user/' + row?.employer?._id">{{row[col.field][col.subfield]}}</a>
+                        <a *ngIf="row?.employerType === 'USER'" [routerLink]="'/v/r/user/' + row?.employer?._id"
+                            target="_blank">{{row[col.field][col.subfield]}}</a>
+                        <a *ngIf="row?.employerType === 'COMPANY'" [routerLink]="'/v/c/user/' + row?.employer?._id"
+                            target="_blank">{{row[col.field][col.subfield]}}</a>
                     </span>
                     <span *ngIf="col.field === 'user'">
-                        <a [routerLink]="'/v/r/user/' + row?.user?._id">{{row[col.field][col.subfield]}}</a>
+                        <a [routerLink]="'/v/r/user/' + row?.user?._id"
+                            target="_blank">{{row[col.field][col.subfield]}}</a>
                     </span>
                 </ng-template>
                 <ng-template #normal_content>
@@ -37,6 +38,8 @@
                     (click)="cancel(row._id, i)">Cancel</button>
                 <button *ngIf="row.status === OfferStatus.APPROVED" class="btn btn-outline-success"
                     (click)="finish(row._id, i)">Finished</button>
+                <a class="btn btn-outline-success"
+                    [routerLink]="'/dashboard/home/offer/' + row._id">Details</a>
             </td>
         </tr>
     </ng-template>

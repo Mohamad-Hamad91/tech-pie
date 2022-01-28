@@ -25,7 +25,7 @@ export class GeneralInterceptor implements HttpInterceptor {
     else tokenizedReq = request.clone();
     return new Observable((observer) => {
       next.handle(tokenizedReq).subscribe((res) => {
-        if (res instanceof HttpResponse)
+        // if (res instanceof HttpResponse)
           observer.next(res);
       },
         (err: HttpErrorResponse) => {

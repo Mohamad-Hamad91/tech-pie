@@ -10,7 +10,8 @@ export class CompanyDto {
     address?: string;
     city?: string;
     description?: string;
-    empBenifits?: string;
+    empBenifits?: string[];
+    techStack?: string[];
     compSize?: string;
     aboutImg?: string;
     aboutImgFile?: File;

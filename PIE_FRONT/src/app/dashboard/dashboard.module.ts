@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng-lts/toast';
 import {TableModule} from 'primeng-lts/table';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng-lts/dialog';
+import { OfferDetailsComponent } from './manage-offers/offer-details/offer-details.component';
 
 
 
@@ -19,7 +20,8 @@ import { DialogModule } from 'primeng-lts/dialog';
     LayoutComponent,
     AdminSidebarComponent,
     ManageOffersComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    OfferDetailsComponent
   ],
   imports: [
     CommonModule,

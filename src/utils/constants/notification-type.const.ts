@@ -1,0 +1,5 @@
+export enum NOTIFICATION_TYPE {
+    IN_OFFER = 'IN_OFFER',
+    OUT_OFFER = 'OUT_OFFER',
+    VIEW_PROFILE = 'VIEW_PROFILE'
+}

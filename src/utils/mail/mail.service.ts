@@ -1,11 +1,12 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { UserMailDto } from './dto/user.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MailService {
 
-    constructor(private mailerService: MailerService) { }
+    constructor(private mailerService: MailerService, private config: ConfigService) { }
 
 
     async sendUserConfirmation(user: UserMailDto, token: string) {
@@ -46,7 +47,10 @@ export class MailService {
             // from: '"Support Team" <support@example.com>',
             subject: 'Job Offer',
             template: './offer-template',
-            context: { ...offer },
+            context: { 
+                ...offer,
+                link: this.config.get('FRONT_DOMAIN') + 'e/inbox'
+             },
         });
     }
 

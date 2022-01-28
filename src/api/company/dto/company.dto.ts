@@ -39,7 +39,10 @@ export class CompanyDto {
     description?: string;
 
     @ApiProperty()
-    empBenifits?: string;
+    empBenifits?: string[];
+
+    @ApiProperty()
+    techStack?: string[];
 
     @ApiProperty()
     compSize?: string;
