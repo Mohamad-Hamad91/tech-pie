@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseURL: 'http://localhost:3001/api/v1/',
-  frontDomain: 'http://localhost:4200/',
+  baseURL: 'https://tech-pie.herokuapp.com/api/v1/',
+  frontDomain: 'https://tech-pie.herokuapp.com/',
 };

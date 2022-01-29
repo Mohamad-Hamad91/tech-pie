@@ -27,22 +27,22 @@ import { AppController } from './app.controller';
 @Module({
   imports: [
     // for publish
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'front'),
-      exclude: ['/api*', '/public'],
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/public'
-    }),
     // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'dist/front'),
+    //   rootPath: join('/app/front'),
     //   exclude: ['/api*', '/public'],
     // }),
     // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'dist/public'),
+    //   rootPath: join('/app/public'),
     //   serveRoot: '/public'
     // }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'dist/front'),
+      exclude: ['/api*', '/public'],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'dist/public'),
+      serveRoot: '/public'
+    }),
     EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true, // no need to import into other modules
@@ -87,7 +87,9 @@ import { AppController } from './app.controller';
     },],
 })
 export class AppModule implements NestModule {
+  
   configure(consumer: MiddlewareConsumer) {
+  console.log( join(__dirname, '..', '/front'));
     consumer
       .apply(HttpLoggerMiddleware)
       .forRoutes('*');
