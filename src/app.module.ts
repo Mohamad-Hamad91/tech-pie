@@ -1,6 +1,5 @@
-import { CacheInterceptor, CacheModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { CacheInterceptor, CacheModule, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-// import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './api/auth/auth.module';
 import { ResumeModule } from './api/resume/resume.module';
@@ -23,13 +22,27 @@ import { join } from 'path';
 import { OfferModule } from './api/offer/offer.module';
 import { CompanyModule } from './api/company/company.module';
 import { NotificationModule } from './utils/notification/notification.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
+    // for publish
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'dist/public'),
+      rootPath: join(__dirname, '..', 'front'),
+      exclude: ['/api*', '/public'],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
       serveRoot: '/public'
     }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'dist/front'),
+    //   exclude: ['/api*', '/public'],
+    // }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'dist/public'),
+    //   serveRoot: '/public'
+    // }),
     EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true, // no need to import into other modules
@@ -51,26 +64,10 @@ import { NotificationModule } from './utils/notification/notification.module';
     ResumeModule,
     MongooseModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
-      uri: config.get('DB_URL'),
+        uri: config.get('DB_URL'),
+      }),
+      inject: [ConfigService],
     }),
-    inject: [ConfigService],
-  }),
-    // TypeOrmModule.forRootAsync({
-    //   useFactory: (config: ConfigService) => ({
-    //     type: config.get('DB_TYPE'),
-    //     host: config.get('DB_HOST'),
-    //     url: config.get('DB_URL'),
-    //     // port: +config.get<number>('DB_PORT'),
-    //     // username: config.get('DB_USERNAME'),
-    //     // password: config.get('DB_PASSWORD'),
-    //     // database: config.get('DB_NAME'),
-    //     entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    //     synchronize: config.get('DB_SYNC'),
-    //     useUnifiedTopology: true,
-    //   }),
-    //   inject: [ConfigService],
-    // }
-    // ),// the configuration was taken from the file ormconfig.json at the root directory
     MailModule,
     LoggerModule,
     ConsoleModule,
@@ -82,7 +79,7 @@ import { NotificationModule } from './utils/notification/notification.module';
     CompanyModule,
     NotificationModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [SeedService,
     {
       provide: APP_INTERCEPTOR,
@@ -94,5 +91,6 @@ export class AppModule implements NestModule {
     consumer
       .apply(HttpLoggerMiddleware)
       .forRoutes('*');
+
   }
 }

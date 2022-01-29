@@ -7,6 +7,7 @@ import * as helmet from 'helmet';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import * as compression from 'compression';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { join } from 'path';
 
 async function bootstrap() {
 
