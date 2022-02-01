@@ -11,6 +11,8 @@ import { CompanyController } from './company.controller';
 import { CompanyService } from './company.service';
 import { Company, CompanySchema } from './schema/company.schema';
 import { Portofolio, PortofolioSchema } from './schema/portofolio.schema';
+import { SearchController } from './search/search.controller';
+import { SearchService } from './search/search.service';
 
 @Module({
   imports: [
@@ -24,7 +26,7 @@ import { Portofolio, PortofolioSchema } from './schema/portofolio.schema';
     UsersModule,
     AuthModule
   ],
-  controllers: [CompanyController],
-  providers: [CompanyService, FileService, UsersService,]
+  controllers: [CompanyController, SearchController],
+  providers: [CompanyService, FileService, UsersService, SearchService,]
 })
 export class CompanyModule {}

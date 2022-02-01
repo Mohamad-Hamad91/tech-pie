@@ -31,6 +31,9 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/c/search" routerLinkActive="active-nav-link">Search</a>
             </li>
+            <li class="nav-item"  *ngIf="isLoggedin && isEmployee">
+                <a class="nav-link" routerLink="/e/search" routerLinkActive="active-nav-link">Companies</a>
+            </li>
             <li *ngIf="isLoggedin && isEmployee">
                 <a class="nav-link" routerLink="/e/profile" routerLinkActive="active-nav-link">Resume</a>
             </li>
@@ -48,7 +51,7 @@
             </li>
         </ul>
 
-        <span style="display: inline-flex;">
+        <span [hidden]="!isLoggedin" style="display: inline-flex;">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" (click)="notifSattus = !notifSattus">
                 <span class="badge"><i class="pi pi-bell"></i>{{unseenCount}}</span>
             </a>

@@ -17,6 +17,7 @@ import { DialogModule } from 'primeng-lts/dialog';
 import { InputTextModule } from 'primeng-lts/inputtext';
 import { FileUploadModule } from 'primeng-lts/fileupload';
 import { OfferInboxComponent } from './offer-inbox/offer-inbox.component';
+import { SearchCompanyComponent } from './search-company/search-company.component';
 
 
 
@@ -26,7 +27,8 @@ import { OfferInboxComponent } from './offer-inbox/offer-inbox.component';
   declarations: [
 
     EmpProfileComponent,
-     OfferInboxComponent
+     OfferInboxComponent,
+     SearchCompanyComponent
   ],
   imports: [
     CommonModule,

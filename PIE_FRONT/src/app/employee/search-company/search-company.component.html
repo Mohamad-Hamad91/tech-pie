@@ -1,0 +1,83 @@
+<app-navbar></app-navbar>
+
+<section class="container search">
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2 search-input-wrapper">
+            <div class="centered-image">
+                <img src="assets/imgs/search-emp.svg" alt="search" width="190">
+            </div>
+            <h2>Search for Companies</h2>
+
+            <form (ngSubmit)="search()">
+                <div class="input-group mb-3">
+                    <input name="search" [(ngModel)]="query.search" type="search" class="search-input"
+                        placeholder="Search By Company's Name">
+                    <div class="input-group-prepend" style="margin: 0%;">
+                        <button class="btn btn-outline-secondary search-btn" type="submit">
+                            <img src="assets/imgs/search.svg" alt="search" width="27">
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="advanced-search">
+        <h6 (click)="flipArrow()">Advanced Search <img #arrow src="assets/imgs/arraow-bottom.svg" alt="arrow bottom"
+                width="25"></h6>
+        <form (ngSubmit)="search()">
+            <div #advancedSearch class="row advanced-search-input-wrapper"
+                [ngClass]="{'hide-advanced-search': !displayAdvanceSearch}">
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label for="city">City</label>
+                        </div>
+                        <div class="col-8">
+                            <p-autoComplete name="city" [(ngModel)]="tempQuery.city" [suggestions]="cities" id="city"
+                                (completeMethod)="searchCities($event)" [dropdown]="true" Placeholder="City"
+                                appendTo="body" [inputStyle]="{'background': '#fff', 'color': '#232323'}">
+                            </p-autoComplete>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="city">Company Size</label>
+                        </div>
+                        <div class="col-8">
+                            <input pInputText class="input" type="text" name="compSize" [(ngModel)]="tempQuery.compSize"
+                                style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="advanced-search-btn-wrapper">
+                    <button class="pi-btn" type="submit">
+                        Search &nbsp;&nbsp; <img src="assets/imgs/search.svg" alt="search" width="20">
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</section>
+
+<section class="container search-results">
+    <div class="row">
+        <h5 *ngIf="expectResult && !data?.length">No result found!</h5>
+        <div *ngIf="expectResult && data?.length">
+            <div class="col-3" *ngFor="let result of data; index as i">
+                <div (click)="browseCompany(result._id)" style="cursor: pointer;">
+                    <img [src]="result.logo?.url" alt="Company Logo" width="150">
+                    <h3>{{result.name}}</h3>
+                    <p>{{result.title}}</p>
+                    <p>{{result.city}} - {{result.address}}</p>
+                    <p>Company size: {{result.compSize}} Employees</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-footer></app-footer>
