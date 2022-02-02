@@ -38,7 +38,7 @@ export class OfferController {
     }
 
     @Get('income')
-    @Roles(ROLE.USER)
+    @Roles(ROLE.USER, ROLE.COMPANY)
     async getEmp(@GetUser() user, @Query() input: BaseQueryInputDto) {
         return await this.offerService.getByEmp(user._id, input);
     }
@@ -63,7 +63,7 @@ export class OfferController {
     }
 
     @Put('/:id')
-    @Roles(ROLE.ADMIN, ROLE.USER)
+    @Roles(ROLE.ADMIN, ROLE.USER, ROLE.COMPANY)
     @UsePipes(new ValidationPipe({ transform: true }))
     async update(@Body() offer: OfferDto, @Param('id') id: string, @GetUser() user) {
         return await this.offerService.edit(id, offer, user.email);

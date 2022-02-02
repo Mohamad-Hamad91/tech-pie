@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng-lts/api';
 import { OfferStatus } from 'src/app/model/offer-status';
 import { OfferDto } from 'src/app/model/offer.dto';
 import { OfferService } from 'src/app/service/offer.service';
 
 @Component({
-  selector: 'app-offer-inbox',
-  templateUrl: './offer-inbox.component.html',
-  styleUrls: ['./offer-inbox.component.scss']
+  selector: 'app-init-apps-inbox',
+  templateUrl: './init-apps-inbox.component.html',
+  styleUrls: ['./init-apps-inbox.component.scss']
 })
-export class OfferInboxComponent implements OnInit {
+export class InitAppsInboxComponent implements OnInit {
 
   data: OfferDto[] = [];
   cols: any;
   OfferStatus = OfferStatus;
 
-  constructor(private _offerService: OfferService, private _messageService: MessageService,) { }
+  constructor(private _offerService: OfferService, private _messageService: MessageService) { }
 
   ngOnInit(): void {
     this.cols = [

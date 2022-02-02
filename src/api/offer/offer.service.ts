@@ -78,7 +78,7 @@ export class OfferService {
     }
 
     /**
-     * To get approved offers by employee
+     * To get approved offers by employee or init apps for companies
      * @param input 
      * @returns 
      */

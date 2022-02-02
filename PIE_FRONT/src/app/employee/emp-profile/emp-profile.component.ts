@@ -87,6 +87,8 @@ export class EmpProfileComponent implements OnInit {
   tempLang: LanguageDto = new LanguageDto();
   imageSrc: string | ArrayBuffer;
   fromFrontAvatar: boolean;
+
+  editMode: 'add' | 'edit';
   //#endregion Data member definition
 
 
@@ -236,13 +238,15 @@ export class EmpProfileComponent implements OnInit {
 
 
   //#region Employment History
-  displayEmpHistory() {
+  displayEmpHistory(editMode: 'add' | 'edit') {
+    this.editMode = editMode;
     this.tempEmpHistomry = new EmploymentHistory();
     this.empHistoryDialog = true;
   }
 
   addEmpHistory() {
-    if (this.tempEmpHistomry._id && this.tempEmpHistomry.myIndex >= 0)
+    debugger;
+    if (this.editMode === 'edit')
       this.data.employmentHistory[this.tempEmpHistomry.myIndex] = { ...this.tempEmpHistomry };
     else
       this.data.employmentHistory.push({ ...this.tempEmpHistomry });
@@ -256,10 +260,11 @@ export class EmpProfileComponent implements OnInit {
   }
 
   deleteEmpHistory(i) {
-    this.data.employmentHistory = this.data.employmentHistory.splice(i, 1);
+    this.data.employmentHistory.splice(i, 1);
   }
 
   editEmpHistory(i) {
+    this.editMode = 'edit';
     this.tempEmpHistomry = this.data.employmentHistory[i];
     this.tempEmpHistomry.myIndex = i;
     this.tempEmpHistomry.startDate = this.tempEmpHistomry.startDate ? new Date(this.tempEmpHistomry.startDate) : null;
@@ -271,12 +276,13 @@ export class EmpProfileComponent implements OnInit {
 
   //#region Education section
   displayEdu() {
+    this.editMode = 'add';
     this.tempEdu = new EducationDto();
     this.eduDialog = true;
   }
 
   addEdu() {
-    if (this.tempEdu._id && this.tempEdu.myIndex >= 0)
+    if (this.editMode === 'edit')
       this.data.education[this.tempEdu.myIndex] = { ...this.tempEdu };
     else
       this.data.education.push({ ...this.tempEdu });
@@ -290,10 +296,11 @@ export class EmpProfileComponent implements OnInit {
   }
 
   deleteEdu(i) {
-    this.data.education = this.data.education.splice(i, 1);
+    this.data.education.splice(i, 1);
   }
 
   editEdu(i) {
+    this.editMode = 'edit';
     this.tempEdu = this.data.education[i];
     this.tempEdu.myIndex = i;
     this.tempEdu.startDate = this.tempEdu.startDate ? new Date(this.tempEdu.startDate) : null;
@@ -305,12 +312,13 @@ export class EmpProfileComponent implements OnInit {
 
   //#region Courses section
   displayCourse() {
+    this.editMode = 'add';
     this.tempCourse = new CourseDto();
     this.courseDialog = true;
   }
 
   addCourse() {
-    if (this.tempCourse._id && this.tempCourse.myIndex >= 0)
+    if (this.editMode === 'edit')
       this.data.courses[this.tempCourse.myIndex] = { ...this.tempCourse };
     else
       this.data.courses.push({ ...this.tempCourse });
@@ -324,10 +332,11 @@ export class EmpProfileComponent implements OnInit {
   }
 
   deleteCourse(i) {
-    this.data.courses = this.data.courses.splice(i, 1);
+    this.data.courses.splice(i, 1);
   }
 
   editCourse(i) {
+    this.editMode = 'edit';
     this.tempCourse = this.data.courses[i];
     this.tempCourse.myIndex = i;
     this.tempCourse.startDate = this.tempCourse.startDate ? new Date(this.tempCourse.startDate) : null;
@@ -339,12 +348,13 @@ export class EmpProfileComponent implements OnInit {
 
   //#region Projects section
   displayProject() {
+    this.editMode = 'add';
     this.tempProject = new ProjectDto();
     this.projectDialog = true;
   }
 
   addProject() {
-    if (this.tempProject._id && this.tempProject.myIndex >= 0)
+    if (this.editMode === 'edit')
       this.data.projects[this.tempProject.myIndex] = { ...this.tempProject };
     else
       this.data.projects.push({ ...this.tempProject });
@@ -358,10 +368,11 @@ export class EmpProfileComponent implements OnInit {
   }
 
   deleteProject(i) {
-    this.data.projects = this.data.projects.splice(i, 1);
+    this.data.projects.splice(i, 1);
   }
 
   editProject(i) {
+    this.editMode = 'edit';
     this.tempProject = this.data.projects[i];
     this.tempProject.myIndex = i;
     this.tempProject.startDate = this.tempProject.startDate ? new Date(this.tempProject.startDate) : null;
@@ -373,12 +384,13 @@ export class EmpProfileComponent implements OnInit {
 
   //#region References section
   displayRef() {
+    this.editMode = 'add';
     this.tempRef = new ReferencesDto();
     this.refDialog = true;
   }
 
   addRef() {
-    if (this.tempRef._id && this.tempRef.myIndex >= 0)
+    if (this.editMode === 'edit')
       this.data.references[this.tempRef.myIndex] = { ...this.tempRef };
     else
       this.data.references.push({ ...this.tempRef });
@@ -392,10 +404,11 @@ export class EmpProfileComponent implements OnInit {
   }
 
   deleteRef(i) {
-    this.data.references = this.data.references.splice(i, 1);
+    this.data.references.splice(i, 1);
   }
 
   editRef(i) {
+    this.editMode = 'edit';
     this.tempRef = this.data.references[i];
     this.tempRef.myIndex = i;
     this.refDialog = true;
@@ -405,12 +418,13 @@ export class EmpProfileComponent implements OnInit {
 
   //#region Links section
   displayLink() {
+    this.editMode = 'add';
     this.tempLink = new LinkDto();
     this.linkDialog = true;
   }
 
   addLink() {
-    if (this.tempLink._id && this.tempLink.myIndex >= 0)
+    if (this.editMode === 'edit')
       this.data.links[this.tempLink.myIndex] = { ...this.tempLink };
     else
       this.data.links.push({ ...this.tempLink });
@@ -424,10 +438,11 @@ export class EmpProfileComponent implements OnInit {
   }
 
   deleteLink(i) {
-    this.data.links = this.data.links.splice(i, 1);
+    this.data.links.splice(i, 1);
   }
 
   editLink(i) {
+    this.editMode = 'edit';
     this.tempLink = this.data.links[i];
     this.tempLink.myIndex = i;
     this.linkDialog = true;
@@ -437,13 +452,14 @@ export class EmpProfileComponent implements OnInit {
 
   //#region Skills section
   displaySkill() {
+    this.editMode = 'add';
     this.tempSkill = new SkillDto();
     this.skillDialog = true;
   }
 
   addSkill() {
     this.tempSkill.expertLevelValue = GET_SKILL_VALUE(this.tempSkill.expertLevel);
-    if (this.tempSkill._id && this.tempSkill.myIndex >= 0)
+    if (this.editMode === 'edit')
       this.data.skills[this.tempSkill.myIndex] = { ...this.tempSkill };
     else
       this.data.skills.push({ ...this.tempSkill });
@@ -457,10 +473,11 @@ export class EmpProfileComponent implements OnInit {
   }
 
   deleteSkill(i) {
-    this.data.skills = this.data.skills.splice(i, 1);
+    this.data.skills.splice(i, 1);
   }
 
   editSkill(i) {
+    this.editMode = 'edit';
     this.tempSkill = this.data.skills[i];
     this.tempSkill.myIndex = i;
     this.skillDialog = true;
@@ -470,13 +487,14 @@ export class EmpProfileComponent implements OnInit {
 
   //#region Languages section
   displayLang() {
+    this.editMode = 'add';
     this.tempLang = new LanguageDto();
     this.langDialog = true;
   }
 
   addLang() {
     this.tempLang.expertValue = GET_LANG_VALUE(this.tempLang.level);
-    if (this.tempLang._id && this.tempLang.myIndex >= 0)
+    if (this.editMode === 'edit')
       this.data.languages[this.tempLang.myIndex] = { ...this.tempLang };
     else
       this.data.languages.push({ ...this.tempLang });
@@ -490,10 +508,11 @@ export class EmpProfileComponent implements OnInit {
   }
 
   deleteLang(i) {
-    this.data.languages = this.data.languages.splice(i, 1);
+    this.data.languages.splice(i, 1);
   }
 
   editLang(i) {
+    this.editMode = 'edit';
     this.tempLang = this.data.languages[i];
     this.tempLang.myIndex = i;
     this.langDialog = true;

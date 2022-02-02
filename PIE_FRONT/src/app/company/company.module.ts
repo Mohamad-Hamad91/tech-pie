@@ -14,13 +14,15 @@ import { FileUploadModule } from 'primeng-lts/fileupload';
 import { InputTextModule } from 'primeng-lts/inputtext';
 import { DialogModule } from 'primeng-lts/dialog';
 import { InputTextareaModule } from 'primeng-lts/inputtextarea';
+import { InitAppsInboxComponent } from './init-apps-inbox/init-apps-inbox.component';
 
 
 @NgModule({
   declarations: [
     SearchComponent,
     OfferComponent,
-    CompProfileComponent
+    CompProfileComponent,
+    InitAppsInboxComponent
   ],
   imports: [
     CommonModule,

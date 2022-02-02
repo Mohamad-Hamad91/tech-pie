@@ -44,6 +44,9 @@
                 <a class="nav-link" routerLink="/e/inbox" routerLinkActive="active-nav-link">Inbox</a>
             </li>
             <li *ngIf="isLoggedin && isCompany">
+                <a class="nav-link" routerLink="/c/inbox" routerLinkActive="active-nav-link">Inbox</a>
+            </li>
+            <li *ngIf="isLoggedin && isCompany">
                 <a class="nav-link" routerLink="/c/sent-offers" routerLinkActive="active-nav-link">Sent Offers</a>
             </li>
             <li *ngIf="isLoggedin && isEmployee">
